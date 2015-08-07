@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white"
+        android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/coach_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/avator" />
+
+        <TextView
+            android:id="@+id/tv_coachName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/coach_img"
+            android:text="叶教练"
+            android:textColor="@color/font_black" />
+
+        <TextView
+            android:id="@+id/subject_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_coachName"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/font_gray_light"
+            android:text="科目二"/>
+
+        <RatingBar
+            android:id="@+id/rb_score"
+            style="@style/roomRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_coachName"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/coach_img"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="2.3"
+            android:stepSize="0.15" />
+
+        <TextView
+            android:id="@+id/studentAmount_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="123名学生"
+            android:textColor="@color/font_gray_light" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@color/line" />
+
+</LinearLayout>

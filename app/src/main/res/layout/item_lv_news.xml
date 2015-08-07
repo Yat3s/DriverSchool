@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_white"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.drivingevaluate.view.CircleImageView
+            android:id="@+id/img_avator"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/avator" >
+        </com.drivingevaluate.view.CircleImageView>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img_avator"
+            android:text="美人一号"
+            android:textColor="@color/font_gray_light" />
+
+        <TextView
+            android:id="@+id/tv_pubAddr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img_avator"
+            android:drawableLeft="@mipmap/ic_loc"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:maxEms="10"
+            android:singleLine="true"
+            android:textColor="@color/theme_blue" />
+
+        <TextView
+            android:id="@+id/tv_stuStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="正在学车"
+            android:textColor="@color/font_gray_light" />
+    </RelativeLayout>
+
+    <com.drivingevaluate.view.EmoticonsTextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="洛丽塔原指美国一部小说《Lolita》，后在日本引伸发展成一种次文化。“萝莉”或“萝莉塔”作为名词用以指称“女孩子”本身。" />
+
+    <GridView android:id="@+id/gv_imgs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="4"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:listSelector="@null"></GridView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#EEEEEE" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/tv_pubTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123123"
+            android:textColor="@color/font_gray_light" />
+
+        <ImageButton
+            android:id="@+id/btn_comment"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:background="@drawable/bg_circle"
+            android:src="@mipmap/ic_comment" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="5dp"
+            android:focusable="false"
+            android:layout_toLeftOf="@id/btn_comment"
+            android:background="@drawable/bg_circle"
+            android:src="@mipmap/ic_fav" />
+    </RelativeLayout>
+    
+
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:padding="10dp">
+    <com.drivingevaluate.view.CleanableEditText 
+	    android:id="@+id/et_oldPwd"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/bg_edittext"
+	    android:layout_marginTop="20dp"
+	    android:inputType="textPassword"
+	    android:drawableRight="@mipmap/ic_clean"
+	    android:textColorHint="@color/font_gray_light"
+	    android:hint="请输入旧密码"/>
+	<com.drivingevaluate.view.CleanableEditText 
+	    android:id="@+id/et_newPwd"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/bg_edittext"
+	    android:drawableRight="@mipmap/ic_clean"
+	    android:layout_marginTop="20dp"
+	    android:inputType="textPassword"
+	    android:textColorHint="@color/font_gray_light"
+	    android:hint="请输入新密码"/>
+	<com.drivingevaluate.view.CleanableEditText 
+	    android:id="@+id/et_repeatNewPwd"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/bg_edittext"
+	    android:drawableRight="@mipmap/ic_clean"
+	    android:layout_marginTop="20dp"
+	    android:inputType="textPassword"
+	    android:textColorHint="@color/font_gray_light"
+	    android:hint="请重复输入新密码"/>
+	<Button 
+	    android:id="@+id/btn_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:background="@drawable/selector_blue"
+        android:text="修改密码"/>
+
+</LinearLayout>

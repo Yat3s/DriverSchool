@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/consult_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_edittext"
+        android:layout_margin="10dp"
+        android:hint="请输入咨询内容"
+        android:gravity="left|top"
+        android:lines="5"/>
+
+    <Button
+        android:id="@+id/consult_btn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_blue"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:text="提交咨询"/>
+</LinearLayout>

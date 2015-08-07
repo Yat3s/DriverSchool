@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="江西驾驶学校是江西省规模大、设施先进、教学培训规范的国家一类驾驶学校。鲜明的办学特色和突出的办学成绩得到了中国道路运输协会等有关部门和社会各界的广泛关注和赞誉，荣获了“江西省十强驾校”之首、“江西省职业教育先进单位”等称号，被江西省团委、省学联首个授予“江西省大学生素质拓展训练技能培训基地”，也是南昌市车管所直属的机动车驾驶员考试考场。"
+        android:textSize="16sp" />
+
+</LinearLayout>

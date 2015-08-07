@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp" >
+
+<!--     <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_logo" />
+ -->
+    <LinearLayout
+        android:id="@+id/layout_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical" >
+
+        <com.drivingevaluate.view.CleanableEditText
+            android:id="@+id/et_account"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_edittext"
+            android:drawableLeft="@mipmap/ic_account"
+            android:drawablePadding="5dp"
+            android:drawableRight="@mipmap/ic_clean"
+            android:inputType="phone"
+            android:textColorHint="@color/font_gray_light"
+            android:hint="请输入手机号" 
+            android:text="15170777774"/>
+
+        <com.drivingevaluate.view.CleanableEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_edittext"
+            android:drawableLeft="@mipmap/ic_password"
+            android:drawableRight="@mipmap/ic_clean"
+            android:inputType="textPassword"
+            android:textColorHint="@color/font_gray_light"
+            android:drawablePadding="5dp"
+            android:text="123456"
+            android:hint="请输入密码"/>
+        
+        <Button android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:background="@drawable/selector_blue"
+            android:text="登录"/>
+    </LinearLayout>
+    
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/layout_login"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/theme_blue"
+        android:text="忘记密码?"/>
+    
+    <Button android:id="@+id/btn_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_border"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="注册"/>
+
+</RelativeLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/tv_commenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ya**s"
+        android:textColor="@color/font_gray_light" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/tv_commenter"
+        android:text="2015-7-1"
+        android:textColor="@color/font_gray_light" />
+
+    <RatingBar
+        android:id="@+id/rb_score"
+        style="@style/roomRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:stepSize="0.15"
+        android:rating="3.5" />
+    
+    <TextView android:id="@+id/tv_commentContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/tv_commenter"
+        android:textColor="#000000"
+        android:text="还不错"/>
+
+</RelativeLayout>

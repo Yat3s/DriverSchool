@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="citys">
+        <item>全部地区</item>
+        <item>500米</item>
+        <item>1000米</item>
+        <item>2000米</item>
+        <item>5000米</item>
+    </string-array>
+    <string-array name="dschools">
+        <item>全部驾校</item>
+        <item>热门驾校</item>
+    </string-array>
+    <string-array name="order">
+        <item>默认排序</item>
+        <item>距离最近</item>
+        <item>价格最低</item>
+        <item>价格最高</item>
+    </string-array>
+    <string-array name="school">
+        <item>无</item>
+        <item>南昌理工大学</item>
+        <item>南昌理工学院</item>
+        <item>江西农业大学</item>
+        <item>江西财经大学</item>
+        <item>江西管理职业学院</item>
+        <item>江西青年职业学院</item>
+        <item>华东交通大学</item>
+        <item>江西水利职业学院</item>
+        <item>江西科技师范大学</item>
+        <item>江西机电职业学院</item>
+        <item>江西理工大学南昌校区</item>
+    </string-array>
+
+</resources>
