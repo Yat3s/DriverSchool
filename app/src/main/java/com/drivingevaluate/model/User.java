@@ -8,7 +8,7 @@ public class User implements Serializable{
     private String account;
     private String userName;
     private String password;
-    private String token;
+    private String accessToken;
     private String enable;
     private String sex;
     private String ip;
@@ -23,6 +23,14 @@ public class User implements Serializable{
     private String identifyCode;//验证码
     private Date identifyCodeSendTime;//验证码发送时间  用以检查验证码是否过期
     private String headPath;//头像路径
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -54,14 +62,6 @@ public class User implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getEnable() {
@@ -160,26 +160,4 @@ public class User implements Serializable{
         this.headPath = headPath;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", account='" + account + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", token='" + token + '\'' +
-                ", enable='" + enable + '\'' +
-                ", sex='" + sex + '\'' +
-                ", ip='" + ip + '\'' +
-                ", registerTime=" + registerTime +
-                ", age=" + age +
-                ", lat=" + lat +
-                ", lon=" + lon +
-                ", sign='" + sign + '\'' +
-                ", grade=" + grade +
-                ", identifyCode='" + identifyCode + '\'' +
-                ", identifyCodeSendTime=" + identifyCodeSendTime +
-                ", headPath='" + headPath + '\'' +
-                '}';
-    }
 }

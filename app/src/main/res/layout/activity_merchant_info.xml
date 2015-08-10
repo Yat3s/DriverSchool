@@ -53,98 +53,6 @@
                 </RelativeLayout>
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="普通班:"
-                        android:textColor="@color/font_gray_light" />
-
-                    <TextView
-                        android:id="@+id/tv_ourPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="2300元"
-                        android:textColor="@color/red"
-                        android:textSize="18sp" />
-
-
-                    <TextView
-                        android:id="@+id/tv_marketPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rb_score"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/tv_ourPrice"
-                        android:text="￥2300"
-                        android:textColor="@color/font_gray_light"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="(平均拿证时间 88天)"
-                        android:textColor="@color/font_gray_light" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="VIP  班:"
-                        android:textColor="@color/font_gray_light" />
-
-                    <TextView
-                        android:id="@+id/tv_vipPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="3780元"
-                        android:textColor="@color/red"
-                        android:textSize="18sp" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rb_score"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/tv_ourPrice"
-                        android:text="￥4000"
-                        android:textColor="@color/font_gray_light"
-                        android:textSize="16sp" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="(平均拿证时间 67天)"
-                        android:textColor="@color/font_gray_light" />
-                </LinearLayout>
-            </LinearLayout>
-
-
             <include layout="@layout/layout_address_intro" />
 
             <include layout="@layout/layout_grade_merchant" />
@@ -153,7 +61,7 @@
 
             <include layout="@layout/layout_coach" />
 
-            <include layout="@layout/layout_intro" />
+            <include layout="@layout/layout_pick_line" />
 
             <include layout="@layout/layout_comment" />
         </LinearLayout>

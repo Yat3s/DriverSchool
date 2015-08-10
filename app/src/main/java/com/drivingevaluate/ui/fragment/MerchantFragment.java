@@ -124,8 +124,7 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
                 Bundle paramBundle = new Bundle();
-                paramBundle.putSerializable("dSchool",
-                        merchants.get(position -1));
+                paramBundle.putInt("merchantId",merchants.get(position-1).getSid());
                 startActivity(MerchantInfoActivity.class, paramBundle);
             }
         });

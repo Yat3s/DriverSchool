@@ -1,5 +1,7 @@
 package com.drivingevaluate.net;
 
+import android.util.Log;
+
 import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.config.ServerConf;
 import com.drivingevaluate.config.UrlConfig;
@@ -49,6 +51,7 @@ public class GetUserInfoRequester {
     }
     class MyErrorHandler implements ErrorHandler {
         @Override public Throwable handleError(RetrofitError cause) {
+            Log.e("yat3s", "GetUserInfoRequester---->" + cause.getMessage());
             return cause;
         }
     }

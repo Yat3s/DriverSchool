@@ -3,20 +3,13 @@ package com.drivingevaluate.ui;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.config.AppConf;
-import com.drivingevaluate.model.Account;
 import com.drivingevaluate.net.LoginRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.api.JsonResolveUtils;
-import com.drivingevaluate.config.Constants;
 import com.drivingevaluate.model.User;
-import com.drivingevaluate.util.AppMethod;
 import com.drivingevaluate.util.SharedPreferencesUtils;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -92,21 +85,15 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
             return;
         }
 
-        Callback<Account> callback = new Callback<Account>() {
+        Callback<User> callback = new Callback<User>() {
             @Override
-            public void success(Account account, Response response) {
-                if (account != null){
-                    for (int i = 0 ; i < response.getHeaders().size(); i++){
-                        if (response.getHeaders().get(i).getName().equals("token")){
-                            SharedPreferencesUtils.put(LoginActivity.this, "token", response.getHeaders().get(i).getValue());
-                            break;
-                        }
-                    }
-                    SharedPreferencesUtils.put(LoginActivity.this, "userId", account.getUserId());
-                    AppConf.TOKEN = SharedPreferencesUtils.get(LoginActivity.this,"token","").toString();
-                    startActivity(MainActivity.class);
-                    finish();
-                }
+            public void success(User user, Response response) {
+                SharedPreferencesUtils.put(LoginActivity.this, "token", user.getAccessToken());
+                SharedPreferencesUtils.put(LoginActivity.this, "userId", user.getUserId());
+                AppConf.TOKEN = SharedPreferencesUtils.get(LoginActivity.this,"token","").toString();
+                AppConf.USER_ID = (int) SharedPreferencesUtils.get(LoginActivity.this,"userId",-1);
+                startActivity(MainActivity.class);
+                finish();
             }
 
             @Override

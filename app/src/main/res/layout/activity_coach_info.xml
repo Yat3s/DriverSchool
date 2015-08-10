@@ -18,7 +18,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/img_bg_coachinfo"
+                android:background="@color/md_cyan_50"
                 android:padding="10dp" >
 
                 <com.drivingevaluate.view.CircleImageView
@@ -37,7 +37,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:text="叶教练"
-                    android:textColor="#FFFFFF"
                     android:textSize="20sp" />
 
                 <RatingBar
@@ -59,8 +58,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="10dp"
-                    android:text="123人报名"
-                    android:textColor="#FFFFFF" />
+                    android:text="123人报名" />
             </RelativeLayout>
 
             <LinearLayout

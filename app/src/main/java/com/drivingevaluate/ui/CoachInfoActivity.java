@@ -2,6 +2,7 @@ package com.drivingevaluate.ui;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.ui.base.Yat3sActivity;
+import com.drivingevaluate.util.MyUtil;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -49,7 +50,7 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
 //        sName = getIntent().getExtras().getString("sName");
 //        sid = getIntent().getExtras().getString("sid");
         tvCoachName.setText(coachName);
-//        loadImg(avatorImageView,getIntent().getExtras().getString("pic"));
+        MyUtil.loadImg(avatorImageView,getIntent().getExtras().getString("coachAvatarUrl"));
         for (int i = 0; i < commenter.length; i++) {
             View convertView = LayoutInflater.from(getApplicationContext())
                     .inflate(R.layout.item_lv_coach_comment, null);

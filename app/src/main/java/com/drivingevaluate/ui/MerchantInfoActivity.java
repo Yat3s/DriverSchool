@@ -8,9 +8,11 @@ import java.util.Map;
 import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.CoachHorizontalAdapter;
 import com.drivingevaluate.adapter.CourseAdapter;
+import com.drivingevaluate.model.CoachComment;
 import com.drivingevaluate.model.Course;
 import com.drivingevaluate.model.Merchant;
 import com.drivingevaluate.net.GetCoachListRequester;
+import com.drivingevaluate.net.GetMerchantDetailRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.model.Coach;
 import com.drivingevaluate.view.FullyLinearLayoutManager;
@@ -19,7 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextPaint;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -33,10 +35,11 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MerchantInfoActivity extends Yat3sActivity implements OnClickListener {
-    private Button btnApply, btnConsult, btnMoreCoach;
-    private TextView tvName, tvOurPrice,marketPriceTv, tvDSchoolInfo, tvCoachAmount, studentAmountTextView, gradeTextView,addressTv;
     private RelativeLayout navigateRl;
-    private RatingBar gradeBar;
+    private Button btnApply, btnConsult, btnMoreCoach;
+    private TextView tvName, merchantIntroTv, tvCoachAmount, studentAmountTextView, gradeTextView,addressTv;
+    private TextView timeGradeTv,placeGradeTv,serviceGradeTv;
+    private RatingBar timeGradeRb,placeGradeRb,serviceGradeRb;
     private RecyclerView coachRv;
     private RecyclerView courseRv;
     private CoachHorizontalAdapter coachHorizontalAdapter;
@@ -44,7 +47,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
     private ImageButton btnMap;
     private List<Coach> coaches = new ArrayList<>();
     private List<Course> courses = new ArrayList<>();
-    private String sid, sName;
+    private int merchantId;
     private Merchant merchant;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,36 +63,37 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
     }
 
     private void refreshView() {
+        setTitleBarTitle(merchant.getSname());
         tvName.setText(merchant.getSname());
-        tvOurPrice.setText((int) merchant.getOurPrice() + "元");
-        marketPriceTv.getPaint().setFlags(TextPaint.STRIKE_THRU_TEXT_FLAG);
-        marketPriceTv.setText((int) merchant.getMarketPrice() + "元");
-        studentAmountTextView.setText("学生数量:" + merchant.getSellCount());
+        studentAmountTextView.setText("报名人数:" + merchant.getSellCount());
         addressTv.setText(merchant.getSaddress());
-        if (merchant.getSlevel()!=null){
-            gradeTextView.setText(merchant.getSlevel().toString());
-        }
+        merchantIntroTv.setText(merchant.getSintroduction());
         tvCoachAmount.setText("精品教练(" + coaches.size() + ")");
         btnMoreCoach.setText("查看全部" + coaches.size() + "位教练");
-        coachHorizontalAdapter.notifyDataSetChanged();
-        dismissLoading();
 
+        //综合评分以及三项评价的分数
+        if (merchant.getSlevel()!=null) {
+            gradeTextView.setText(merchant.getSlevel().toString());
+        }
+        timeGradeRb.setRating(merchant.getItem1());
+        placeGradeRb.setRating(merchant.getItem2());
+        serviceGradeRb.setRating(merchant.getItem3());
+        timeGradeTv.setText(merchant.getItem1() + "分");
+        placeGradeTv.setText(merchant.getItem2() + "分");
+        serviceGradeTv.setText(merchant.getItem3() + "分");
 
-        //模拟数据
-        Course course1 = new Course();
-        course1.setPrice(3200);
-        course1.setSubject("周一到周五");
-        course1.setType("普通班");
-        Course course2 = new Course();
-        course2.setPrice(3800);
-        course2.setSubject("全天");
-        course2.setType("VIP班");
-
-        courses.add(course1);
-        courses.add(course2);
-
+        //暂时只有单个课程价格
+        Course course = new Course();
+        course.setPrice(merchant.getOurPrice());
+        course.setSubject("自选教学时间");
+        course.setType("普通班");
+        course.setMerchantId(merchant.getSid());
+        course.setMerchantName(merchant.getSname());
+        courses.add(course);
         courseAdapter.notifyDataSetChanged();
 
+        coachHorizontalAdapter.notifyDataSetChanged();
+        dismissLoading();
     }
 
     private void initEvent() {
@@ -97,18 +101,34 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
         btnApply.setOnClickListener(this);
         btnMoreCoach.setOnClickListener(this);
         btnMap.setOnClickListener(this);
-        tvDSchoolInfo.setOnClickListener(this);
+        merchantIntroTv.setOnClickListener(this);
         navigateRl.setOnClickListener(this);
     }
 
     private void getData() {
         showLoading();
-        merchant = (Merchant) getIntent().getExtras().getSerializable("dSchool");
-        sid = merchant.getSid();
-        sName = merchant.getSname();
+        merchantId = getIntent().getExtras().getInt("merchantId");
+        getMerchantDetailData();
+    }
 
-        setTitleBarTitle(sName);
+    private void getMerchantDetailData() {
+        Callback<Merchant> callback = new Callback<Merchant>() {
+            @Override
+            public void success(Merchant remoteMerchant, Response response) {
+                merchant = remoteMerchant;
+                getCoachListData();
+                getCoachCommentListData();
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        };
+        GetMerchantDetailRequester getMerchantDetailRequester = new GetMerchantDetailRequester(callback,merchantId);
+        getMerchantDetailRequester.request();
+    }
+    private void getCoachListData() {
         Callback<List<Coach>> callback = new Callback<List<Coach>>() {
             @Override
             public void success(List<Coach> coachList, Response response) {
@@ -122,9 +142,25 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
             }
         };
         Map<String,Object> param = new HashMap<>();
-        param.put("merchantId",sid);
+        param.put("merchantId", merchantId);
+
         GetCoachListRequester getCoachListRequester = new GetCoachListRequester(callback,param);
         getCoachListRequester.request();
+    }
+
+    private void getCoachCommentListData() {
+        Callback<List<CoachComment>> callback = new Callback<List<CoachComment>>() {
+            @Override
+            public void success(List<CoachComment> coachComments, Response response) {
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        };
+
     }
 
     private void initView() {
@@ -136,7 +172,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
 
         courseRv = (RecyclerView) findViewById(R.id.price_merchant_rv);
         FullyLinearLayoutManager courseLinearLayoutManager = new FullyLinearLayoutManager(this);
-        courseAdapter = new CourseAdapter(courses);
+        courseAdapter = new CourseAdapter(courses,MerchantInfoActivity.this);
         courseRv.setLayoutManager(courseLinearLayoutManager);
         courseRv.setAdapter(courseAdapter);
 
@@ -147,15 +183,19 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
         btnMoreCoach = (Button) findViewById(R.id.btn_moreCoach);
 
         tvName = (TextView) findViewById(R.id.tv_name);
-        tvOurPrice = (TextView) findViewById(R.id.tv_ourPrice);
-        tvDSchoolInfo = (TextView) findViewById(R.id.merchantIntro_tv);
+        merchantIntroTv = (TextView) findViewById(R.id.merchantIntro_tv);
         tvCoachAmount = (TextView) findViewById(R.id.tv_coachAmount);
         studentAmountTextView = (TextView) findViewById(R.id.tvStudentAmount);
         gradeTextView = (TextView) findViewById(R.id.grade_merchant_tv);
-        marketPriceTv = (TextView) findViewById(R.id.tv_marketPrice);
         addressTv = (TextView) findViewById(R.id.address_tv);
 
-        gradeBar = (RatingBar) findViewById(R.id.rb_score);
+        timeGradeRb = (RatingBar) findViewById(R.id.time_grade_rb);
+        placeGradeRb = (RatingBar) findViewById(R.id.place_grade_rb);
+        serviceGradeRb = (RatingBar) findViewById(R.id.service_grade_rb);
+
+        timeGradeTv = (TextView) findViewById(R.id.time_grade_tv);
+        placeGradeTv = (TextView) findViewById(R.id.place_grade_tv);
+        serviceGradeTv = (TextView) findViewById(R.id.service_grade_tv);
 
         btnMap = (ImageButton) findViewById(R.id.btn_map);
     }
@@ -165,8 +205,8 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
         switch (v.getId()) {
             case R.id.btn_apply:
                 Intent applyIntent = new Intent(MerchantInfoActivity.this, ApplyDSchoolActivity.class);
-                applyIntent.putExtra("sid", sid);
-                applyIntent.putExtra("sName", sName);
+                applyIntent.putExtra("sid", merchant.getSid());
+                applyIntent.putExtra("sName", merchant.getSname());
                 startActivity(applyIntent);
                 break;
             case R.id.btn_consult:

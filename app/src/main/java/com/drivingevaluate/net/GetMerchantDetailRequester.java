@@ -1,5 +1,7 @@
 package com.drivingevaluate.net;
 
+import android.util.Log;
+
 import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.config.ServerConf;
 import com.drivingevaluate.config.UrlConfig;
@@ -29,7 +31,7 @@ public class GetMerchantDetailRequester {
 
     private interface GetMerchantDetailService {
         @GET(UrlConfig.merchantDetailAPI)
-        void getMerchantDetail(@Query("merchant") int merchantId, Callback<Merchant> callback);
+        void getMerchantDetail(@Query("merchantId") int merchantId, Callback<Merchant> callback);
     }
 
     public void request(){
@@ -52,13 +54,7 @@ public class GetMerchantDetailRequester {
 
     class MyErrorHandler implements ErrorHandler {
         @Override public Throwable handleError(RetrofitError cause) {
-            Response r = cause.getResponse();
-            if (r != null && r.getStatus() == 404) {
-
-            }
-            if (r != null && r.getStatus() == 422) {
-
-            }
+            Log.e("yat3s", "GetMerchantDetailRequester---->" + cause.getMessage());
             return cause;
         }
     }

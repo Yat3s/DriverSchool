@@ -54,7 +54,7 @@ public class GetCoachListRequester {
     }
     class MyErrorHandler implements ErrorHandler {
         @Override public Throwable handleError(RetrofitError cause) {
-            Log.e("yat3s","getCoachList---->"+cause.getMessage());
+            Log.e("yat3s","getCoachList---->"+cause.getResponse().getBody().toString());
             return cause;
         }
     }

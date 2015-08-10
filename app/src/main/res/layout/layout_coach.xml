@@ -9,8 +9,7 @@
         android:id="@+id/tv_coachAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="精品教练(5)" />
+        android:layout_margin="10dp"/>
 
     <View
         android:layout_width="match_parent"

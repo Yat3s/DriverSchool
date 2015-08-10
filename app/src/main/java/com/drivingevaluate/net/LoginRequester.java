@@ -4,7 +4,7 @@ package com.drivingevaluate.net;
 import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.config.ServerConf;
 import com.drivingevaluate.config.UrlConfig;
-import com.drivingevaluate.model.Account;
+import com.drivingevaluate.model.User;
 
 import java.util.Map;
 
@@ -15,7 +15,6 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.http.Body;
-import retrofit.http.Field;
 import retrofit.http.POST;
 import retrofit.http.QueryMap;
 
@@ -24,17 +23,17 @@ import retrofit.http.QueryMap;
  * Email:hawkoyates@gmail.com
  */
 public class LoginRequester {
-    private Callback<Account> callback ;
+    private Callback<User> callback ;
     private Map<String,Object> param;
 
-    public LoginRequester(Callback<Account> callback, Map<String, Object> param) {
+    public LoginRequester(Callback<User> callback, Map<String, Object> param) {
         this.callback = callback;
         this.param = param;
     }
 
     private interface LoginService{
         @POST(UrlConfig.userLoginAPI)
-        void login(@Body String body,@QueryMap Map<String, Object> param,Callback<Account> callback);
+        void login(@Body String body,@QueryMap Map<String, Object> param,Callback<User> callback);
     }
 
     public void request(){

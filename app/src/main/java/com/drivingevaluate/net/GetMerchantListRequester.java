@@ -1,5 +1,7 @@
 package com.drivingevaluate.net;
 
+import android.util.Log;
+
 import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.config.ServerConf;
 import com.drivingevaluate.config.UrlConfig;
@@ -54,13 +56,7 @@ public class GetMerchantListRequester {
 
     class MyErrorHandler implements ErrorHandler {
         @Override public Throwable handleError(RetrofitError cause) {
-            Response r = cause.getResponse();
-            if (r != null && r.getStatus() == 404) {
-
-            }
-            if (r != null && r.getStatus() == 422) {
-
-            }
+            Log.e("yat3s", "GetMerchantListRequester---->" + cause.getMessage());
             return cause;
         }
     }

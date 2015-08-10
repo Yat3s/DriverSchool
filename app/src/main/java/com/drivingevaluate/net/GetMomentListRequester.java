@@ -54,13 +54,7 @@ public class GetMomentListRequester {
     }
     class MyErrorHandler implements ErrorHandler {
         @Override public Throwable handleError(RetrofitError cause) {
-            Response r = cause.getResponse();
-            if (r != null && r.getStatus() == 404) {
-
-            }
-            if (r != null && r.getStatus() == 422) {
-
-            }
+            Log.e("yat3s", "GetMomentListRequester---->" + cause.getMessage());
             return cause;
         }
     }

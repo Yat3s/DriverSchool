@@ -63,11 +63,14 @@
                     android:layout_height="wrap_content"
                     android:text="时间安排: "/>
                 <RatingBar
+                    android:id="@+id/time_grade_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/roomRatingBar"
+                    android:stepSize="0.15"
                     android:layout_gravity="center"/>
                 <TextView
+                    android:id="@+id/time_grade_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -85,11 +88,14 @@
                     android:layout_height="wrap_content"
                     android:text="场地评分: "/>
                 <RatingBar
+                    android:id="@+id/place_grade_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/roomRatingBar"
+                    android:stepSize="0.15"
                     android:layout_gravity="center"/>
                 <TextView
+                    android:id="@+id/place_grade_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -107,11 +113,14 @@
                     android:layout_height="wrap_content"
                     android:text="服务特色: "/>
                 <RatingBar
+                    android:id="@+id/service_grade_rb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/roomRatingBar"
+                    android:stepSize="0.15"
                     android:layout_gravity="center"/>
                 <TextView
+                    android:id="@+id/service_grade_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

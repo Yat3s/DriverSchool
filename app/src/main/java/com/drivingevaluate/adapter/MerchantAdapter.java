@@ -66,14 +66,16 @@ public class MerchantAdapter extends BaseAdapter{
             vh = (ViewHolder)convertView.getTag();
         }
         vh.nameTv.setText(dSchoolList.get(position).getSname());
-        vh.ourPriceTv.setText("¥" + (int) dSchoolList.get(position).getOurPrice());
+        vh.ourPriceTv.setText("¥" + dSchoolList.get(position).getMarketPrice());
         vh.marketPriceTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        vh.marketPriceTv.setText(("¥" + (int) dSchoolList.get(position).getMarketPrice()));
+        vh.marketPriceTv.setText(("¥" + dSchoolList.get(position).getMarketPrice()));
         vh.studentAmountTV.setText(dSchoolList.get(position).getSellCount()+ "名学生");
         vh.spendTimeTv.setText("约" + dSchoolList.get(position).getSpendTime() + "天拿证");
-        vh.scoreTv.setText((dSchoolList.get(position).getSlevel()) + "分");
-        if (dSchoolList.get(position).getSlevel()!=null)
-        vh.scoreRb.setRating(Float.parseFloat(dSchoolList.get(position).getSlevel()));
+
+        if (dSchoolList.get(position).getSlevel()!=null) {
+            vh.scoreRb.setRating(Float.parseFloat(dSchoolList.get(position).getSlevel()));
+            vh.scoreTv.setText((dSchoolList.get(position).getSlevel()) + "分");
+        }
 
         MyUtil.loadImg(vh.preImg,dSchoolList.get(position).getPhotoPath());
         float distance = dSchoolList.get(position).getDistance();

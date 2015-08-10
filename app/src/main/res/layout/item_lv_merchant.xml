@@ -55,7 +55,7 @@
                     android:layout_below="@id/tv_name"
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@id/rb_score"
-                    android:text="5.0"
+                    android:text="5.0分"
                     android:textColor="@color/theme_blue"
                     android:textSize="12sp" />
 

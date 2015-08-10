@@ -1,5 +1,8 @@
 package com.drivingevaluate.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.widget.TextView;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.model.Course;
+import com.drivingevaluate.ui.ApplyDSchoolActivity;
 
 import java.util.List;
 
@@ -17,9 +21,11 @@ import java.util.List;
  */
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder>{
     private List<Course> courses;
+    private Context context;
 
-    public CourseAdapter(List<Course> courses) {
+    public CourseAdapter(List<Course> courses, Context context) {
         this.courses = courses;
+        this.context = context;
     }
 
     @Override
@@ -33,7 +39,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.typeTv.setText(courses.get(position).getType());
         holder.subjectTv.setText(courses.get(position).getSubject());
-        holder.priceTv.setText(courses.get(position).getPrice()+"");
+        holder.priceTv.setText("￥"+courses.get(position).getPrice()+"元");
     }
 
     @Override
@@ -50,6 +56,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             typeTv = (TextView) itemView.findViewById(R.id.type_class_tv);
             subjectTv = (TextView) itemView.findViewById(R.id.subject_class_tv);
             priceTv = (TextView) itemView.findViewById(R.id.price_class_tv);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int i = getPosition();
+                    Intent signUpIntent = new Intent(context,ApplyDSchoolActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("sName",courses.get(i).getMerchantName());
+                    bundle.putInt("sid",courses.get(i).getMerchantId());
+                    signUpIntent.putExtras(bundle);
+                    context.startActivity(signUpIntent);
+                }
+            });
         }
     }
 }
