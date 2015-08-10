@@ -18,7 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.drivingevaluate.config.Config;
 import com.drivingevaluate.config.Constants;
-import com.drivingevaluate.model.Goods;
+import com.drivingevaluate.model.Good;
 import com.drivingevaluate.model.Merchant;
 import com.drivingevaluate.model.Publish;
 import com.drivingevaluate.model.User;
@@ -288,7 +288,7 @@ public class JsonResolveUtils {
                 try {
                     String url = JsonResolveUtils.buildFullPath(goodsOfMerchantAPI, param);
                     String json = MyGet.doGet(url);
-                    List<Goods> list = JSON.parseArray(json, Goods.class);
+                    List<Good> list = JSON.parseArray(json, Good.class);
                     AppMethod.sendMessage(handler, list, Constants.CODE_REFRESH_GOODS_LIST);
                 } catch (Exception e) {
                     AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
@@ -306,9 +306,9 @@ public class JsonResolveUtils {
                     String url = JsonResolveUtils.buildFullPath(getGoodsDetailsAPI, param);
                     //Log.d("======url-=======", url);
                     String json = MyGet.doGet(url);
-                    Goods goods = JSON.parseObject(json, Goods.class);
-                    if(goods!=null){
-                        AppMethod.sendMessage(handler, goods, Constants.CODE_REFRASH_GOODS_DETAIL);
+                    Good good = JSON.parseObject(json, Good.class);
+                    if(good !=null){
+                        AppMethod.sendMessage(handler, good, Constants.CODE_REFRASH_GOODS_DETAIL);
                     }
                 } catch (Exception e) {
                     AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
@@ -325,9 +325,9 @@ public class JsonResolveUtils {
                 try {
                     String url = JsonResolveUtils.buildFullPath(getGoodsSimpleInfoAPI, param);
                     String json = MyGet.doGet(url);
-                    Goods goods = JSON.parseObject(json, Goods.class);
-                    if(goods!=null){
-                        AppMethod.sendMessage(handler, goods, Constants.CODE_REFRASH_GOODS_DETAIL);
+                    Good good = JSON.parseObject(json, Good.class);
+                    if(good !=null){
+                        AppMethod.sendMessage(handler, good, Constants.CODE_REFRASH_GOODS_DETAIL);
                     }
                 } catch (Exception e) {
                     AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);

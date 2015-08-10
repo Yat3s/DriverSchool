@@ -42,22 +42,13 @@ public class Yat3sActivity extends FragmentActivity {
     /**
      * Toast相关
      *
-     * @param paramInt
+     * @param
      */
-    protected void showLongToast(int paramInt) {
-        Toast.makeText(this, getString(paramInt), Toast.LENGTH_LONG).show();
-    }
-
-    protected void showLongToast(String paramString) {
-        Toast.makeText(this, paramString, Toast.LENGTH_LONG).show();
-    }
-
-    public void showShortToast(int paramInt) {
-        Toast.makeText(this, getString(paramInt), Toast.LENGTH_SHORT).show();
-    }
-
     public void showShortToast(String paramString) {
         Toast.makeText(this, paramString, Toast.LENGTH_SHORT).show();
+    }
+    public void showLongToast(String paramString) {
+        Toast.makeText(this, paramString, Toast.LENGTH_LONG).show();
     }
 
     @SuppressWarnings("unchecked")

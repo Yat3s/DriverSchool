@@ -23,7 +23,7 @@ import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.MyUtil;
 import com.drivingevaluate.view.BackTitleBar;
 
-public class DSchoolMapActivity extends Yat3sActivity implements OnGetRoutePlanResultListener {
+public class MerchantMapActivity extends Yat3sActivity implements OnGetRoutePlanResultListener {
     private TextView tvRoutePlan;
 
     MapView mMapView = null;    // 地图View
@@ -37,7 +37,7 @@ public class DSchoolMapActivity extends Yat3sActivity implements OnGetRoutePlanR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BackTitleBar titleBar = new BackTitleBar(this);
-        setContentView(R.layout.activity_dschool_map);
+        setContentView(R.layout.activity_merchant_map);
         titleBar.setTitle("路线");
         DEApplication.getInstance().initBaiduLocClient();
         initView();
@@ -64,7 +64,7 @@ public class DSchoolMapActivity extends Yat3sActivity implements OnGetRoutePlanR
         myLl = mApplication.myLl;
 
         tvRoutePlan = (TextView) findViewById(R.id.tv_routePlan);
-        loading = MyUtil.createLoadingDialog(DSchoolMapActivity.this, "正在加载中");
+        loading = MyUtil.createLoadingDialog(MerchantMapActivity.this, "正在加载中");
         loading.show();
 
         mMapView = (MapView) findViewById(R.id.map);
@@ -83,7 +83,7 @@ public class DSchoolMapActivity extends Yat3sActivity implements OnGetRoutePlanR
     @Override
     public void onGetTransitRouteResult(TransitRouteResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(DSchoolMapActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MerchantMapActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             //起终点或途经点地址有岐义，通过以下接口获取建议查询信息

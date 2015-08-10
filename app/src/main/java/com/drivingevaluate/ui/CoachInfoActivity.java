@@ -46,10 +46,10 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
     private void getData() {
         lvComment.setFocusable(false);
         coachName = getIntent().getExtras().getString("coachName");
-        sName = getIntent().getExtras().getString("sName");
-        sid = getIntent().getExtras().getString("sid");
+//        sName = getIntent().getExtras().getString("sName");
+//        sid = getIntent().getExtras().getString("sid");
         tvCoachName.setText(coachName);
-        loadImg(avatorImageView,getIntent().getExtras().getString("pic"));
+//        loadImg(avatorImageView,getIntent().getExtras().getString("pic"));
         for (int i = 0; i < commenter.length; i++) {
             View convertView = LayoutInflater.from(getApplicationContext())
                     .inflate(R.layout.item_lv_coach_comment, null);

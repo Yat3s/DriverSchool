@@ -53,9 +53,9 @@
             android:name=".ui.MainActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden" />
-        <activity android:name=".ui.DSchoolInfoActivity" />
+        <activity android:name=".ui.MerchantInfoActivity" />
         <activity android:name=".ui.ApplyDSchoolActivity" />
-        <activity android:name=".ui.DSchoolMapActivity" />
+        <activity android:name=".ui.MerchantMapActivity" />
         <activity android:name=".ui.ResultCoachActivity" />
         <activity android:name=".ui.ResultDSchoolInfoActivity" />
         <activity android:name=".ui.ResultSchoolActivity" />

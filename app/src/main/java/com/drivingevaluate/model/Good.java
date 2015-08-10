@@ -2,7 +2,7 @@ package com.drivingevaluate.model;
 
 import java.util.Date;
 
-public class Goods {
+public class Good {
 
     private Long goodsId;
     private Integer merchantId;

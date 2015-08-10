@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_white"
+                android:background="@drawable/selector_common"
                 android:clickable="true"
                 android:padding="10dp" >
 
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_white"
+                android:background="@drawable/selector_common"
                 android:clickable="true"
                 android:orientation="horizontal"
                 android:padding="13dp" >
@@ -129,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_white"
+                android:background="@drawable/selector_common"
                 android:clickable="true"
                 android:orientation="horizontal"
                 android:padding="13dp" >
@@ -161,7 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_white"
+                android:background="@drawable/selector_common"
                 android:clickable="true"
                 android:orientation="horizontal"
                 android:padding="13dp" >
@@ -192,7 +192,7 @@
                 android:id="@+id/rl_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_white"
+                android:background="@drawable/selector_common"
                 android:clickable="true"
                 android:orientation="horizontal"
                 android:padding="13dp" >

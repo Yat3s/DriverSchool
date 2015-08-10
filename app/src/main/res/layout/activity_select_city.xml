@@ -26,7 +26,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_white"
+        android:background="@drawable/selector_common"
         android:drawableRight="@mipmap/ic_true"
         android:gravity="center_vertical"
         android:text="南昌" />
@@ -41,7 +41,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_white"
+        android:background="@drawable/selector_common"
         android:drawableRight="@mipmap/ic_current_loc"
         android:gravity="center_vertical"
         android:text="南昌" />

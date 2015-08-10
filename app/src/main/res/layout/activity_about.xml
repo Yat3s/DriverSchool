@@ -5,14 +5,15 @@
     android:gravity="center"
     android:orientation="vertical" >
     
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
+    <TextView android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:gravity="center"
+        android:background="@drawable/shape_circle"
         android:text="驾考点评"/>
     <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="驾考点评是2015.6.12成日"/>
+        android:text="@string/test"/>
     <TextView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

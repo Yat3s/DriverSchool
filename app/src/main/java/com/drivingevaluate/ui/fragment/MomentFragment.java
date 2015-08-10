@@ -126,7 +126,6 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
                 momentAdapter.notifyDataSetChanged();
                 momentRefresh.setRefreshing(false);
             }
-
             @Override
             public void failure(RetrofitError error) {
             }

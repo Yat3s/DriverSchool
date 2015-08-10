@@ -13,7 +13,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.drivingevaluate.config.Config;
 import com.drivingevaluate.model.Comment;
-import com.drivingevaluate.model.Goods;
+import com.drivingevaluate.model.Good;
 import com.drivingevaluate.model.Merchant;
 import com.drivingevaluate.model.Publish;
 import com.drivingevaluate.model.User;
@@ -125,15 +125,15 @@ public class Api {
         return list;
     }
 
-    public static List<Goods> getCoach(String merchantId) throws Exception {
-        List<Goods> list;
+    public static List<Good> getCoach(String merchantId) throws Exception {
+        List<Good> list;
         Map<String, String> map = new HashMap<String, String>();
         map.put("merchantId", merchantId);
         map.put("pageSize", "8");
         map.put("pageNo", "1");
         String json = HttpUtil.postRequest(Config.CoachURL, map);
         Log.e("exc", json);
-        list = JSON.parseArray(json, Goods.class);
+        list = JSON.parseArray(json, Good.class);
         return list;
     }
 

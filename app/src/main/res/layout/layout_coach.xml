@@ -5,33 +5,23 @@
     android:layout_marginTop="10dp"
     android:background="#FFFFFF"
     android:orientation="vertical" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_coachAmount"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp" >
-
-        <TextView
-            android:id="@+id/tv_coachAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="精品教练(5)" />
-    </RelativeLayout>
+        android:layout_margin="10dp"
+        android:text="精品教练(5)" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/line" />
+        android:background="@color/md_grey_300" />
 
-    <LinearLayout
-        android:id="@+id/layoutCoach"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/coach_merchant_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-    </LinearLayout>
-
+        android:background="#ffffff"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
@@ -41,10 +31,11 @@
         android:id="@+id/btn_moreCoach"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_white"
+        android:background="@drawable/selector_common"
         android:drawableRight="@mipmap/ic_forward"
-        android:gravity="center"
+        android:padding="10dp"
+        android:gravity="center_vertical"
         android:text="查看更多教练"
-        android:textColor="@color/font_gray_light" />
+        android:textColor="@color/md_blue_500" />
 
 </LinearLayout>

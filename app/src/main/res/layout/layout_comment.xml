@@ -33,7 +33,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_white"
+            android:background="@drawable/selector_common"
             android:clickable="true"
             android:padding="10dp" >
 

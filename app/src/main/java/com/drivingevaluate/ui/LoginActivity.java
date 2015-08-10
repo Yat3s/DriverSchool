@@ -2,6 +2,7 @@ package com.drivingevaluate.ui;
 
 
 import com.drivingevaluate.R;
+import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.model.Account;
 import com.drivingevaluate.net.LoginRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
@@ -35,31 +36,6 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
     private EditText etAccount,etPassword;
 
     private User user;
-
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case Constants.CODE_REFRESH_LOGIN:
-                    if (msg.obj instanceof Integer) {
-                        showShortToast("账号或密码错误");
-                    }
-                    else if (msg.obj instanceof User) {
-                        user = (User) msg.obj;
-                        AppMethod.setCurUserId(user.getUserId());
-                        AppMethod.setCurUserAccount(user.getAccount());
-                        AppMethod.getSharedPreferencesHelper().SetLogin();
-                        startActivity(MainActivity.class);
-                        finish();
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-        }
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,13 +87,23 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
     private void Login() {
         String account = etAccount.getText().toString();
         String password = etPassword.getText().toString();
+        if (account.isEmpty() || password.isEmpty()){
+            showShortToast("账号或密码不能为空");
+            return;
+        }
 
         Callback<Account> callback = new Callback<Account>() {
             @Override
             public void success(Account account, Response response) {
                 if (account != null){
-                    SharedPreferencesUtils.put(LoginActivity.this, "token", account.getToken());
+                    for (int i = 0 ; i < response.getHeaders().size(); i++){
+                        if (response.getHeaders().get(i).getName().equals("token")){
+                            SharedPreferencesUtils.put(LoginActivity.this, "token", response.getHeaders().get(i).getValue());
+                            break;
+                        }
+                    }
                     SharedPreferencesUtils.put(LoginActivity.this, "userId", account.getUserId());
+                    AppConf.TOKEN = SharedPreferencesUtils.get(LoginActivity.this,"token","").toString();
                     startActivity(MainActivity.class);
                     finish();
                 }
@@ -125,6 +111,7 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
 
             @Override
             public void failure(RetrofitError error) {
+                showShortToast("账号或密码错误");
             }
         };
         Map<String,Object> param = new HashMap<>();

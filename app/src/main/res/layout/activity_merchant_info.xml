@@ -41,26 +41,6 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <RatingBar
-                        android:id="@+id/rb_score"
-                        style="@style/roomRatingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_name"
-                        android:isIndicator="true"
-                        android:numStars="5"
-                        android:rating="3.2"
-                        android:stepSize="0.15" />
-
-                    <TextView
-                        android:id="@+id/tvScore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_name"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/rb_score"
-                        android:text="3.5"
-                        android:textColor="#FFFFFF" />
 
                     <TextView
                         android:id="@+id/tvStudentAmount"
@@ -98,7 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="￥2300起"
+                        android:text="2300元"
                         android:textColor="@color/red"
                         android:textSize="18sp" />
 
@@ -164,58 +144,12 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/line" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:padding="10dp">
+            <include layout="@layout/layout_address_intro" />
 
-                <TextView
-                    android:id="@+id/tv_addr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/ic_loc"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:text="江西省南昌市昌北经开区" />
+            <include layout="@layout/layout_grade_merchant" />
 
-                <ImageButton
-                    android:id="@+id/btn_map"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bg_white_nopading"
-                    android:padding="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/ic_bus" />
-
-                <TextView
-                    android:id="@+id/tv_dschoolInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_addr"
-                    android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@id/btn_map"
-                    android:background="@drawable/bg_white"
-                    android:drawableRight="@mipmap/ic_forward"
-                    android:padding="5dp"
-                    android:singleLine="true"
-                    android:text="江西驾驶学校是江西省规模大、设施先进、教学培训规范的国家一类驾驶学校。鲜明的办学特色和突出的办学成绩得到了中国道路运输协会等有关部门和社会各界的广泛关注和赞誉，荣获了“江西省十强驾校”之首、“江西省职业教育先进单位”等称号，被江西省团委、省学联首个授予“江西省大学生素质拓展训练技能培训基地”，也是南昌市车管所直属的机动车驾驶员考试考场。" />
-
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@id/btn_map"
-                    android:background="@color/line" />
-            </RelativeLayout>
-            <!--<include layout="@layout/layout_service" />-->
+            <include layout="@layout/layout_course" />
 
             <include layout="@layout/layout_coach" />
 

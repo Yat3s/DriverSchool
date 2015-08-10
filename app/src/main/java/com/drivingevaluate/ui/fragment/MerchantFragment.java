@@ -28,7 +28,7 @@ import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.MerchantAdapter;
 import com.drivingevaluate.model.Merchant;
 import com.drivingevaluate.ui.base.Yat3sFragment;
-import com.drivingevaluate.ui.DSchoolInfoActivity;
+import com.drivingevaluate.ui.MerchantInfoActivity;
 import com.drivingevaluate.ui.SelectCityActivity;
 import com.drivingevaluate.net.GetMerchantListRequester;
 import com.drivingevaluate.view.RefreshLayout;
@@ -126,7 +126,7 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
                 Bundle paramBundle = new Bundle();
                 paramBundle.putSerializable("dSchool",
                         merchants.get(position -1));
-                startActivity(DSchoolInfoActivity.class, paramBundle);
+                startActivity(MerchantInfoActivity.class, paramBundle);
             }
         });
     }

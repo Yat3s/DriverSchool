@@ -48,7 +48,7 @@ public class UrlConfig {
     //获取发表列表
     private static final String publishListAPI = "/api/publish/get_list.htm";
     //获得商户的商品
-    private static final String goodsOfMerchantAPI = "/api/goods/get_merchant_goods.htm";
+    public static final String coachsOfMerchantAPI = "/api/goods/get_merchant_goods.htm";
     //获得发布详情
     private static final String publishDetailAPI = "/api/publish/get_details.htm";
     //获取发布评论

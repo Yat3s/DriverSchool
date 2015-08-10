@@ -32,11 +32,12 @@ public class UserInfoActivity extends Yat3sActivity implements OnClickListener{
     }
 
     private void getDate() {
-        user = (User) getIntent().getSerializableExtra("user");
-
-        tvNickName.setText(user.getUserName());
-        tvPhone.setText(StringUtil.getPhoneStrWithStar(user.getAccount()));
-        tvEmotions.setText(user.getSign());
+        user = (User) getIntent().getExtras().getSerializable("user");
+        if (user != null) {
+            tvNickName.setText(user.getUserName());
+            tvPhone.setText(StringUtil.getPhoneStrWithStar(user.getAccount()));
+            tvEmotions.setText(user.getSign());
+        }
     }
 
     private void initView() {
