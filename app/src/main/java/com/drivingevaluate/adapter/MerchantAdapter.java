@@ -21,24 +21,24 @@ import java.util.List;
  * Created by Yat3s on 15/8/4.
  */
 public class MerchantAdapter extends BaseAdapter{
-    private List<Merchant> dSchoolList;
+    private List<Merchant> merchants;
     private Context context;
     private ViewHolder vh;
 
 
-    public MerchantAdapter(List<Merchant> dSchoolList, Context context) {
-        this.dSchoolList = dSchoolList;
+    public MerchantAdapter(List<Merchant> merchants, Context context) {
+        this.merchants = merchants;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return dSchoolList.size();
+        return merchants.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return dSchoolList.get(position);
+        return merchants.get(position);
     }
 
     @Override
@@ -65,26 +65,28 @@ public class MerchantAdapter extends BaseAdapter{
         else {
             vh = (ViewHolder)convertView.getTag();
         }
-        vh.nameTv.setText(dSchoolList.get(position).getSname());
-        vh.ourPriceTv.setText("¥" + dSchoolList.get(position).getMarketPrice());
+        vh.nameTv.setText(merchants.get(position).getSname());
+        vh.ourPriceTv.setText("¥" + merchants.get(position).getMarketPrice());
         vh.marketPriceTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        vh.marketPriceTv.setText(("¥" + dSchoolList.get(position).getMarketPrice()));
-        vh.studentAmountTV.setText(dSchoolList.get(position).getSellCount()+ "名学生");
-        vh.spendTimeTv.setText("约" + dSchoolList.get(position).getSpendTime() + "天拿证");
+        vh.marketPriceTv.setText(("¥" + merchants.get(position).getMarketPrice()));
+        vh.studentAmountTV.setText(merchants.get(position).getSellCount()+ "名学生");
+        vh.spendTimeTv.setText("约" + merchants.get(position).getSpendTime() + "天拿证");
 
-        if (dSchoolList.get(position).getSlevel()!=null) {
-            vh.scoreRb.setRating(Float.parseFloat(dSchoolList.get(position).getSlevel()));
-            vh.scoreTv.setText((dSchoolList.get(position).getSlevel()) + "分");
-        }
+        //取3个item的平均分
+        float avgGrade = (merchants.get(position).getItem1()+ merchants.get(position).getItem2()+ merchants.get(position).getItem3())/3.0f;
+        vh.scoreRb.setRating(avgGrade);
+        vh.scoreTv.setText(avgGrade + "分");
 
-        MyUtil.loadImg(vh.preImg,dSchoolList.get(position).getPhotoPath());
-        float distance = dSchoolList.get(position).getDistance();
+        MyUtil.loadImg(vh.preImg, merchants.get(position).getPhotoPath());
+
+        //距离处理
+        float distance = merchants.get(position).getDistance();
         if (distance > 1000) {
             vh.distanceTv.setText(new DecimalFormat("#.0").format(distance / 1000) + "km");
         } else {
             vh.distanceTv.setText(new DecimalFormat("#").format(distance) + "m");
         }
-        if (dSchoolList.get(position).getDistance() == null || distance == 0) {
+        if (merchants.get(position).getDistance() == null || distance == 0) {
             vh.distanceTv.setText("");
         }
         return convertView;

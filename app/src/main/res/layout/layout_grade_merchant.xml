@@ -68,6 +68,7 @@
                     android:layout_height="wrap_content"
                     style="@style/roomRatingBar"
                     android:stepSize="0.15"
+                    android:isIndicator="true"
                     android:layout_gravity="center"/>
                 <TextView
                     android:id="@+id/time_grade_tv"
@@ -93,6 +94,7 @@
                     android:layout_height="wrap_content"
                     style="@style/roomRatingBar"
                     android:stepSize="0.15"
+                    android:isIndicator="true"
                     android:layout_gravity="center"/>
                 <TextView
                     android:id="@+id/place_grade_tv"
@@ -118,6 +120,7 @@
                     android:layout_height="wrap_content"
                     style="@style/roomRatingBar"
                     android:stepSize="0.15"
+                    android:isIndicator="true"
                     android:layout_gravity="center"/>
                 <TextView
                     android:id="@+id/service_grade_tv"

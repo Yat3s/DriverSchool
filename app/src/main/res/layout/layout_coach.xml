@@ -27,14 +27,13 @@
         android:background="@color/line" />
 
     <Button
-        android:id="@+id/btn_moreCoach"
+        android:id="@+id/allCoach_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_common"
         android:drawableRight="@mipmap/ic_forward"
         android:padding="10dp"
         android:gravity="center_vertical"
-        android:text="查看更多教练"
         android:textColor="@color/md_blue_500" />
 
 </LinearLayout>

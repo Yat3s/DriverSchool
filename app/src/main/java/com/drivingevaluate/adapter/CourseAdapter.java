@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.model.Course;
@@ -59,13 +60,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int i = getPosition();
-                    Intent signUpIntent = new Intent(context,ApplyDSchoolActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("sName",courses.get(i).getMerchantName());
-                    bundle.putInt("sid",courses.get(i).getMerchantId());
-                    signUpIntent.putExtras(bundle);
-                    context.startActivity(signUpIntent);
+//                    int i = getPosition();
+//                    Intent signUpIntent = new Intent(context,ApplyDSchoolActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("sName",courses.get(i).getMerchantName());
+//                    bundle.putInt("sid",courses.get(i).getMerchantId());
+//                    signUpIntent.putExtras(bundle);
+//                    context.startActivity(signUpIntent);
+                    Toast.makeText(context,"请先选择教练后报名",Toast.LENGTH_LONG).show();
                 }
             });
         }

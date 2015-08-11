@@ -43,7 +43,7 @@ public class SplashActivity extends Yat3sActivity {
     private void checkIsLogin() {
         if (SharedPreferencesUtils.contains(SplashActivity.this,"token")){
             AppConf.TOKEN = SharedPreferencesUtils.get(SplashActivity.this,"token","").toString();
-
+            AppConf.USER_ID = (int) SharedPreferencesUtils.get(SplashActivity.this,"userId",-1);
             if (AppConf.TOKEN != null && !AppConf.TOKEN.isEmpty()){
                 startActivity(MainActivity.class);
                 finish();

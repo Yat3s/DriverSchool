@@ -192,7 +192,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/bg_blue"
-            android:text="在线报名"
+            android:text="选择该教练报名"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 

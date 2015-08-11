@@ -66,8 +66,7 @@ public class CoachHorizontalAdapter extends RecyclerView.Adapter<CoachHorizontal
                 public void onClick(View v) {
                     int position = getPosition();
                     Intent coachInfoIntent = new Intent(context, CoachInfoActivity.class);
-                    coachInfoIntent.putExtra("coachName",coaches.get(position).getSellerName());
-                    coachInfoIntent.putExtra("coachAvatarUrl",coaches.get(position).getPhotoPath());
+                    coachInfoIntent.putExtra("coachId",coaches.get(position).getGoodsId());
                     context.startActivity(coachInfoIntent);
                 }
             });

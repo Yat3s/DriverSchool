@@ -17,11 +17,9 @@ import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.model.Coach;
 import com.drivingevaluate.view.FullyLinearLayoutManager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -36,7 +34,7 @@ import retrofit.client.Response;
 
 public class MerchantInfoActivity extends Yat3sActivity implements OnClickListener {
     private RelativeLayout navigateRl;
-    private Button btnApply, btnConsult, btnMoreCoach;
+    private Button btnApply, btnConsult, moreCoachBtn;
     private TextView tvName, merchantIntroTv, tvCoachAmount, studentAmountTextView, gradeTextView,addressTv;
     private TextView timeGradeTv,placeGradeTv,serviceGradeTv;
     private RatingBar timeGradeRb,placeGradeRb,serviceGradeRb;
@@ -69,7 +67,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
         addressTv.setText(merchant.getSaddress());
         merchantIntroTv.setText(merchant.getSintroduction());
         tvCoachAmount.setText("精品教练(" + coaches.size() + ")");
-        btnMoreCoach.setText("查看全部" + coaches.size() + "位教练");
+        moreCoachBtn.setText("查看全部" + coaches.size() + "位教练");
 
         //综合评分以及三项评价的分数
         if (merchant.getSlevel()!=null) {
@@ -99,7 +97,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
     private void initEvent() {
         btnConsult.setOnClickListener(this);
         btnApply.setOnClickListener(this);
-        btnMoreCoach.setOnClickListener(this);
+        moreCoachBtn.setOnClickListener(this);
         btnMap.setOnClickListener(this);
         merchantIntroTv.setOnClickListener(this);
         navigateRl.setOnClickListener(this);
@@ -180,7 +178,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
 
         btnApply = (Button) findViewById(R.id.btn_apply);
         btnConsult = (Button) findViewById(R.id.btn_consult);
-        btnMoreCoach = (Button) findViewById(R.id.btn_moreCoach);
+        moreCoachBtn = (Button) findViewById(R.id.allCoach_btn);
 
         tvName = (TextView) findViewById(R.id.tv_name);
         merchantIntroTv = (TextView) findViewById(R.id.merchantIntro_tv);
@@ -202,12 +200,15 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
 
     @Override
     public void onClick(View v) {
+        Bundle coachBundle = new Bundle();
+        coachBundle.putInt("merchantId",merchant.getSid());
         switch (v.getId()) {
             case R.id.btn_apply:
-                Intent applyIntent = new Intent(MerchantInfoActivity.this, ApplyDSchoolActivity.class);
-                applyIntent.putExtra("sid", merchant.getSid());
-                applyIntent.putExtra("sName", merchant.getSname());
-                startActivity(applyIntent);
+//                Intent applyIntent = new Intent(MerchantInfoActivity.this, ApplyDSchoolActivity.class);
+//                applyIntent.putExtra("sid", merchant.getSid());
+//                applyIntent.putExtra("sName", merchant.getSname());
+//                startActivity(applyIntent);
+                startActivity(ResultCoachActivity.class, coachBundle);
                 break;
             case R.id.btn_consult:
                 startActivity(ConsultActivity.class);
@@ -219,11 +220,12 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
                 startActivity(MerchantMapActivity.class, bundle);
                 break;
             case R.id.merchantIntro_tv:
-                Intent dSchoolInfoIntent = new Intent(MerchantInfoActivity.this, ResultDSchoolInfoActivity.class);
-                startActivity(dSchoolInfoIntent);
+                Bundle introBundle = new Bundle();
+                introBundle.putString("intro",merchant.getSintroduction());
+                startActivity(ResultMerchantIntroActivity.class,introBundle);
                 break;
-            case R.id.btn_moreCoach:
-                //TODO show all coaches
+            case R.id.allCoach_btn:
+                startActivity(ResultCoachActivity.class,coachBundle);
                 break;
             default:
                 break;

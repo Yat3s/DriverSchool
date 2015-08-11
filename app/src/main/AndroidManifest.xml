@@ -57,7 +57,7 @@
         <activity android:name=".ui.ApplyDSchoolActivity" />
         <activity android:name=".ui.MerchantMapActivity" />
         <activity android:name=".ui.ResultCoachActivity" />
-        <activity android:name=".ui.ResultDSchoolInfoActivity" />
+        <activity android:name=".ui.ResultMerchantIntroActivity" />
         <activity android:name=".ui.ResultSchoolActivity" />
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.CoachInfoActivity" />

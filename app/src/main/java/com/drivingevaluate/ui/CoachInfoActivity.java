@@ -1,6 +1,8 @@
 package com.drivingevaluate.ui;
 
 import com.drivingevaluate.R;
+import com.drivingevaluate.model.Coach;
+import com.drivingevaluate.net.GetCoachDetailRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.MyUtil;
 
@@ -16,6 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
 
     private ListView lvComment;
@@ -26,7 +35,8 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
 
     private String[] commenter = new String[]{"寂寞**雨","洗剪吹**特","你好**吗"};
     private String[] comments = new String[]{"这个教练挺不错的","还行哦特","特别棒"};
-    private String coachName,sName,sid;
+    private int coachId;
+    private Coach coach;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +56,30 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
 
     private void getData() {
         lvComment.setFocusable(false);
-        coachName = getIntent().getExtras().getString("coachName");
-//        sName = getIntent().getExtras().getString("sName");
-//        sid = getIntent().getExtras().getString("sid");
-        tvCoachName.setText(coachName);
-        MyUtil.loadImg(avatorImageView,getIntent().getExtras().getString("coachAvatarUrl"));
+        coachId = getIntent().getExtras().getInt("coachId");
+
+        Callback<Coach> callback = new Callback<Coach>() {
+            @Override
+            public void success(Coach remoteCoach, Response response) {
+                coach = remoteCoach;
+                refreshView();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        };
+        Map<String,Object> param = new HashMap<>();
+        param.put("goodsId",coachId);
+        GetCoachDetailRequester getCoachDetailRequester = new GetCoachDetailRequester(callback,param);
+        getCoachDetailRequester.request();
+    }
+
+    private void refreshView() {
+        tvCoachName.setText(coach.getSellerName());
+        MyUtil.loadImg(avatorImageView, coach.getPhotoPath());
+
         for (int i = 0; i < commenter.length; i++) {
             View convertView = LayoutInflater.from(getApplicationContext())
                     .inflate(R.layout.item_lv_coach_comment, null);
@@ -78,13 +107,15 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
         switch (v.getId()) {
             case R.id.btn_selectMe:
                 Bundle bundle = new Bundle();
-                bundle.putString("coachName",coachName);
-                bundle.putString("sName",sName);
-                bundle.putString("sid",sid);
+                bundle.putString("coachName",coach.getSellerName());
+                bundle.putString("coachSubject",coach.getGoodsTitle());
+                bundle.putInt("coachId",coachId);
+                bundle.putDouble("prePay",coach.getPrepayPrice());
                 startActivity(ApplyDSchoolActivity.class,bundle);
                 break;
             case R.id.consult_btn:
-                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+getIntent().getExtras().getString("tel"))));
+//                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+getIntent().getExtras().getString("tel"))));
+                showShortToast("告诉我这个该咨询谁？");
                 break;
             default:
                 break;

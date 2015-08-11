@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
 import com.drivingevaluate.R;
+import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.api.JsonResolveUtils;
 import com.drivingevaluate.config.Constants;
@@ -27,14 +28,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListener{
-    private TextView tvTip,tvSelectCoach,etSchool;
+    private TextView tvTip,tvSelectCoach,etSchool,prePayTv;
     private EditText etName,etIdNo,etTel;
     private Button btnCommitOrder;
     private LinearLayout layoutSelectSchool;
 
     private String reString;
     private List<Merchant> list;
-    private String sid;
+    private int coachId;
+    private double prePay;
 
     private static final int SDK_PAY_FLAG = 2;
     private static final int SDK_CHECK_FLAG = 3;
@@ -116,12 +118,11 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
     }
     private void getData() {
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            tvSelectCoach.setText(bundle.getString("coachName"));
-            tvTip.setText(Html.fromHtml("您正在选购  <font color=blue>"+bundle.getString("sName")+"</font> 课程"));
-            sid = bundle.getString("sid");
-        }
-        sid = getIntent().getStringExtra("sid");
+        tvSelectCoach.setText("教练"+bundle.getString("coachName")+"("+bundle.getString("coachSubject")+")");
+        coachId = bundle.getInt("coachId");
+        prePay = bundle.getDouble("prePay");
+
+        prePayTv.setText(prePay+"元");
     }
     private void initEvent() {
         tvSelectCoach.setOnClickListener(this);
@@ -137,21 +138,22 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
 
         etSchool = (TextView) findViewById(R.id.et_school);
         tvSelectCoach = (TextView) findViewById(R.id.tv_selectCoach);
-        tvTip = (TextView) findViewById(R.id.tv_tip);
+        prePayTv = (TextView) findViewById(R.id.prePay_tv);
+//        tvTip = (TextView) findViewById(R.id.tv_tip);
 
         layoutSelectSchool = (LinearLayout) findViewById(R.id.layout_selectSchool);
 
         btnCommitOrder = (Button) findViewById(R.id.btn_commitOrder);
 
-        tvTip.setText(Html.fromHtml("您正在选购  <font color=blue>"+getIntent().getStringExtra("sName")+"</font> 课程"));
+//        tvTip.setText(Html.fromHtml("您正在选购  <font color=blue>"+getIntent().getStringExtra("sName")+"</font> 课程"));
     }
 
 
     private void commitOrder(){
         Map<String,Object> param =new HashMap<String, Object>();
         if(AppMethod.getCurUserId()==null) startActivity(LoginActivity.class);
-        param.put(Constants.GOODS_ID, sid);
-        param.put(Constants.USER_ID, AppMethod.getCurUserId());
+        param.put(Constants.GOODS_ID, coachId);
+        param.put(Constants.USER_ID, AppConf.USER_ID);
         param.put(Constants.ADDRESS, etSchool.getText().toString());
         param.put(Constants.REAL_RName, etName.getText().toString());
         param.put(Constants.ID_CARD_NO, etIdNo.getText().toString());
@@ -162,9 +164,9 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_selectCoach:
-                Intent toSelectCoachIntent = new Intent(ApplyDSchoolActivity.this,ResultCoachActivity.class);
-                toSelectCoachIntent.putExtra("sid", sid);
-                startActivityForResult(toSelectCoachIntent, 0);
+//                Intent toSelectCoachIntent = new Intent(ApplyDSchoolActivity.this,ResultCoachActivity.class);
+//                toSelectCoachIntent.putExtra("sid", coachId);
+//                startActivityForResult(toSelectCoachIntent, 0);
                 break;
             case R.id.btn_commitOrder:
                 OrderFilter();

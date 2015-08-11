@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,17 +41,7 @@ public class ResultCoachActivity extends Yat3sActivity{
     private RecyclerView.LayoutManager coachRvLayoutManager;
     private CoachHorizontalAdapter coachHorizontalAdapter;
     private List<Coach> coaches = new ArrayList<>();
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == StateConfig.CODE_GET_COACH_LIST) {
-                coaches = JSON.parseArray(msg.obj.toString(), Coach.class);
-                setCoachData();
-            }
-        }
-
-    };
+    private int merchantId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +73,7 @@ public class ResultCoachActivity extends Yat3sActivity{
 
     private void getDate() {
 //        JsonResolve.getCoachByDSchool("1", "0", "0", handler);
-
+        merchantId = getIntent().getExtras().getInt("merchantId");
         Callback<List<Coach>> callback = new Callback<List<Coach>>() {
             @Override
             public void success(List<Coach> coachList, Response response) {
@@ -96,7 +87,7 @@ public class ResultCoachActivity extends Yat3sActivity{
             }
         };
         Map<String,Object> param = new HashMap<>();
-        param.put("merchantId",1);
+        param.put("merchantId",merchantId);
         GetCoachListRequester getCoachListRequester = new GetCoachListRequester(callback,param);
         getCoachListRequester.request();
     }
@@ -104,43 +95,9 @@ public class ResultCoachActivity extends Yat3sActivity{
     private void initView() {
         setTitleBarTitle("选择教练");
         coachRv = (RecyclerView) findViewById(R.id.coach_rv);
-        coachRvLayoutManager = new LinearLayoutManager(ResultCoachActivity.this);
+        coachRvLayoutManager = new GridLayoutManager(ResultCoachActivity.this,3);
         coachRv.setLayoutManager(coachRvLayoutManager);
         coachHorizontalAdapter = new CoachHorizontalAdapter(coaches,this);
         coachRv.setAdapter(coachHorizontalAdapter);
     }
-
-//    class CoachAdapter extends BaseAdapter{
-//
-//        @Override
-//        public int getCount() {
-//            return coachList.size();
-//        }
-//
-//        @Override
-//        public Object getItem(int position) {
-//            return coachList.get(position);
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            return position;
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            if (convertView == null) {
-//                convertView = LayoutInflater.from(ResultCoachActivity.this).inflate(R.layout.item_lv_result_coach, null);
-//            }
-//            TextView tvName = (TextView) convertView.findViewById(R.id.tv_name);
-//            TextView amountTv = (TextView) convertView.findViewById(R.id.tv_selectedAmount);
-//            TextView classTv = (TextView) convertView.findViewById(R.id.tv_class);
-//            ImageView coachImg = (ImageView) convertView.findViewById(R.id.coach_img);
-//            loadImg(coachImg,coachList.get(position).getPhotoPath());
-//            tvName.setText(coachList.get(position).getSellerName());
-//            classTv.setText(coachList.get(position).getGoodsTitle());
-//            amountTv.setText(coachList.get(position).getSellCount()+"人正在学习");
-//            return convertView;
-//        }
-//    }
 }

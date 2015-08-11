@@ -64,7 +64,7 @@ public class UrlConfig {
     //发布评论
     private static final String commitPublishCommentAPI = "/api/comment/commit_comment.htm";
     //商品详情
-    private static final String getGoodsDetailsAPI = "/api/goods/get_goods_details.htm";
+    public static final String getGoodsDetailsAPI = "/api/goods/get_goods_details.htm";
     //商品简单信息
     private static final String getGoodsSimpleInfoAPI = "/api/goods/get_goods_simple.htm";
     //获取用户账户
