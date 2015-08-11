@@ -1,25 +1,23 @@
 package com.drivingevaluate.ui;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
 import com.drivingevaluate.R;
 import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.model.Order;
+import com.drivingevaluate.net.CommitOrderRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.api.JsonResolveUtils;
 import com.drivingevaluate.config.Constants;
-import com.drivingevaluate.model.Merchant;
 import com.drivingevaluate.model.PayResult;
 import com.drivingevaluate.util.AppMethod;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -27,14 +25,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListener{
-    private TextView tvTip,tvSelectCoach,etSchool,prePayTv;
+    private TextView tvSelectCoach,etSchool,prePayTv;
     private EditText etName,etIdNo,etTel;
     private Button btnCommitOrder;
     private LinearLayout layoutSelectSchool;
-
-    private String reString;
-    private List<Merchant> list;
     private int coachId;
     private double prePay;
 
@@ -45,28 +44,6 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case Constants.CODE_COMMIT_ORDER://请求订单
-                    if(msg.obj!=null){
-                        String str = (String)msg.obj;
-                        System.out.println(str);
-                        JSONObject jobj = JSON.parseObject(str);
-                        final String signedResult = jobj.getString(Constants.RESULT);
-                        //传递给支付宝接口处理
-                        //必须异步调用
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // 构造PayTask 对象
-                                PayTask alipay = new PayTask(ApplyDSchoolActivity.this);
-                                // 调用支付接口，获取支付结果
-                                String result = alipay.pay(signedResult);
-                                AppMethod.sendMessage(handler, result, SDK_PAY_FLAG);
-                            }
-                        }).start();
-                    }else{
-                        showShortToast("提交订单失败");
-                    }
-                    break;
                 case SDK_CHECK_FLAG://检查是否存在已认证客户端
                     boolean flag = (Boolean)msg.obj;
                     if(flag){//存在
@@ -118,11 +95,11 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
     }
     private void getData() {
         Bundle bundle = getIntent().getExtras();
-        tvSelectCoach.setText("教练"+bundle.getString("coachName")+"("+bundle.getString("coachSubject")+")");
+        tvSelectCoach.setText("教练:"+bundle.getString("coachName")+"("+bundle.getString("coachSubject")+")");
         coachId = bundle.getInt("coachId");
         prePay = bundle.getDouble("prePay");
 
-        prePayTv.setText(prePay+"元");
+        prePayTv.setText(prePay + "元");
     }
     private void initEvent() {
         tvSelectCoach.setOnClickListener(this);
@@ -139,37 +116,60 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         etSchool = (TextView) findViewById(R.id.et_school);
         tvSelectCoach = (TextView) findViewById(R.id.tv_selectCoach);
         prePayTv = (TextView) findViewById(R.id.prePay_tv);
-//        tvTip = (TextView) findViewById(R.id.tv_tip);
 
         layoutSelectSchool = (LinearLayout) findViewById(R.id.layout_selectSchool);
 
         btnCommitOrder = (Button) findViewById(R.id.btn_commitOrder);
 
-//        tvTip.setText(Html.fromHtml("您正在选购  <font color=blue>"+getIntent().getStringExtra("sName")+"</font> 课程"));
     }
 
-
+    /**
+     * 提交订单给服务器
+     */
     private void commitOrder(){
-        Map<String,Object> param =new HashMap<String, Object>();
-        if(AppMethod.getCurUserId()==null) startActivity(LoginActivity.class);
+        Callback<Order> callback = new Callback<Order>() {
+            @Override
+            public void success(final Order order, Response response) {
+                //传递给支付宝接口处理
+                //必须异步调用
+                Log.e("Yat3s",order.getResult());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 构造PayTask 对象
+                        PayTask alipay = new PayTask(ApplyDSchoolActivity.this);
+                        // 调用支付接口，获取支付结果
+                        String result = alipay.pay(order.getResult());
+                        AppMethod.sendMessage(handler, result, SDK_PAY_FLAG);
+                    }
+                }).start();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("Yat3s",error.getMessage());
+                showShortToast("提交订单失败");
+            }
+        };
+
+        Map<String,Object> param =new HashMap<>();
         param.put(Constants.GOODS_ID, coachId);
         param.put(Constants.USER_ID, AppConf.USER_ID);
         param.put(Constants.ADDRESS, etSchool.getText().toString());
         param.put(Constants.REAL_RName, etName.getText().toString());
         param.put(Constants.ID_CARD_NO, etIdNo.getText().toString());
         param.put(Constants.TEL_NO, this.etTel.getText().toString());
-        JsonResolveUtils.commitBuyOrder(param, handler);
+        CommitOrderRequester commitOrderRequester = new CommitOrderRequester(callback,param);
+        commitOrderRequester.request();
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_selectCoach:
-//                Intent toSelectCoachIntent = new Intent(ApplyDSchoolActivity.this,ResultCoachActivity.class);
-//                toSelectCoachIntent.putExtra("sid", coachId);
-//                startActivityForResult(toSelectCoachIntent, 0);
+
                 break;
             case R.id.btn_commitOrder:
-                OrderFilter();
+                inputFilter();
                 break;
             case R.id.layout_selectSchool:
                 Intent schoolIntent = new Intent(ApplyDSchoolActivity.this,ResultSchoolActivity.class);
@@ -180,7 +180,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         }
     }
 
-    private void OrderFilter() {
+    private void inputFilter() {
         if (tvSelectCoach.getText().toString().isEmpty()) {
             showShortToast("请选择教练");
         }
@@ -197,16 +197,16 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
             showShortToast("请选择学校");
         }
         else {
-            check();
+            checkAlipay();
         }
     }
 
     /**
-     * check whether the device has authentication alipay account.
+     * checkAlipay whether the device has authentication alipay account.
      * 查询终端设备是否存在支付宝认证账户
      *
      */
-    public void check() {
+    public void checkAlipay() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -217,22 +217,5 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
                 AppMethod.sendMessage(handler, isExist, SDK_CHECK_FLAG);
             }
         }).start();
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        if (requestCode == 0 && resultCode == 0) {
-            String coachName = data.getStringExtra("coachName");
-            String className = data.getStringExtra("class");
-            tvSelectCoach.setText(coachName+" ("+className+")");
-        }
-        if (requestCode == 1 && resultCode == 1) {
-            etSchool.setText(data.getStringExtra("name"));
-        }
     }
 }

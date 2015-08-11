@@ -70,7 +70,7 @@ public class UrlConfig {
     //获取用户账户
     private static final String getUserAccountAPI = "/api/account/get_user_account.htm";
     //提交订单
-    private static final String commitBuyOrderAPI = "/api/payment/create_order.htm";
+    public static final String commitBuyOrderAPI = "/api/payment/create_order.htm";
     //提交用户信息
     private static final String commitUserInfoAPI = "/api/user/save_userinfo.htm";
     //获得用户信息

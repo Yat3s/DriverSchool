@@ -12,14 +12,14 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:background="#ADADAD" />
+            android:layout_height="0.5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/md_grey_300" />
 
         <TextView
             android:id="@+id/tv_selectCoach"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableRight="@mipmap/ic_forward"
             android:padding="20dp"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -45,6 +45,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -60,19 +61,19 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:hint="请输入真实姓名"
-                    android:padding="5dp"
                     android:textColorHint="@color/font_gray_light" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="#EEEEEE" />
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/md_grey_300" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -90,19 +91,19 @@
                     android:digits="0123456789xX"
                     android:hint="请输入身份证号"
                     android:inputType="number"
-                    android:padding="5dp"
                     android:textColorHint="@color/font_gray_light" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="#EEEEEE" />
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/md_grey_300" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -119,17 +120,17 @@
                     android:background="@null"
                     android:hint="请输入手机号码"
                     android:inputType="phone"
-                    android:padding="5dp"
                     android:textColorHint="@color/font_gray_light" />
             </LinearLayout>
-			<View
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="#EEEEEE" />
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/md_grey_300" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -145,20 +146,20 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     android:hint="请输入详细地址"
-                    android:padding="5dp"
                     android:textColorHint="@color/font_gray_light" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="#EEEEEE" />
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/md_grey_300" />
 
             <LinearLayout
                 android:id="@+id/layout_selectSchool"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/bg_white_nopading"
                 android:clickable="true"
                 android:orientation="horizontal" >
@@ -177,66 +178,65 @@
                     android:background="@null"
                     android:drawableRight="@mipmap/ic_forward"
                     android:hint="请选择就读院校"
-                    android:padding="5dp"
                     android:textColorHint="@color/font_gray_light"
                     android:textSize="18sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="#EEEEEE" />
+                android:layout_height="0.5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/md_grey_300" />
 
-            <LinearLayout
-                android:id="@+id/layout_selectTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_white_nopading"
-                android:clickable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
+            <!--<LinearLayout-->
+                <!--android:id="@+id/layout_selectTime"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--android:background="@drawable/bg_white_nopading"-->
+                <!--android:clickable="true"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal" >-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="接送时间:"
-                    android:textColor="@color/theme_blue" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="接送时间:"-->
+                    <!--android:textColor="@color/theme_blue" />-->
 
-                <TextView
-                    android:id="@+id/et_takeMeUp"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="2012-4-4 上午"
-                    android:background="@null"
-                    android:padding="5dp"
-                    android:textColor="@color/font_gray_dark"
-                    android:textSize="14sp" />
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="match_parent"
-                     android:text="或"
-                     android:textColor="@color/font_black"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/et_takeMeUp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:text="2012-4-4 上午"-->
+                    <!--android:background="@null"-->
+                    <!--android:textColor="@color/font_gray_dark"-->
+                    <!--android:textSize="14sp" />-->
+                 <!--<TextView-->
+                     <!--android:layout_width="wrap_content"-->
+                     <!--android:layout_height="match_parent"-->
+                     <!--android:text="或"-->
+                     <!--android:textColor="@color/font_black"/>-->
 
-                <TextView
-                    android:id="@+id/et_takeMeUp2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:text="2015-4-4 下午"
-                    android:background="@null"
-                    android:padding="5dp"
-                    android:textColor="@color/font_gray_dark"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/et_takeMeUp2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:text="2015-4-4 下午"-->
+                    <!--android:background="@null"-->
+                    <!--android:textColor="@color/font_gray_dark"-->
+                    <!--android:textSize="14sp" />-->
+            <!--</LinearLayout>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="#EEEEEE" />
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0.5dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:background="@color/md_grey_300" />-->
         </LinearLayout>
 
         <TextView
