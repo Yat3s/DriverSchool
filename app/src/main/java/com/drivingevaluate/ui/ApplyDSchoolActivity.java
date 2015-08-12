@@ -1,19 +1,5 @@
 package com.drivingevaluate.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.alipay.sdk.app.PayTask;
-import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
-import com.drivingevaluate.model.Order;
-import com.drivingevaluate.net.CommitOrderRequester;
-import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.api.JsonResolveUtils;
-import com.drivingevaluate.config.Constants;
-import com.drivingevaluate.model.PayResult;
-import com.drivingevaluate.util.AppMethod;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +10,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.alipay.sdk.app.PayTask;
+import com.drivingevaluate.R;
+import com.drivingevaluate.api.JsonResolveUtils;
+import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.config.Constants;
+import com.drivingevaluate.model.Order;
+import com.drivingevaluate.model.PayResult;
+import com.drivingevaluate.net.CommitOrderRequester;
+import com.drivingevaluate.ui.base.Yat3sActivity;
+import com.drivingevaluate.util.AppMethod;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -130,9 +130,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         Callback<Order> callback = new Callback<Order>() {
             @Override
             public void success(final Order order, Response response) {
-                //传递给支付宝接口处理
-                //必须异步调用
-                Log.e("Yat3s",order.getResult());
+                //传递给支付宝接口处理,必须异步调用
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

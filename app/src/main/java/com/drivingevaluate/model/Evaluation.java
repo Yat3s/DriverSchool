@@ -4,7 +4,7 @@ package com.drivingevaluate.model;
  * Created by Yat3s on 8/10/15.
  * Email:hawkoyates@gmail.com
  */
-public class CoachComment {
+public class Evaluation {
     private long createTime;
     private int goodsId;
     private int id;
@@ -17,6 +17,10 @@ public class CoachComment {
     private float item2;
     private float item3;
     private float item4;
+
+    public float getAvgGrade() {
+        return (item1 + item2 + item3) / 3.0f;
+    }
 
     public long getCreateTime() {
         return createTime;

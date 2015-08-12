@@ -1,36 +1,24 @@
 package com.drivingevaluate.ui;
 
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+
+import com.drivingevaluate.R;
+import com.drivingevaluate.adapter.CoachHorizontalAdapter;
+import com.drivingevaluate.model.Coach;
+import com.drivingevaluate.net.GetCoachListRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
+import com.drivingevaluate.ui.base.Yat3sActivity;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.alibaba.fastjson.JSON;
-import com.drivingevaluate.R;
-import com.drivingevaluate.adapter.CoachHorizontalAdapter;
-import com.drivingevaluate.net.GetCoachListRequester;
-import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.api.JsonResolve;
-import com.drivingevaluate.config.StateConfig;
-import com.drivingevaluate.model.Coach;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -83,7 +71,14 @@ public class ResultCoachActivity extends Yat3sActivity{
 
             @Override
             public void failure(RetrofitError error) {
-
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(ResultCoachActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         Map<String,Object> param = new HashMap<>();

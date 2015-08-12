@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.drivingevaluate" >
 
-    <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="18" />
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
@@ -74,6 +70,7 @@
         <activity android:name=".ui.MomentDetailActivity" />
         <activity android:name=".ui.SearchActivity" />
         <activity android:name=".ui.ConsultActivity" />
+        <activity android:name=".ui.EvaluationActivity" />
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

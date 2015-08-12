@@ -17,69 +17,33 @@
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/tv_niceTeacher"
+                android:id="@+id/evaluation_merchant_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="用户评价(5)" />
+                android:text="用户评价" />
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/line" />
-
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/evaluation_merchant_pre_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+        <Button
+            android:id="@+id/allEvaluation_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_common"
-            android:clickable="true"
-            android:padding="10dp" >
+            android:drawableRight="@mipmap/ic_forward"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/md_blue_500" />
 
-            <TextView
-                android:id="@+id/tv_commenter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Yat3s"
-                android:textColor="#ADADAD" />
-
-            <TextView
-                android:id="@+id/tv_commentContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_commenter"
-                android:layout_marginTop="10dp"
-                android:text="這所驾校很不错" />
-
-            <RatingBar
-                android:id="@+id/rb_score"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="10dp"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:rating="4.5"
-                android:stepSize="0.5" />
-
-            <TextView
-                android:id="@+id/tv_commentDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_commentContent"
-                android:layout_marginTop="10dp"
-                android:text="1天前"
-                android:textColor="#ADADAD" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/line" />
     </LinearLayout>
 
 </LinearLayout>

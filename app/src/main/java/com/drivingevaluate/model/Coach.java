@@ -25,6 +25,10 @@ public class Coach {
 
     private long createdTime;
 
+    public float getAvgGrade() {
+        return (item1 + item2 + item3) / 3.0f;
+    }
+
     public int getMerchantId() {
         return merchantId;
     }

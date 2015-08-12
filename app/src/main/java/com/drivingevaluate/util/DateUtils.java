@@ -1,7 +1,6 @@
 package com.drivingevaluate.util;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -49,19 +48,9 @@ public class DateUtils
 		String date = sdf.format(new Date(Date*1000L));
 		return date;
 	}
-	public static String getStandardDate(String timeStr) {
-
-		SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date = null;
-		try {
-			date = simpleDateFormat.parse(timeStr);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
+	public static String getStandardDate(long timestamp) {
 		StringBuffer sb = new StringBuffer();
-
-		long t = date.getTime()/1000;
+		long t = timestamp/1000;
 		long time = System.currentTimeMillis() - (t*1000);
 		long mill = (long) Math.ceil(time /1000);//秒前
 

@@ -1,7 +1,5 @@
 package com.drivingevaluate.ui;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +7,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,12 +20,13 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.drivingevaluate.R;
-import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.api.JsonResolve;
 import com.drivingevaluate.config.StateConfig;
 import com.drivingevaluate.model.Comment;
 import com.drivingevaluate.model.Moment;
-import com.drivingevaluate.util.DateUtils;
+import com.drivingevaluate.ui.base.Yat3sActivity;
+
+import java.util.List;
 
 /**
  * @author Yat3s
@@ -199,7 +198,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
             ImageView imgAvator = (ImageView) convertView.findViewById(R.id.img_avator);
             loadImg(imgAvator, comments.get(position).getAuthorPic());
             tvContent.setText(comments.get(position).getInformation());
-            tvPubTime.setText(DateUtils.getStandardDate(comments.get(position).getDate()));
+//            tvPubTime.setText(DateUtils.getStandardDate(comments.get(position).getDate()));
             tvName.setText(comments.get(position).getAuthorName()+":");
             return convertView;
         }

@@ -2,16 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line" />
+    <LinearLayout
         android:id="@+id/navigate_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_common"
+        android:orientation="horizontal"
         android:clickable="true">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/address_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@mipmap/ic_loc"
+            android:drawablePadding="5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="sAddress" />
         <ImageButton
             android:id="@+id/btn_map"
             android:layout_width="45dp"
@@ -23,19 +35,8 @@
             android:padding="5dp"
             android:scaleType="fitCenter"
             android:src="@mipmap/ic_bus" />
-        <TextView
-            android:id="@+id/address_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/ic_loc"
-            android:drawablePadding="5dp"
-            android:layout_centerVertical="true"
-            android:layout_below="@id/tv_name"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:text="sAddress" />
 
-    </RelativeLayout>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

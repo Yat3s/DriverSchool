@@ -38,6 +38,9 @@ public class Merchant implements Serializable{
     private float item2;
     private float item3;
     private float item4;
+    public float getAvgGrade() {
+        return (item1 + item2 + item3) / 3.0f;
+    }
 
     public int getSid() {
         return sid;

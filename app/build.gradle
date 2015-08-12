@@ -38,4 +38,5 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.android.support:cardview-v7:22.2.1'
     compile 'com.android.support:design:22.2.1'
+    compile 'com.balysv:material-ripple:1.0.2'
 }

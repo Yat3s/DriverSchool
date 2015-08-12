@@ -72,10 +72,8 @@ public class MerchantAdapter extends BaseAdapter{
         vh.studentAmountTV.setText(merchants.get(position).getSellCount()+ "名学生");
         vh.spendTimeTv.setText("约" + merchants.get(position).getSpendTime() + "天拿证");
 
-        //取3个item的平均分
-        float avgGrade = (merchants.get(position).getItem1()+ merchants.get(position).getItem2()+ merchants.get(position).getItem3())/3.0f;
-        vh.scoreRb.setRating(avgGrade);
-        vh.scoreTv.setText(avgGrade + "分");
+        vh.scoreRb.setRating(merchants.get(position).getAvgGrade());
+        vh.scoreTv.setText(merchants.get(position).getAvgGrade() + "分");
 
         MyUtil.loadImg(vh.preImg, merchants.get(position).getPhotoPath());
 

@@ -1,13 +1,6 @@
 package com.drivingevaluate.ui;
 
 
-import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
-import com.drivingevaluate.net.LoginRequester;
-import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.model.User;
-import com.drivingevaluate.util.SharedPreferencesUtils;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -15,6 +8,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.drivingevaluate.R;
+import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.model.User;
+import com.drivingevaluate.net.LoginRequester;
+import com.drivingevaluate.ui.base.Yat3sActivity;
+import com.drivingevaluate.util.SharedPreferencesUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -98,7 +98,18 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
 
             @Override
             public void failure(RetrofitError error) {
-                showShortToast("账号或密码错误");
+                int code = error.getResponse().getStatus();
+                switch (code) {
+                    case 401:
+                        showShortToast("账号密码错误");
+                        break;
+                    case 500:
+                        showShortToast("服务器内部错误");
+                        break;
+                    default:
+                        showShortToast("未知错误");
+                        break;
+                }
             }
         };
         Map<String,Object> param = new HashMap<>();

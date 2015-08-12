@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
@@ -61,9 +62,9 @@
 
             <include layout="@layout/layout_coach" />
 
-            <include layout="@layout/layout_pick_line" />
-
             <include layout="@layout/layout_comment" />
+
+            <include layout="@layout/layout_pick_line" />
         </LinearLayout>
     </ScrollView>
 
@@ -83,14 +84,23 @@
             android:text="在线咨询"
             android:textColor="#FFFFFF" />
 
-        <Button
-            android:id="@+id/btn_apply"
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_blue"
+            app:mrl_rippleAlpha="0.6"
+            app:mrl_rippleColor="@color/md_blue_700"
+            app:mrl_rippleOverlay="true">
+        <Button
+            android:id="@+id/btn_apply"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/md_blue_400"
             android:text="立即报名"
             android:textColor="#FFFFFF" />
+        </com.balysv.materialripple.MaterialRippleLayout>
     </LinearLayout>
 
 </RelativeLayout>
