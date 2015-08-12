@@ -7,21 +7,20 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.drivingevaluate.app.DEApplication;
 import com.drivingevaluate.R;
-import com.drivingevaluate.ui.base.Yat3sActivity;
+import com.drivingevaluate.app.DEApplication;
 import com.drivingevaluate.config.VersionManager;
-import com.drivingevaluate.ui.fragment.MerchantFragment;
+import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.ui.fragment.FindFragment;
+import com.drivingevaluate.ui.fragment.MerchantFragment;
 import com.drivingevaluate.ui.fragment.UserFragment;
-import com.drivingevaluate.util.DataContainer;
 
 public class MainActivity extends Yat3sActivity implements OnClickListener {
 	private LinearLayout mTabFind;
@@ -40,8 +39,6 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		
-		DataContainer.addActivity(this);
 
 		initView();
 		initEvent();

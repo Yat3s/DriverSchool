@@ -133,7 +133,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
     private void initView() {
         setTitleBarTitle("详情");
 
-        imgAvator = (ImageView) findViewById(R.id.img_avator);
+        imgAvator = (ImageView) findViewById(R.id.img_avatar);
         img = (ImageView) findViewById(R.id.img);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvPubTime = (TextView) findViewById(R.id.tv_pubTime);
@@ -195,7 +195,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
             TextView tvName = (TextView) convertView.findViewById(R.id.tv_name);
             TextView tvPubTime = (TextView) convertView.findViewById(R.id.tv_pubTime);
 
-            ImageView imgAvator = (ImageView) convertView.findViewById(R.id.img_avator);
+            ImageView imgAvator = (ImageView) convertView.findViewById(R.id.img_avatar);
             loadImg(imgAvator, comments.get(position).getAuthorPic());
             tvContent.setText(comments.get(position).getInformation());
 //            tvPubTime.setText(DateUtils.getStandardDate(comments.get(position).getDate()));

@@ -70,7 +70,7 @@ public class RequestErrorHandler {
 
     public void handError(RetrofitError response) throws IOException, JSONException {
         if (response.getKind() == RetrofitError.Kind.NETWORK) {
-            showToast("网络异常");
+            showToast("网络连接异常");
             return;
         }
         int code = response.getResponse().getStatus();

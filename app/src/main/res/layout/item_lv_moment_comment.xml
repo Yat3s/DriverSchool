@@ -6,10 +6,10 @@
     android:padding="10dp" >
 
     <ImageView
-        android:id="@+id/img_avator"
+        android:id="@+id/img_avatar"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/avator" />
+        android:src="@drawable/avatar" />
 
     <RelativeLayout
         android:layout_width="match_parent"

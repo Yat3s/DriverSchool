@@ -9,7 +9,7 @@
         android:id="@+id/coach_img"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/avator" />
+        android:src="@drawable/avatar" />
 
     <RelativeLayout
         android:layout_width="match_parent"

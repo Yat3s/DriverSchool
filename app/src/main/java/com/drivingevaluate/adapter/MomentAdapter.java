@@ -64,7 +64,7 @@ public class MomentAdapter extends BaseAdapter{
             vh.likeTagTv = (TextView) convertView.findViewById(R.id.tv_likeTag);
             vh.publicTimeTv = (TextView) convertView.findViewById(R.id.tv_pubTime);
 
-            vh.avatorImg = (ImageView) convertView.findViewById(R.id.img_avator);
+            vh.avatorImg = (ImageView) convertView.findViewById(R.id.img_avatar);
             vh.mainImg = (ImageView) convertView.findViewById(R.id.img);
 
             vh.commentLayout = (LinearLayout) convertView.findViewById(R.id.ll_comment);

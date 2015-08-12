@@ -21,7 +21,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />10.0.
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
@@ -34,43 +34,43 @@
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:theme="@style/MyTheme" >
+        android:theme="@style/MyTheme">
         <activity
             android:name=".ui.SplashActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.MainActivity"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden" />
-        <activity android:name=".ui.MerchantInfoActivity" />
-        <activity android:name=".ui.ApplyDSchoolActivity" />
-        <activity android:name=".ui.MerchantMapActivity" />
-        <activity android:name=".ui.ResultCoachActivity" />
-        <activity android:name=".ui.ResultMerchantIntroActivity" />
-        <activity android:name=".ui.ResultSchoolActivity" />
-        <activity android:name=".ui.LoginActivity" />
-        <activity android:name=".ui.CoachInfoActivity" />
-        <activity android:name=".ui.RegActivity" />
-        <activity android:name=".ui.UserInfoActivity" />
-        <activity android:name=".ui.AlterPwdActivity" />
-        <activity android:name=".ui.AboutActivity" />
-        <activity android:name=".ui.MyOrderActivity" />
-        <activity android:name=".ui.MomentActivity" />
-        <activity android:name=".ui.MsgActivity" />
-        <activity android:name=".ui.SelectCityActivity" />
-        <activity android:name=".ui.ViewImgActivity" />
-        <activity android:name=".ui.AddMomentActivity" />
-        <activity android:name=".ui.MomentDetailActivity" />
-        <activity android:name=".ui.SearchActivity" />
-        <activity android:name=".ui.ConsultActivity" />
-        <activity android:name=".ui.EvaluationActivity" />
+            android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.MerchantInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ApplyDSchoolActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.MerchantMapActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ResultCoachActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ResultMerchantIntroActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ResultSchoolActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.CoachInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.RegActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.UserInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.AlterPwdActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.AboutActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.MyOrderActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.MomentActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.MsgActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.SelectCityActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ViewImgActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.AddMomentActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.MomentDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.SearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ConsultActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.EvaluationActivity" android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

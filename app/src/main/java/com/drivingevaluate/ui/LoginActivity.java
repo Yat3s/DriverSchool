@@ -98,6 +98,10 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
 
             @Override
             public void failure(RetrofitError error) {
+                if (error.getKind() == RetrofitError.Kind.NETWORK) {
+                    showShortToast("网络连接异常");
+                    return;
+                }
                 int code = error.getResponse().getStatus();
                 switch (code) {
                     case 401:

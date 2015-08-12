@@ -1,18 +1,13 @@
 package com.drivingevaluate.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -27,11 +22,20 @@ import android.widget.TextView;
 import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.MerchantAdapter;
 import com.drivingevaluate.model.Merchant;
-import com.drivingevaluate.ui.base.Yat3sFragment;
+import com.drivingevaluate.net.GetMerchantListRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.MerchantInfoActivity;
 import com.drivingevaluate.ui.SelectCityActivity;
-import com.drivingevaluate.net.GetMerchantListRequester;
+import com.drivingevaluate.ui.base.Yat3sFragment;
 import com.drivingevaluate.view.RefreshLayout;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -146,6 +150,14 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
 
             @Override
             public void failure(RetrofitError error) {
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(getActivity());
+                try {
+                    requestErrorHandler.handError(error);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         Map<String,Object> parameter = new HashMap<>();

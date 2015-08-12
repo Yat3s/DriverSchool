@@ -1,13 +1,5 @@
 package com.drivingevaluate.ui;
 
-import com.drivingevaluate.R;
-import com.drivingevaluate.model.Coach;
-import com.drivingevaluate.net.GetCoachDetailRequester;
-import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.util.MyUtil;
-
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +9,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.drivingevaluate.R;
+import com.drivingevaluate.model.Coach;
+import com.drivingevaluate.net.GetCoachDetailRequester;
+import com.drivingevaluate.ui.base.Yat3sActivity;
+import com.drivingevaluate.util.MyUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -96,7 +94,7 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
         btnSelectMe = (Button) findViewById(R.id.btn_selectMe);
         tvCoachName = (TextView) findViewById(R.id.tv_coachName);
         lvComment = (ListView) findViewById(R.id.lv_comment);
-        avatorImageView = (ImageView) findViewById(R.id.img_avator);
+        avatorImageView = (ImageView) findViewById(R.id.img_avatar);
         consultButton = (Button) findViewById(R.id.consult_btn);
 
         commentLayout = (LinearLayout) findViewById(R.id.layoutComment);

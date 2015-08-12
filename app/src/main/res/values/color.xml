@@ -15,6 +15,7 @@
     <color name="font_black">#2F2F2F</color>
     <color name="background_window">#FFE5E5E5</color>
 
+    <color name="bg_dialog">#99FFFFFF</color>
 
 
     <!-- google's material design colours from

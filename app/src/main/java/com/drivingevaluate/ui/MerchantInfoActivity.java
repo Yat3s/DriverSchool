@@ -40,7 +40,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MerchantInfoActivity extends Yat3sActivity implements OnClickListener {
-    private LinearLayout navigateLl, evaluationLl,evaluationPreLl;
+    private LinearLayout navigateLl, evaluationLl,evaluationPreLl,loading;
     private Button btnApply, btnConsult, moreCoachBtn,moreEvaluationBtn;
     private TextView tvName, merchantIntroTv, tvCoachAmount, studentAmountTextView, gradeTextView,addressTv,evaluationMerchantTtv;
     private TextView timeGradeTv,placeGradeTv,serviceGradeTv;
@@ -93,9 +93,10 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
         course.setMerchantName(merchant.getSname());
         courses.add(course);
         courseAdapter.notifyDataSetChanged();
-
         coachHorizontalAdapter.notifyDataSetChanged();
-        dismissLoading();
+
+        //loading
+        loading.setVisibility(View.GONE);
     }
 
     private void initEvent() {
@@ -110,7 +111,6 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
     }
 
     private void getData() {
-        showLoading();
         merchantId = getIntent().getExtras().getInt("merchantId");
         getMerchantDetailData();
     }
@@ -228,6 +228,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
         navigateLl = (LinearLayout) findViewById(R.id.navigate_rl);
         evaluationLl = (LinearLayout) findViewById(R.id.evaluation_merchant_ll);
         evaluationPreLl = (LinearLayout) findViewById(R.id.evaluation_merchant_pre_ll);
+        loading = (LinearLayout) findViewById(R.id.loading);
 
         btnApply = (Button) findViewById(R.id.btn_apply);
         btnConsult = (Button) findViewById(R.id.btn_consult);

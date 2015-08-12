@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.model.User;
+import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.StringUtil;
 
 public class UserInfoActivity extends Yat3sActivity implements OnClickListener{
@@ -49,7 +49,7 @@ public class UserInfoActivity extends Yat3sActivity implements OnClickListener{
         tvEmotions = (TextView) findViewById(R.id.tv_emotions);
         btnAlterPwd = (Button) findViewById(R.id.btn_alterPwd);
 
-        imgAvator = (ImageView) findViewById(R.id.img_avator);
+        imgAvator = (ImageView) findViewById(R.id.img_avatar);
     }
     private void initEvent() {
         imgAvator.setOnClickListener(this);
@@ -59,7 +59,7 @@ public class UserInfoActivity extends Yat3sActivity implements OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.img_avator:
+            case R.id.img_avatar:
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);

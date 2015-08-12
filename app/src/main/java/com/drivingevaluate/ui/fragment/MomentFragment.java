@@ -1,10 +1,5 @@
 package com.drivingevaluate.ui.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,13 +15,22 @@ import android.widget.TextView;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.MomentAdapter;
-import com.drivingevaluate.net.GetMomentListRequester;
-import com.drivingevaluate.ui.base.Yat3sFragment;
-import com.drivingevaluate.ui.MomentDetailActivity;
 import com.drivingevaluate.model.Moment;
+import com.drivingevaluate.net.GetMomentListRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
+import com.drivingevaluate.ui.MomentDetailActivity;
+import com.drivingevaluate.ui.base.Yat3sFragment;
 import com.drivingevaluate.util.MyUtil;
 import com.drivingevaluate.view.ArcMenu;
 import com.drivingevaluate.view.RefreshLayout;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -128,6 +132,14 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
             }
             @Override
             public void failure(RetrofitError error) {
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(getActivity());
+                try {
+                    requestErrorHandler.handError(error);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         Map<String,Object> param = new HashMap<>();
@@ -143,7 +155,6 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         backButton = (Button) root.findViewById(R.id.btn_back);
 
         sortTextView = (TextView) root.findViewById(R.id.tv_sort);
-//        mArcMenu = (ArcMenu) root.findViewById(R.id.id_menu);
         loading = MyUtil.createLoadingDialog(getActivity(), "努力加载中");
 
         momentAdapter = new MomentAdapter(getActivity(), momentList,sort);

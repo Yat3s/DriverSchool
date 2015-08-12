@@ -103,4 +103,7 @@
         </com.balysv.materialripple.MaterialRippleLayout>
     </LinearLayout>
 
+    <include
+        android:id="@+id/loading"
+        layout="@layout/loading"/>
 </RelativeLayout>

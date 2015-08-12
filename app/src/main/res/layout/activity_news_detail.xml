@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content" >
 
                 <ImageView
-                    android:id="@+id/img_avator"
+                    android:id="@+id/img_avatar"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
 
@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/img_avator"
+                    android:layout_toRightOf="@id/img_avatar"
                     android:textColor="@color/font_gray_light" />
 
                 <TextView

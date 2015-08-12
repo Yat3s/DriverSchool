@@ -39,7 +39,7 @@
             android:id="@+id/img"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/avator" />
+            android:src="@drawable/avatar" />
 
         <TextView
             android:id="@+id/tv_class"
@@ -98,4 +98,5 @@
             android:text="评价"
             android:textColor="#FFFFFF" />
     </RelativeLayout>
-</LinearLayout>
+
+</LinearLayout>

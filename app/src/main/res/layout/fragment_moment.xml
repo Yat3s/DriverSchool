@@ -44,9 +44,7 @@
         android:id="@+id/moment_fresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp">
+        android:layout_below="@id/top">
         <ListView
             android:id="@+id/moment_lv"
             android:layout_width="match_parent"

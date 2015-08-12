@@ -37,7 +37,7 @@ public class GetUserInfoRequester {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addHeader("token", AppConf.DEFAULT_TOKEN);
+                request.addHeader("token", AppConf.TOKEN);
             }
         };
 

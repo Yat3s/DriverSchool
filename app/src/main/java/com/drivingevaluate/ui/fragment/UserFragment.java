@@ -1,27 +1,8 @@
 package com.drivingevaluate.ui.fragment;
 
 
-import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
-import com.drivingevaluate.net.GetUserInfoRequester;
-import com.drivingevaluate.ui.SplashActivity;
-import com.drivingevaluate.ui.base.Yat3sFragment;
-import com.drivingevaluate.ui.AboutActivity;
-import com.drivingevaluate.ui.LoginActivity;
-import com.drivingevaluate.ui.MsgActivity;
-import com.drivingevaluate.ui.MyOrderActivity;
-import com.drivingevaluate.ui.UserInfoActivity;
-import com.drivingevaluate.api.Api;
-import com.drivingevaluate.config.VersionManager;
-import com.drivingevaluate.model.User;
-import com.drivingevaluate.util.AppMethod;
-import com.drivingevaluate.util.SharedPreferencesUtils;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +11,25 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.drivingevaluate.R;
+import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.config.VersionManager;
+import com.drivingevaluate.model.User;
+import com.drivingevaluate.net.GetUserInfoRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
+import com.drivingevaluate.ui.AboutActivity;
+import com.drivingevaluate.ui.LoginActivity;
+import com.drivingevaluate.ui.MsgActivity;
+import com.drivingevaluate.ui.MyOrderActivity;
+import com.drivingevaluate.ui.UserInfoActivity;
+import com.drivingevaluate.ui.base.Yat3sFragment;
+import com.drivingevaluate.util.AppMethod;
+import com.drivingevaluate.util.SharedPreferencesUtils;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -67,7 +67,14 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
 
             @Override
             public void failure(RetrofitError error) {
-
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(getActivity());
+                try {
+                    requestErrorHandler.handError(error);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         AppConf.USER_ID =(int)SharedPreferencesUtils.get(getActivity(), "userId", -1);
