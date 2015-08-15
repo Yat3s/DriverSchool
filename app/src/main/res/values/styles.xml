@@ -1,12 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:textColorSecondary">@color/md_grey_800</item>
+        <item name="android:colorPrimaryDark">@color/theme_blue</item>
+        <item name="android:textColor">@color/md_grey_800</item>
     </style>
-
-
     <style name="StatusBarBackground">
         <item name="android:background">@color/theme_blue</item>
     </style>

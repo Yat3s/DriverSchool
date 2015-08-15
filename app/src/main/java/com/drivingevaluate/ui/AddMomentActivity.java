@@ -1,8 +1,5 @@
 package com.drivingevaluate.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -38,16 +35,26 @@ import android.widget.TextView;
 
 import com.baidu.mapapi.model.LatLng;
 import com.drivingevaluate.R;
-import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.adapter.EmoViewPagerAdapter;
 import com.drivingevaluate.adapter.EmoteAdapter;
-import com.drivingevaluate.api.JsonResolve;
+import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.config.StateConfig;
 import com.drivingevaluate.model.FaceText;
+import com.drivingevaluate.net.PostMomentRequester;
+import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.FaceTextUtils;
 import com.drivingevaluate.util.MyUtil;
 import com.drivingevaluate.util.UploadFile;
 import com.drivingevaluate.view.EmoticonsEditText;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class AddMomentActivity extends Yat3sActivity implements OnClickListener {
     private TextView tvAddr;
@@ -101,7 +108,7 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
         myAddr = mApplication.myAddr;
         loading = MyUtil.createLoadingDialog(AddMomentActivity.this, "发布中");
 
-        tvAddr = (TextView) findViewById(R.id.tv_addr);
+        tvAddr = (TextView) findViewById(R.id.tv_address);
         imgAddPic = (ImageView) findViewById(R.id.img_addPic);
         etContent = (EmoticonsEditText) findViewById(R.id.et_content);
 
@@ -123,7 +130,7 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_addr:
+            case R.id.tv_address:
                 if (isAddAddr) {
                     isAddAddr = false;
                     tvAddr.setTextColor(getResources().getColor(R.color.font_black));
@@ -225,13 +232,34 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
     private void commitMoment() {
         String content = etContent.getText().toString();
         String latlng = myLl.longitude+";"+myLl.latitude;
-        if (picPath!=null) {
-            JsonResolve.addMoment("南昌", latlng, "1", UploadFile.getPhotoFileName("1"), content, handler);
-        }
-        else {
-            JsonResolve.addMoment("南昌", latlng, "1", "", content, handler);
-        }
+//        if (picPath!=null) {
+//            JsonResolve.addMoment("南昌", latlng, "1", UploadFile.getPhotoFileName("1"), content, handler);
+//        }
+//        else {
+//            JsonResolve.addMoment("南昌", latlng, "1", "", content, handler);
+//        }
 
+        Callback<String> callback = new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                showShortToast("发布成功");
+                Intent back = getIntent();
+                back.putExtra("picPath", picPath);
+                setResult(Activity.RESULT_OK, back);
+                finish();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        };
+
+        Map<String,Object> param = new HashMap<>();
+        param.put("userId", AppConf.USER_ID);
+        param.put("content", content);
+        PostMomentRequester postMomentRequester = new PostMomentRequester(callback,param);
+        postMomentRequester.request();
     }
 
     List<FaceText> emos;

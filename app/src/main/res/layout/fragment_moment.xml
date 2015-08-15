@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/md_grey_200">
 
     <RelativeLayout
         android:id="@+id/top"
@@ -55,16 +56,16 @@
     </com.drivingevaluate.view.RefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/add_moment_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        app:elevation="6dp"
+        android:src="@mipmap/ic_plus"
+        app:elevation="2dp"
         app:pressedTranslationZ="12dp"
-        app:backgroundTint="@color/md_grey_200"
-        app:rippleColor="@color/md_blue_600"/>
-    <!--<include layout="@layout/menu_right_bottom" />-->
+        app:backgroundTint="@color/md_blue_300"
+        app:rippleColor="@color/md_blue_700"/>
 
 </RelativeLayout>

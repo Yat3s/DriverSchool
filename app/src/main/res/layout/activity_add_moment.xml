@@ -20,7 +20,8 @@
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"
+                android:background="@color/md_white_1000"
+                android:textSize="14sp"
                 android:gravity="top|left"
                 android:hint="吐槽一下教练吧"
                 android:lines="5" />
@@ -39,7 +40,7 @@
             android:background="#DDDDDD" />
 
         <TextView
-            android:id="@+id/tv_addr"
+            android:id="@+id/tv_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_common"

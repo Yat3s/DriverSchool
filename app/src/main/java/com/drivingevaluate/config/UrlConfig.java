@@ -48,7 +48,7 @@ public class UrlConfig {
     //获取驾校全部教练的全部评论
     public static final String merchantCommentAPI = "/api/merchant/get_judges.htm";
     //获取发表列表
-    private static final String publishListAPI = "/api/publish/get_list.htm";
+    public static final String publishListAPI = "/api/publish/get_list.htm";
     //获得商户的商品
     public static final String coachsOfMerchantAPI = "/api/goods/get_merchant_goods.htm";
     //获得发布详情

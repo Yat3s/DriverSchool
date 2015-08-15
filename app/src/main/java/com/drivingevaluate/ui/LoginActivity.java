@@ -107,6 +107,9 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
                     case 401:
                         showShortToast("账号密码错误");
                         break;
+                    case 404:
+                        showShortToast("该账号不存在");
+                        break;
                     case 500:
                         showShortToast("服务器内部错误");
                         break;

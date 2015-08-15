@@ -42,7 +42,7 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 
 		initView();
 		initEvent();
-		setSelect(1);
+		setSelect(0);
 		VersionManager versionManager = new VersionManager(MainActivity.this,0);
 		versionManager.checkUpdate();
 	}

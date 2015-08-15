@@ -10,60 +10,142 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp" >
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                    <ImageView
-                        android:id="@+id/img_avatar"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/avatar" />
-
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@id/img_avatar"
-                        android:textColor="@color/font_gray_light" />
-
-                    <TextView
-                        android:id="@+id/tv_pubTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginLeft="10dp"
-                        android:textColor="@color/font_gray_light" />
-                </RelativeLayout>
-
-                <com.drivingevaluate.view.EmoticonsTextView
-                    android:id="@+id/tv_content"
+                <LinearLayout
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" />
+                    android:orientation="horizontal"
+                    android:descendantFocusability="blocksDescendants"
+                    android:padding="12dp">
 
-                <ImageView
-                    android:id="@+id/img"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="10dp"
-                    android:scaleType="fitCenter" />
+                    <com.drivingevaluate.view.RoundAngleImageView
+                        android:id="@+id/avatar_img"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        app:roundWidth="8dp"
+                        app:roundHeight="8dp"
+                        android:src="@drawable/avatar" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/name_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="username"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/time_moment_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/name_tv"
+                                android:layout_marginTop="5dp"
+                                android:textSize="12sp"
+                                android:text="08-15 00:00"
+                                android:textColor="@color/md_grey_500" />
+
+                            <TextView
+                                android:id="@+id/status_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:textSize="12sp"
+                                android:text="正在学车"
+                                android:textColor="@color/md_grey_500" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/md_grey_200"/>
+
+                        <com.drivingevaluate.view.EmoticonsTextView
+                            android:id="@+id/content_moment_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textColor="@color/md_grey_600"
+                            android:text="无" />
+
+
+                        <ImageView
+                            android:id="@+id/img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/like_count_moment_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/md_grey_500"
+                                android:text="0赞"/>
+
+                            <TextView
+                                android:id="@+id/comment_count_moment_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/md_grey_500"
+                                android:layout_toRightOf="@id/like_count_moment_tv"
+                                android:layout_marginLeft="8dp"
+                                android:text="0评论"/>
+
+                            <LinearLayout
+                                android:id="@+id/like_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:gravity="center_vertical"
+                                android:layout_marginRight="8dp"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/like_moment_img"
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:scaleType="fitCenter"/>
+                                <TextView
+                                    android:id="@+id/like_moment_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/md_grey_500"
+                                    android:layout_marginLeft="4dp"
+                                    android:text="点赞"/>
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:background="@color/line" />
-
                 <ListView
                     android:id="@+id/lv_comment"
                     android:layout_width="match_parent"

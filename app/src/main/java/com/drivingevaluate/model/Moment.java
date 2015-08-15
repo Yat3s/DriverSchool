@@ -2,100 +2,123 @@ package com.drivingevaluate.model;
 public class Moment {
     private int id;
     private double distance;
-    private String locate;
-    private String authorName;
-    private String authorPic;
-    private int commentAmount=0;
-    private int audienceAmount=0;
-    private int likeAmount=0;
-    private String GPS="";
-    private String publicTime;
-    private int authorID;
-    private String picturePath;
-    private String content;
-    private String like;
+    private int clicks;
+    private int commentCount;
+    private int praiseCount;
+
+    private long createTime;
+    private String description;
+    private String imgIds;
+    private String title;
+
+    private String imgPathsLimit;
+    private String[] images;
+
+    private User user;
+
+    private boolean praised;
+
+    public boolean isPraised() {
+        return praised;
+    }
+
+    public void setPraised(boolean praised) {
+        this.praised = praised;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public double getDistance() {
         return distance;
     }
+
     public void setDistance(double distance) {
         this.distance = distance;
     }
-    public String getLocate() {
-        return locate;
+
+    public int getClicks() {
+        return clicks;
     }
-    public void setLocate(String locate) {
-        this.locate = locate;
+
+    public void setClicks(int clicks) {
+        this.clicks = clicks;
     }
-    public String getAuthorName() {
-        return authorName;
+
+    public int getCommentCount() {
+        return commentCount;
     }
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
-    public String getAuthorPic() {
-        return authorPic;
+
+    public int getPraiseCount() {
+        return praiseCount;
     }
-    public void setAuthorPic(String authorPic) {
-        this.authorPic = authorPic;
+
+    public void setPraiseCount(int praiseCount) {
+        this.praiseCount = praiseCount;
     }
-    public int getCommentAmount() {
-        return commentAmount;
+
+    public long getCreateTime() {
+        return createTime;
     }
-    public void setCommentAmount(int commentAmount) {
-        this.commentAmount = commentAmount;
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
-    public int getAudienceAmount() {
-        return audienceAmount;
+
+    public String getDescription() {
+        return description;
     }
-    public void setAudienceAmount(int audienceAmount) {
-        this.audienceAmount = audienceAmount;
+
+    public void setDescription(String description) {
+        this.description = description;
     }
-    public int getLikeAmount() {
-        return likeAmount;
+
+    public String getImgIds() {
+        return imgIds;
     }
-    public void setLikeAmount(int likeAmount) {
-        this.likeAmount = likeAmount;
+
+    public void setImgIds(String imgIds) {
+        this.imgIds = imgIds;
     }
-    public String getGPS() {
-        return GPS;
+
+    public String getTitle() {
+        return title;
     }
-    public void setGPS(String gPS) {
-        GPS = gPS;
+
+    public void setTitle(String title) {
+        this.title = title;
     }
-    public String getPublicTime() {
-        return publicTime;
+
+    public String getImgPathsLimit() {
+        return imgPathsLimit;
     }
-    public void setPublicTime(String publicTime) {
-        this.publicTime = publicTime;
+
+    public void setImgPathsLimit(String imgPathsLimit) {
+        this.imgPathsLimit = imgPathsLimit;
     }
-    public int getAuthorID() {
-        return authorID;
+
+    public String[] getImages() {
+        return images;
     }
-    public void setAuthorID(int authorID) {
-        this.authorID = authorID;
-    }
-    public String getPicturePath() {
-        return picturePath;
-    }
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
-    }
-    public String getContent() {
-        return content;
-    }
-    public void setContent(String content) {
-        this.content = content;
-    }
-    public String getLike() {
-        return like;
-    }
-    public void setLike(String like) {
-        this.like = like;
+
+    public void setImages(String[] images) {
+        this.images = images;
     }
 }

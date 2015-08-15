@@ -41,6 +41,7 @@ public class EvaluationActivity extends Yat3sActivity {
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
+        setBackTitleBar();
         setContentView(R.layout.activity_merchant_evaluation);
 
         initView();
@@ -80,6 +81,8 @@ public class EvaluationActivity extends Yat3sActivity {
     }
 
     private void initView() {
+        setTitleBarTitle("评价列表");
+
         evaluationRv = (RecyclerView) findViewById(R.id.evaluation_merchant_rv);
         layoutManager = new LinearLayoutManager(this);
         evaluationAdapter = new EvaluationAdapter(evaluations,this);

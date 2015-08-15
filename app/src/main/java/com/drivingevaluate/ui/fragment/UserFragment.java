@@ -24,7 +24,6 @@ import com.drivingevaluate.ui.MsgActivity;
 import com.drivingevaluate.ui.MyOrderActivity;
 import com.drivingevaluate.ui.UserInfoActivity;
 import com.drivingevaluate.ui.base.Yat3sFragment;
-import com.drivingevaluate.util.AppMethod;
 import com.drivingevaluate.util.SharedPreferencesUtils;
 
 import org.json.JSONException;
@@ -106,9 +105,11 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_loginout:
-                Intent loginIntent = new Intent(getActivity(),LoginActivity.class);
-                AppMethod.Loginout();
-                startActivity(loginIntent);
+                if (SharedPreferencesUtils.contains(getActivity(),"token")){
+                    SharedPreferencesUtils.remove(getActivity(),"token");
+                    SharedPreferencesUtils.remove(getActivity(),"userId");
+                }
+                startActivity(LoginActivity.class);
                 getActivity().finish();
                 break;
             case R.id.ll_userInfo:

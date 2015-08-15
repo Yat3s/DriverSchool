@@ -1,10 +1,5 @@
 package com.drivingevaluate.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,14 +15,19 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.drivingevaluate.R;
-import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.api.JsonResolveUtils;
 import com.drivingevaluate.config.Config;
 import com.drivingevaluate.config.Constants;
 import com.drivingevaluate.model.UserBuyOrder;
+import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.AppMethod;
 import com.drivingevaluate.util.DateUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MyOrderActivity extends Yat3sActivity{
     private ListView lvOrders;
@@ -93,7 +93,7 @@ public class MyOrderActivity extends Yat3sActivity{
             if (convertView == null) {
                 convertView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_lv_order, null);
             }
-            TextView tvDschool = (TextView) convertView.findViewById(R.id.tv_dschoolName);
+            TextView merchantTv = (TextView) convertView.findViewById(R.id.tv_dschoolName);
             TextView tvClass = (TextView) convertView.findViewById(R.id.tv_class);
             TextView tvDate = (TextView) convertView.findViewById(R.id.tv_date);
             TextView tvPrice = (TextView) convertView.findViewById(R.id.tv_price);
@@ -101,7 +101,7 @@ public class MyOrderActivity extends Yat3sActivity{
 
             ImageLoader.getInstance().displayImage(userBuyOrders.get(position).getPhotoPath(), img,Config.ImageOptions);
 
-            tvDschool.setText(userBuyOrders.get(position).getSname());
+            merchantTv.setText(userBuyOrders.get(position).getSname());
             tvClass.setText(userBuyOrders.get(position).getGoodsTitle());
             tvPrice.setText("¥"+userBuyOrders.get(position).getTotalFee());
             tvDate.setText(DateUtils.getDateStr(userBuyOrders.get(position).getCreateTime()));

@@ -15,43 +15,50 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.drivingevaluate.R;
 import com.drivingevaluate.api.JsonResolve;
+import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.config.StateConfig;
 import com.drivingevaluate.model.Comment;
 import com.drivingevaluate.model.Moment;
+import com.drivingevaluate.net.GetMomentDetailRequester;
+import com.drivingevaluate.net.LikeMomentRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
+import com.drivingevaluate.util.DateUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * @author Yat3s
  *
  */
 public class MomentDetailActivity extends Yat3sActivity implements OnClickListener{
-    private ImageView imgAvator,img;
-    private TextView tvName,tvPubTime,tvContent;
+    private ImageView avatarImg,img,likeImg;
+    private TextView tvName,tvPubTime,tvContent,likeCountTv,commentCountTv,likeTv;
     private ListView lvComment;
     private EditText etComment;
     private Button btnCommit;
-
+    private LinearLayout likeLayout;
     private int momentId;
 
-    private Moment moment;
+    private Moment mMoment;
     private List<Comment> comments;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case StateConfig.CODE_MOMENT_BY_ID:
-                    moment = JSON.parseObject(msg.obj.toString(),Moment.class);
-                    setMomentDetails();
-                    break;
                 case StateConfig.CODE_COMMENT_BY_STYLE:
                     if (!msg.obj.toString().equals("超出页数")) {
                         comments = JSON.parseArray(msg.obj.toString(),Comment.class);
@@ -79,39 +86,69 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
 
         initView();
         initEvent();
+
+        getData();
+    }
+
+    private void getData() {
         momentId = getIntent().getIntExtra("momentId", -1);
         getMoment();
-        getComment();
+//        getComment();
     }
 
     /**
      * 网络获取Moments详情
      */
     private void getMoment() {
-        JsonResolve.getMomentById(momentId+"", handler);
+        Callback<Moment> callback = new Callback<Moment>() {
+            @Override
+            public void success(Moment moment, Response response) {
+                mMoment = moment;
+                setMomentDetails();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        };
+
+        Map<String,Object> param = new HashMap<>();
+        param.put("publishId",momentId);
+        param.put("userId", AppConf.USER_ID);
+        GetMomentDetailRequester getMomentDetailRequester = new GetMomentDetailRequester(callback,param);
+        getMomentDetailRequester.request();
     }
     /**
      * 设置动态详情
      */
     private void setMomentDetails() {
-        tvContent.setText(moment.getContent());
-        tvName.setText(moment.getAuthorName());
-        tvPubTime.setText(moment.getPublicTime());
-        if (moment.getPicturePath() ==null || moment.getPicturePath().isEmpty()) {
+        tvContent.setText(mMoment.getDescription());
+        tvName.setText(mMoment.getUser().getUserName());
+        tvPubTime.setText(DateUtils.getStandardDate(mMoment.getCreateTime()));
+        likeCountTv.setText(mMoment.getPraiseCount() + "赞");
+        commentCountTv.setText(mMoment.getCommentCount() + "评论");
+        if (mMoment.getImgPathsLimit() ==null || mMoment.getImgPathsLimit().isEmpty()) {
             img.setVisibility(View.GONE);
         }
         else {
-            loadImg(img, moment.getPicturePath());
+            loadImg(img, mMoment.getImgPathsLimit());
         }
 
-        loadImg(imgAvator, moment.getAuthorPic());
+        if (mMoment.isPraised()){
+            likeTv.setText("已赞");
+        }else {
+            likeImg.setImageDrawable(getResources().getDrawable(R.mipmap.ic_like));
+        }
+
+        loadImg(avatarImg, mMoment.getUser().getHeadPath());
     }
 
     /**
      * 网络获取评论
      */
     private void getComment() {
-        JsonResolve.getCommentByStyle(momentId+"","动态","1", handler);
+        JsonResolve.getCommentByStyle(momentId + "", "动态", "1", handler);
     }
 
     /**
@@ -128,31 +165,37 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
      */
     private void commitComment() {
         String commentStr = etComment.getText().toString();
-        JsonResolve.addComment("1", momentId+"", commentStr, "1.jpg", "动态", handler);
+        JsonResolve.addComment("1", momentId + "", commentStr, "1.jpg", "动态", handler);
     }
     private void initView() {
         setTitleBarTitle("详情");
 
-        imgAvator = (ImageView) findViewById(R.id.img_avatar);
+        avatarImg = (ImageView) findViewById(R.id.avatar_img);
         img = (ImageView) findViewById(R.id.img);
-        tvName = (TextView) findViewById(R.id.tv_name);
-        tvPubTime = (TextView) findViewById(R.id.tv_pubTime);
-        tvContent = (TextView) findViewById(R.id.tv_content);
+        tvName = (TextView) findViewById(R.id.name_tv);
+        tvPubTime = (TextView) findViewById(R.id.time_moment_tv);
+        tvContent = (TextView) findViewById(R.id.content_moment_tv);
         etComment = (EditText) findViewById(R.id.et_comment);
         btnCommit = (Button) findViewById(R.id.btn_commit);
+        likeCountTv = (TextView) findViewById(R.id.like_count_moment_tv);
+        commentCountTv = (TextView) findViewById(R.id.comment_count_moment_tv);
+        
+        likeTv = (TextView) findViewById(R.id.like_moment_tv);
+        likeImg = (ImageView) findViewById(R.id.like_moment_img);
+        likeLayout = (LinearLayout) findViewById(R.id.like_layout);
 
         lvComment = (ListView) findViewById(R.id.lv_comment);
     }
     private void initEvent() {
         btnCommit.setOnClickListener(this);
-
+        likeLayout.setOnClickListener(this);
 
         img.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Intent viewImgIntent = new Intent(MomentDetailActivity.this, ViewImgActivity.class);
-                viewImgIntent.putExtra("imgUrl", moment.getPicturePath());
+                viewImgIntent.putExtra("imgUrl", mMoment.getImgPathsLimit());
                 startActivity(viewImgIntent);
             }
         });
@@ -163,10 +206,34 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
             case R.id.btn_commit:
                 commitComment();
                 break;
-
+            case R.id.like_layout:
+                likeMoment();
+                break;
             default:
                 break;
         }
+    }
+
+    private void likeMoment() {
+        Callback<String> callback = new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                likeImg.setVisibility(View.INVISIBLE);
+                likeTv.setText("已赞");
+                likeCountTv.setText((mMoment.getPraiseCount()+1) + "赞");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        };
+
+        Map<String,Object> param = new HashMap<>();
+        param.put("userId",AppConf.USER_ID);
+        param.put("publishId",mMoment.getId());
+        LikeMomentRequester likeMomentRequester = new LikeMomentRequester(callback,param);
+        likeMomentRequester.request();
     }
 
     class CommentAdapter extends BaseAdapter{
