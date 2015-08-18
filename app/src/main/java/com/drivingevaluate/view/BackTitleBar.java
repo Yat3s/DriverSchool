@@ -1,18 +1,14 @@
 package com.drivingevaluate.view;
 
 
-import java.io.IOException;
-
-import com.drivingevaluate.R;
-
 import android.app.Activity;
-import android.app.Instrumentation;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.drivingevaluate.R;
 
 public class BackTitleBar {
     private  Activity mActivity;
@@ -29,7 +25,7 @@ public class BackTitleBar {
         activity.setContentView(R.layout.titlebar_back);
         activity.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
                 R.layout.titlebar_back);
-        Button titleBackBtn = (Button) activity.findViewById(R.id.btn_back);
+        ImageButton titleBackBtn = (ImageButton) activity.findViewById(R.id.btn_back);
         titleBackBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 mActivity.finish();

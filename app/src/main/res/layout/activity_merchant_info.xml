@@ -105,5 +105,5 @@
 
     <include
         android:id="@+id/loading"
-        layout="@layout/loading"/>
+        layout="@layout/layout_loading"/>
 </RelativeLayout>

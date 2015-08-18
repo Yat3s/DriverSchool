@@ -9,7 +9,7 @@ public class SearchActivity extends Yat3sActivity{
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        setContentView(R.layout.diaglog_search);
+        setContentView(R.layout.dialog_search);
 
     }
 }

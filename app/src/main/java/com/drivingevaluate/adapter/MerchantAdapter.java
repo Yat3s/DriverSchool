@@ -1,7 +1,6 @@
 package com.drivingevaluate.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,8 +51,7 @@ public class MerchantAdapter extends BaseAdapter{
             convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_merchant,null);
             vh = new ViewHolder();
             vh.nameTv = (TextView) convertView.findViewById(R.id.tv_name);
-            vh.ourPriceTv = (TextView) convertView.findViewById(R.id.tv_ourPrice);
-            vh.marketPriceTv = (TextView) convertView.findViewById(R.id.tv_marketPrice);
+            vh.marketPriceTv = (TextView) convertView.findViewById(R.id.market_price_tv);
             vh.distanceTv = (TextView) convertView.findViewById(R.id.distance_tv);
             vh.scoreTv = (TextView) convertView.findViewById(R.id.tv_score);
             vh.studentAmountTV = (TextView) convertView.findViewById(R.id.tv_studentAmount);
@@ -66,8 +64,6 @@ public class MerchantAdapter extends BaseAdapter{
             vh = (ViewHolder)convertView.getTag();
         }
         vh.nameTv.setText(merchants.get(position).getSname());
-        vh.ourPriceTv.setText("¥" + merchants.get(position).getMarketPrice());
-        vh.marketPriceTv.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         vh.marketPriceTv.setText(("¥" + merchants.get(position).getMarketPrice()));
         vh.studentAmountTV.setText(merchants.get(position).getSellCount()+ "名学生");
         vh.spendTimeTv.setText("约" + merchants.get(position).getSpendTime() + "天拿证");
@@ -93,7 +89,6 @@ public class MerchantAdapter extends BaseAdapter{
 
     private class ViewHolder{
         TextView nameTv ;
-        TextView ourPriceTv ;
         TextView marketPriceTv ;
         TextView distanceTv ;
         TextView scoreTv;

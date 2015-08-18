@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,7 +42,7 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
     private TextView sortTextView;
     private FloatingActionButton addFab;
     private List<Moment> mMoments = new ArrayList<>();
-    private Button backButton;
+    private ImageButton backButton;
     private MomentAdapter momentAdapter;
     private int sort = 1; // 1按照时间 2按照距离
     private int loadType = 0;
@@ -130,7 +130,7 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
     private void initView() {
         momentRefresh = (RefreshLayout) root.findViewById(R.id.moment_fresh);
         momentLv = (ListView) root.findViewById(R.id.moment_lv);
-        backButton = (Button) root.findViewById(R.id.btn_back);
+        backButton = (ImageButton) root.findViewById(R.id.btn_back);
 
         sortTextView = (TextView) root.findViewById(R.id.tv_sort);
 

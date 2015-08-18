@@ -1,55 +1,33 @@
 package com.drivingevaluate.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.drivingevaluate.R;
+import com.drivingevaluate.net.RegisterRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.api.JsonResolveUtils;
-import com.drivingevaluate.config.Constants;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class RegActivity extends Yat3sActivity implements OnClickListener{
     private EditText etPhone,etPswd,etRePswd,etVerityCode;
     private Button btnCommit,btnGetVerityCode;
 
-    private String account,pswd,verityCode;
+    private String account, pwd,verityCode;
 
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case Constants.CODE_USER_ADD_RESPONSE:
-                    if ((Integer)msg.obj == 1) {
-                        showShortToast("注册成功");
-                        finish();
-                    }
-                    else if ((Integer)msg.obj == 2) {
-                        showShortToast("该号码已经注册");
-                    }
-                    else {
-                        showShortToast("注册失败");
-                    }
-                    break;
-                case Constants.CODE_IDENTIFY_CODE_REQUEST:
-                    if ((Integer)msg.obj == 1) {
-                        showShortToast("验证码已经发送");
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -58,7 +36,6 @@ public class RegActivity extends Yat3sActivity implements OnClickListener{
 
         initView();
         initEvent();
-
     }
 
     private void initEvent() {
@@ -114,16 +91,29 @@ public class RegActivity extends Yat3sActivity implements OnClickListener{
 
     private void getVerityCode() {
         if (etPhone.getText().toString().length()!=11) {
+            showShortToast("请输入正确的手机号码");
             return;
         }
-        Map<String, String> param = new HashMap<String, String>();
+        Callback<String> callback = new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                showShortToast("验证码已发送");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        };
+        Map<String, Object> param = new HashMap<>();
         param.put("account", etPhone.getText().toString());
-        JsonResolveUtils.getIdentifyCode(param, this.handler);
+        RegisterRequester registerRequester = new RegisterRequester(callback,param);
+        registerRequester.getVerifyCodeRequest();
     }
 
     private void commitReg() {
         account = etPhone.getText().toString();
-        pswd = etRePswd.getText().toString();
+        pwd = etRePswd.getText().toString();
         verityCode = etVerityCode.getText().toString();
         if (account.length() != 11 ) {
             showShortToast("请输入正确的手机号码");
@@ -138,11 +128,31 @@ public class RegActivity extends Yat3sActivity implements OnClickListener{
             showShortToast("请输入验证码");
         }
         else {
-            Map<String, Object> param = new HashMap<String, Object>();
+            Callback<String> callback = new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    showShortToast("注册成功");
+                    finish();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    RequestErrorHandler requestErrorHandler = new RequestErrorHandler(RegActivity.this);
+                    try {
+                        requestErrorHandler.handError(error);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            Map<String, Object> param = new HashMap<>();
             param.put("account", account.trim());
-            param.put("pwd", pswd.trim());
+            param.put("pwd", pwd.trim());
             param.put("identifyCode", verityCode);
-            JsonResolveUtils.userReg(param, handler);
+            RegisterRequester registerRequester = new RegisterRequester(callback,param);
+            registerRequester.registerRequest();
         }
     }
 }

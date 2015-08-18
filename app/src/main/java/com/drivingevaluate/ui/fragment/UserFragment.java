@@ -40,7 +40,7 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
     private LinearLayout llUserInfo;
     private RelativeLayout rlUpdate,rlAbout,rlMyOrder;
     private Button btnLoginout,btnMsg;
-    private TextView tvName;
+    private TextView tvName,signTv;
     private View root;
 
     private User mUser;
@@ -49,6 +49,7 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
+
         root = inflater.inflate(R.layout.fragment_user, container, false);
         initView();
         initEvent();
@@ -62,6 +63,11 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
             public void success(User user, Response response) {
                 mUser = user;
                 tvName.setText(user.getAccount());
+                if (user.getSign().isEmpty()){
+                    signTv.setText("我就是马路杀手");
+                }
+                else
+                    signTv.setText(user.getSign());
             }
 
             @Override
@@ -86,7 +92,9 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
         rlAbout = (RelativeLayout) root.findViewById(R.id.rl_about);
         rlMyOrder = (RelativeLayout) root.findViewById(R.id.rl_myOrder);
 
+
         tvName = (TextView) root.findViewById(R.id.tv_name);
+        signTv = (TextView) root.findViewById(R.id.sign_tv);
         btnLoginout = (Button) root.findViewById(R.id.btn_loginout);
         btnMsg = (Button) root.findViewById(R.id.btn_msg);
 

@@ -7,6 +7,7 @@ public class Moment {
     private int praiseCount;
 
     private long createTime;
+    private long firstReply;
     private String description;
     private String imgIds;
     private String title;
@@ -20,6 +21,14 @@ public class Moment {
 
     public boolean isPraised() {
         return praised;
+    }
+
+    public long getFirstReply() {
+        return firstReply;
+    }
+
+    public void setFirstReply(long firstReply) {
+        this.firstReply = firstReply;
     }
 
     public void setPraised(boolean praised) {

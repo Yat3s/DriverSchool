@@ -24,9 +24,11 @@ import com.drivingevaluate.adapter.MerchantAdapter;
 import com.drivingevaluate.model.Merchant;
 import com.drivingevaluate.net.GetMerchantListRequester;
 import com.drivingevaluate.net.component.RequestErrorHandler;
+import com.drivingevaluate.ui.LoginActivity;
 import com.drivingevaluate.ui.MerchantInfoActivity;
 import com.drivingevaluate.ui.SelectCityActivity;
 import com.drivingevaluate.ui.base.Yat3sFragment;
+import com.drivingevaluate.util.SharedPreferencesUtils;
 import com.drivingevaluate.view.RefreshLayout;
 
 import org.json.JSONException;
@@ -85,7 +87,7 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
 
         merchantLv = (ListView) rootView.findViewById(R.id.dschool_lv);
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_header,null);
-        merchantLv.addHeaderView(headerView,null,false);
+        merchantLv.addHeaderView(headerView, null, false);
         merchantRefresh = (RefreshLayout) rootView.findViewById(R.id.dschool_fresh);
         merchantRefresh.setColorSchemeResources(R.color.md_blue_300,
                 android.R.color.holo_green_light,
@@ -127,9 +129,13 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
-                Bundle paramBundle = new Bundle();
-                paramBundle.putInt("merchantId",merchants.get(position-1).getSid());
-                startActivity(MerchantInfoActivity.class, paramBundle);
+                if (!SharedPreferencesUtils.contains(getActivity(), "token")){
+                    startActivity(LoginActivity.class);
+                }else {
+                    Bundle paramBundle = new Bundle();
+                    paramBundle.putInt("merchantId", merchants.get(position - 1).getSid());
+                    startActivity(MerchantInfoActivity.class, paramBundle);
+                }
             }
         });
     }
@@ -174,22 +180,22 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_orderByRating:
-                resetImgs();
+                resetIcon();
                 imgRating.setImageResource(R.mipmap.ic_order_rating_pressed);
                 setSort("5");
                 break;
             case R.id.ll_orderByDistance:
-                resetImgs();
+                resetIcon();
                 imgDistance.setImageResource(R.mipmap.ic_order_distance_pressed);
                 setSort("1");
                 break;
             case R.id.ll_orderByPrice:
-                resetImgs();
+                resetIcon();
                 imgPrice.setImageResource(R.mipmap.ic_order_price_pressed);
                 setSort("2");
                 break;
             case R.id.ll_orderByMember:
-                resetImgs();
+                resetIcon();
                 imgMember.setImageResource(R.mipmap.ic_order_member_pressed);
                 setSort("3");
                 break;
@@ -218,7 +224,7 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
     /**
      * reset img to dark(normal)
      */
-    private void resetImgs() {
+    private void resetIcon() {
         imgRating.setImageResource(R.mipmap.ic_order_rating_normal);
         imgDistance.setImageResource(R.mipmap.ic_order_distance_normal);
         imgPrice.setImageResource(R.mipmap.ic_order_price_normal);
@@ -231,7 +237,7 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
      */
     private void searchMerchantDialog() {
         View view = LayoutInflater.from(getActivity()).inflate(
-                R.layout.diaglog_search, null);
+                R.layout.dialog_search, null);
         LinearLayout layout = (LinearLayout) view
                 .findViewById(R.id.dialog_search);
         searchEditText = (EditText) view.findViewById(R.id.et_search);
@@ -253,7 +259,6 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
     }
 
     private void searchMerchant() {
-//        JsonResolve.findSchoolByName(searchEditText.getText().toString(),
-//                handler);
+        //TODO searchMerchant
     }
 }

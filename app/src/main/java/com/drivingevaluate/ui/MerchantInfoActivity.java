@@ -66,6 +66,8 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
         getData();
     }
 
+
+
     private void refreshView() {
         setTitleBarTitle(merchant.getSname());
         tvName.setText(merchant.getSname());
@@ -95,7 +97,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
         courseAdapter.notifyDataSetChanged();
         coachHorizontalAdapter.notifyDataSetChanged();
 
-        //loading
+        //layout_loading
         loading.setVisibility(View.GONE);
     }
 

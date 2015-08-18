@@ -1,11 +1,5 @@
 package com.drivingevaluate.ui.base;
 
-import com.drivingevaluate.app.DEApplication;
-import com.drivingevaluate.R;
-import com.drivingevaluate.config.Config;
-import com.drivingevaluate.util.MyUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +7,18 @@ import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.drivingevaluate.R;
+import com.drivingevaluate.app.DEApplication;
+import com.drivingevaluate.config.Config;
+import com.drivingevaluate.util.MyUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class Yat3sActivity extends FragmentActivity {
     protected DEApplication mApplication;
@@ -106,7 +106,7 @@ public class Yat3sActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.titlebar_back);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar_back);
-        Button titleBackBtn = (Button) findViewById(R.id.btn_back);
+        ImageButton titleBackBtn = (ImageButton) findViewById(R.id.btn_back);
         titleBackBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 finish();

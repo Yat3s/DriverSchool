@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/md_white_1000">
     <com.drivingevaluate.view.MetaballView
         android:id="@+id/loading"
         android:layout_width="wrap_content"
@@ -14,6 +15,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
-        android:textColor="@color/md_white_1000"
         android:text="努力加载中...."/>
 </LinearLayout>

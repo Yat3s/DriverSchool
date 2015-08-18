@@ -10,14 +10,9 @@ import com.drivingevaluate.util.SharedPreferencesUtils;
  */
 public class AppConf {
     /**
-     * save preferences  file name;
-     */
-    public static final String LOGIN_PREFERENCES_FILE_NAME = "asj1ojsdh23l123hf";
-
-    /**
      * save token as a global value
      */
-    public static String TOKEN;
+    public static String TOKEN = "empty_token";
 
     public static int USER_ID;
 

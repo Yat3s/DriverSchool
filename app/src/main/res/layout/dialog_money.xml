@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@mipmap/bg_money_result"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TextView
+            android:id="@+id/sum_of_money_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/bg_money"
+            android:textColor="@color/md_white_1000"
+            android:textSize="32sp"
+            android:layout_gravity="center"
+            android:text="￥300元"
+            android:gravity="center" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginLeft="64dp"
+                android:layout_marginRight="64dp"
+                android:padding="10dp"
+                android:background="@drawable/selector_orange"
+                android:textColor="@color/md_white_1000"
+                android:textSize="20sp"
+                android:text="分享到朋友圈" />
+    </LinearLayout>

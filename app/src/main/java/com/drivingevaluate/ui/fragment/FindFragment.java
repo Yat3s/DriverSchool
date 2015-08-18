@@ -12,12 +12,13 @@ import android.widget.RelativeLayout;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.drivingevaluate.R;
+import com.drivingevaluate.ui.GetMoneyActivity;
 import com.drivingevaluate.ui.MomentActivity;
 import com.drivingevaluate.ui.base.Yat3sFragment;
 
 public class FindFragment extends Yat3sFragment implements OnClickListener{
     private View root;
-    private RelativeLayout rlKnowledge,rlSub1,rlSub4,consultRl,momentRl;
+    private RelativeLayout rlKnowledge,rlSub1,rlSub4,consultRl,momentRl,moneyLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (root == null) {
@@ -34,6 +35,7 @@ public class FindFragment extends Yat3sFragment implements OnClickListener{
         rlSub4 = (RelativeLayout) root.findViewById(R.id.btn_sub4);
         consultRl = (RelativeLayout) root.findViewById(R.id.consult_rl);
         momentRl = (RelativeLayout) root.findViewById(R.id.moment_rl);
+        moneyLayout = (RelativeLayout) root.findViewById(R.id.luckyMoney_layout);
     }
     private void initEvent() {
         rlKnowledge.setOnClickListener(this);
@@ -41,6 +43,7 @@ public class FindFragment extends Yat3sFragment implements OnClickListener{
         rlSub4.setOnClickListener(this);
         consultRl.setOnClickListener(this);
         momentRl.setOnClickListener(this);
+        moneyLayout.setOnClickListener(this);
     }
 
     @Override
@@ -50,16 +53,19 @@ public class FindFragment extends Yat3sFragment implements OnClickListener{
                 startActivity(MomentActivity.class);
                 break;
             case R.id.btn_knowledge:
-                showShortToast("开发中");
+                showShortToast("开发中,敬请期待");
                 break;
             case R.id.btn_sub1:
-                showShortToast("开发中");
+                showShortToast("开发中,敬请期待");
                 break;
             case R.id.btn_sub4:
-                showShortToast("开发中");
+                showShortToast("开发中,敬请期待");
                 break;
             case R.id.consult_rl:
                 consult();
+                break;
+            case R.id.luckyMoney_layout:
+                startActivity(GetMoneyActivity.class);
                 break;
             default:
                 break;

@@ -1,20 +1,19 @@
 package com.drivingevaluate.ui;
 
-import com.drivingevaluate.R;
-import com.drivingevaluate.view.BackTitleBar;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class ResultMerchantIntroActivity extends Activity{
+import com.drivingevaluate.R;
+import com.drivingevaluate.ui.base.Yat3sActivity;
+
+public class ResultMerchantIntroActivity extends Yat3sActivity{
     private TextView introTv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BackTitleBar titleBar = new BackTitleBar(this);
+        setBackTitleBar();
         setContentView(R.layout.activity_result_dschoolinfo);
-        titleBar.setTitle("驾校简介");
+        setTitleBarTitle("驾校简介");
 
         initView();
         getData();

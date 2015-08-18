@@ -71,6 +71,8 @@
         <activity android:name=".ui.SearchActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.ConsultActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.EvaluationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.GetMoneyActivity" android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

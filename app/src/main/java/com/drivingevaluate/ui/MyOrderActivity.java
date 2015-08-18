@@ -53,7 +53,7 @@ public class MyOrderActivity extends Yat3sActivity{
         setBackTitleBar();
         setContentView(R.layout.activity_user_order);
         initView();
-        getData();
+//        getData();
     }
 
     private void initView() {

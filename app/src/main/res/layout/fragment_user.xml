@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/blue_2"
+        android:background="@color/theme_blue"
         android:orientation="vertical">
 
         <TextView
@@ -73,19 +73,19 @@
                             android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Yat3s"
+                            android:text="未登录"
                             android:textColor="@color/font_black"
                             android:textSize="20sp" />
 
                         <TextView
-                            android:id="@+id/tv_emotions"
+                            android:id="@+id/sign_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_name"
                             android:layout_marginTop="10dp"
                             android:maxEms="8"
                             android:singleLine="true"
-                            android:text="我喜欢我,是颜色不一样的烟火"
+                            android:text="请先登录"
                             android:textColor="@color/font_gray_light" />
 
                         <ImageView

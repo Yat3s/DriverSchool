@@ -15,7 +15,7 @@ import com.drivingevaluate.util.StringUtil;
 
 public class UserInfoActivity extends Yat3sActivity implements OnClickListener{
     private TextView tvNickName,tvPhone,tvRegDate,tvEmotions;
-    private ImageView imgAvator;
+    private ImageView avatarImg;
     private Button btnAlterPwd;
 
     private User user;
@@ -49,10 +49,10 @@ public class UserInfoActivity extends Yat3sActivity implements OnClickListener{
         tvEmotions = (TextView) findViewById(R.id.tv_emotions);
         btnAlterPwd = (Button) findViewById(R.id.btn_alterPwd);
 
-        imgAvator = (ImageView) findViewById(R.id.img_avatar);
+        avatarImg = (ImageView) findViewById(R.id.img_avatar);
     }
     private void initEvent() {
-        imgAvator.setOnClickListener(this);
+        avatarImg.setOnClickListener(this);
         btnAlterPwd.setOnClickListener(this);
     }
 

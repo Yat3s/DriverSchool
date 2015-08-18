@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp" >
+    android:orientation="vertical">
 
 <!--     <ImageView
         android:layout_width="wrap_content"
@@ -10,11 +10,46 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_logo" />
  -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/theme_blue">
+        <ImageButton android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/back"
+            android:padding="8dp"
+            android:background="@drawable/bg_blue"/>
+        <TextView
+            android:id="@+id/tv_titleBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:layout_centerInParent="true"
+            android:text="登录"
+            android:textSize="20dp"/>
+
+        <Button android:id="@+id/btn_reg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_blue"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:textSize="16sp"
+            android:textColor="@color/md_white_1000"
+            android:text="快速注册"/>
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/layout_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:padding="16dp"
         android:orientation="vertical" >
 
         <com.drivingevaluate.view.CleanableEditText
@@ -27,8 +62,7 @@
             android:drawableRight="@mipmap/ic_clean"
             android:inputType="phone"
             android:textColorHint="@color/font_gray_light"
-            android:hint="请输入手机号" 
-            android:text="15170777774"/>
+            android:hint="请输入手机号"/>
 
         <com.drivingevaluate.view.CleanableEditText
             android:id="@+id/et_password"
@@ -41,7 +75,6 @@
             android:inputType="textPassword"
             android:textColorHint="@color/font_gray_light"
             android:drawablePadding="5dp"
-            android:text="123456"
             android:hint="请输入密码"/>
         
         <Button android:id="@+id/btn_login"
@@ -58,20 +91,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/layout_login"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="8dp"
         android:textColor="@color/theme_blue"
         android:text="忘记密码?"/>
-    
-    <Button android:id="@+id/btn_reg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_white_border"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="注册"/>
 
-</RelativeLayout>
+
+</LinearLayout>

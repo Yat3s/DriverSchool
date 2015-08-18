@@ -3,7 +3,6 @@ package com.drivingevaluate.ui;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.CoachHorizontalAdapter;
@@ -41,32 +40,20 @@ public class ResultCoachActivity extends Yat3sActivity{
 
         getDate();
     }
-    private void setCoachData() {
-        Log.e("Yat3s", coaches.size() + "");
-        coachHorizontalAdapter.notifyDataSetChanged();
-    }
+
 
     private void initEvent() {
-//        lvCoachs.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = getIntent();
-//                intent.putExtra("coachName", coachList.get(position).getSellerName());
-//                intent.putExtra("class", coachList.get(position).getGoodsTitle());
-//                setResult(0, intent);
-//                finish();
-//            }
-//        });
+
     }
 
     private void getDate() {
-//        JsonResolve.getCoachByDSchool("1", "0", "0", handler);
         merchantId = getIntent().getExtras().getInt("merchantId");
         Callback<List<Coach>> callback = new Callback<List<Coach>>() {
             @Override
             public void success(List<Coach> coachList, Response response) {
                 coaches.addAll(coachList);
-                setCoachData();
+                coachHorizontalAdapter.notifyDataSetChanged();
+                dismissLoading();
             }
 
             @Override
@@ -88,6 +75,7 @@ public class ResultCoachActivity extends Yat3sActivity{
     }
 
     private void initView() {
+        showLoading();
         setTitleBarTitle("选择教练");
         coachRv = (RecyclerView) findViewById(R.id.coach_rv);
         coachRvLayoutManager = new GridLayoutManager(ResultCoachActivity.this,3);

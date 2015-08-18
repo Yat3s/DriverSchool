@@ -12,7 +12,7 @@
 
     <style name="MyTheme" parent="android:Theme.Light">
         <item name="android:windowTitleBackgroundStyle">@style/StatusBarBackground </item>
-        <item name="android:windowTitleSize">50dp</item>
+        <item name="android:windowTitleSize">48dp</item>
         <item name="android:animationDuration">5000</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:textColorSecondary">@color/md_grey_800</item>
