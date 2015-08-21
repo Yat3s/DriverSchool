@@ -1,45 +1,54 @@
 package com.drivingevaluate.ui;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.drivingevaluate.R;
+import com.drivingevaluate.adapter.EvaluationAdapter;
 import com.drivingevaluate.model.Coach;
+import com.drivingevaluate.model.Evaluation;
 import com.drivingevaluate.net.GetCoachDetailRequester;
+import com.drivingevaluate.net.GetCoachEvaluationListRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.MyUtil;
+import com.drivingevaluate.view.FullyLinearLayoutManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
-
-    private ListView lvComment;
     private TextView tvCoachName;
     private Button btnSelectMe,consultButton;
-    private LinearLayout commentLayout;
-    private ImageView avatorImageView;
+    private ImageView avatarImg;
 
-    private String[] commenter = new String[]{"寂寞**雨","洗剪吹**特","你好**吗"};
-    private String[] comments = new String[]{"这个教练挺不错的","还行哦特","特别棒"};
     private int coachId;
     private Coach coach;
+    private List<Evaluation> mEvaluations = new ArrayList<>();
+    private EvaluationAdapter evaluationAdapter;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.evaluation_coach_rv) RecyclerView evaluationRv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBackTitleBar();
         setContentView(R.layout.activity_coach_info);
+
+        ButterKnife.bind(this);
+        setToolbarWithNavigation(toolbar, "教练详情");
 
         initView();
         initEvent();
@@ -53,51 +62,68 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
     }
 
     private void getData() {
-        lvComment.setFocusable(false);
-        coachId = getIntent().getExtras().getInt("coachId");
+        coachId = getIntent().getIntExtra("coachId",-1);
+        getCoachInfo();
+        getCoachEvaluation();
+    }
 
-        Callback<Coach> callback = new Callback<Coach>() {
+    /**
+     * get Coach Evaluations
+     */
+    private void getCoachEvaluation() {
+        Callback<List<Evaluation>> callback = new Callback<List<Evaluation>>() {
             @Override
-            public void success(Coach remoteCoach, Response response) {
-                coach = remoteCoach;
-                refreshView();
+            public void success(List<Evaluation> evaluations, Response response) {
+                mEvaluations.addAll(evaluations);
+                evaluationAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                Log.e("Yat3s", "getCoachEvaluation---->"+error.getMessage());
             }
         };
         Map<String,Object> param = new HashMap<>();
         param.put("goodsId",coachId);
+        param.put("timestamp", System.currentTimeMillis());
+        GetCoachEvaluationListRequester getCoachEvaluationListRequester = new GetCoachEvaluationListRequester(callback,param);
+        getCoachEvaluationListRequester.request();
+
+    }
+
+    /**
+     * get Coach Information
+     */
+    private void getCoachInfo() {
+        Callback<Coach> callback = new Callback<Coach>() {
+            @Override
+            public void success(Coach remoteCoach, Response response) {
+                coach = remoteCoach;
+                tvCoachName.setText(coach.getSellerName());
+                MyUtil.loadImg(avatarImg, coach.getPhotoPath());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("Yat3s","getCoachInfo---->"+error.getMessage());
+            }
+        };
+        Map<String,Object> param = new HashMap<>();
+        param.put("goodsId", coachId);
         GetCoachDetailRequester getCoachDetailRequester = new GetCoachDetailRequester(callback,param);
         getCoachDetailRequester.request();
     }
 
-    private void refreshView() {
-        tvCoachName.setText(coach.getSellerName());
-        MyUtil.loadImg(avatorImageView, coach.getPhotoPath());
-
-        for (int i = 0; i < commenter.length; i++) {
-            View convertView = LayoutInflater.from(getApplicationContext())
-                    .inflate(R.layout.item_lv_coach_comment, null);
-            TextView tvName = (TextView) convertView
-                    .findViewById(R.id.tv_commenter);
-            tvName.setText(commenter[i]);
-            commentLayout.addView(convertView);
-        }
-    }
 
     private void initView() {
-        setTitleBarTitle("教练详情");
-
         btnSelectMe = (Button) findViewById(R.id.btn_selectMe);
         tvCoachName = (TextView) findViewById(R.id.tv_coachName);
-        lvComment = (ListView) findViewById(R.id.lv_comment);
-        avatorImageView = (ImageView) findViewById(R.id.img_avatar);
+        avatarImg = (ImageView) findViewById(R.id.img_avatar);
         consultButton = (Button) findViewById(R.id.consult_btn);
 
-        commentLayout = (LinearLayout) findViewById(R.id.layoutComment);
+        evaluationAdapter = new EvaluationAdapter(mEvaluations,this);
+        evaluationRv.setLayoutManager(new FullyLinearLayoutManager(this));
+        evaluationRv.setAdapter(evaluationAdapter);
     }
 
     @Override

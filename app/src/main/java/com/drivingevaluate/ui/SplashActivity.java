@@ -5,6 +5,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
+import com.baidu.mapapi.model.LatLng;
 import com.drivingevaluate.R;
 import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.ui.base.Yat3sActivity;
@@ -21,16 +22,21 @@ public class SplashActivity extends Yat3sActivity {
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enlarge);
         animation.setFillAfter(true);
         welcome = (RelativeLayout) findViewById(R.id.welcome);
-//        welcome.startAnimation(animation);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
-                    while (mApplication.myLl == null) {
-                        Thread.sleep(500);
-                    }//如果2秒内还没获取user或者定位 就再继续等。
-                    checkIsLogin();
+                    Thread.sleep(2000);
+                    if (mApplication.myLl == null){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                showShortToast("请检查网络连接");
+                                mApplication.myLl = new LatLng(0.0,0.0);
+                            }
+                        });
+                    }
+                    runApp();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -38,7 +44,7 @@ public class SplashActivity extends Yat3sActivity {
         }).start();
     }
 
-    private void checkIsLogin() {
+    private void runApp() {
         if (SharedPreferencesUtils.contains(SplashActivity.this,"token")){
             AppConf.TOKEN = SharedPreferencesUtils.get(SplashActivity.this,"token","").toString();
             AppConf.USER_ID = (int) SharedPreferencesUtils.get(SplashActivity.this,"userId",-1);
@@ -46,9 +52,5 @@ public class SplashActivity extends Yat3sActivity {
         }
         startActivity(MainActivity.class);
         finish();
-//        else {
-//            startActivity(LoginActivity.class);
-//            finish();
-//        }
     }
 }

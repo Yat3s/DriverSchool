@@ -192,7 +192,7 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
             case R.id.ll_orderByPrice:
                 resetIcon();
                 imgPrice.setImageResource(R.mipmap.ic_order_price_pressed);
-                setSort("2");
+                setSort("4");
                 break;
             case R.id.ll_orderByMember:
                 resetIcon();

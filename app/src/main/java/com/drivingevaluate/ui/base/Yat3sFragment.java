@@ -1,10 +1,5 @@
 package com.drivingevaluate.ui.base;
 
-import com.drivingevaluate.app.DEApplication;
-import com.drivingevaluate.config.Config;
-import com.drivingevaluate.util.MyUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.drivingevaluate.app.DEApplication;
+import com.drivingevaluate.config.Config;
+import com.drivingevaluate.ui.LoginActivity;
+import com.drivingevaluate.util.MyUtil;
+import com.drivingevaluate.util.SharedPreferencesUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class Yat3sFragment extends Fragment{
     protected DEApplication mApplication;
@@ -64,7 +66,7 @@ public class Yat3sFragment extends Fragment{
         }
     }
     public void loadImg(ImageView img,String url) {
-        ImageLoader.getInstance().displayImage("http://121.43.234.220:8090/upload/"+url, img,Config.ImageOptions);
+        ImageLoader.getInstance().displayImage(url, img,Config.ImageOptions);
     }
     /**
      * 开始定位
@@ -100,5 +102,20 @@ public class Yat3sFragment extends Fragment{
         if (paramBundle != null)
             localIntent.putExtras(paramBundle);
         startActivity(localIntent);
+    }
+
+    /**
+     * 检查是否登录。为什么不用异常401来引导到登陆界面 是有原因的
+     * @param paramClass
+     * @param paramBundle
+     */
+    protected void checkLogin2startActivity(Class<?> paramClass, Bundle paramBundle){
+        if(SharedPreferencesUtils.contains(getActivity(), "token")){
+            startActivity(paramClass, paramBundle);
+        }
+        else {
+            startActivity(LoginActivity.class);
+            showShortToast("请先登录");
+        }
     }
 }

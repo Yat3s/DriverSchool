@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,7 +66,7 @@ public class MomentAdapter extends BaseAdapter{
             vh.commentBtn = (ImageButton) convertView.findViewById(R.id.comment_moment_btn);
             vh.avatarImg = (ImageView) convertView.findViewById(R.id.avatar_img);
             vh.mainImg = (ImageView) convertView.findViewById(R.id.img);
-
+//            vh.imagesGv = (GridView) convertView.findViewById(R.id.images_gv);
             convertView.setTag(vh);
 
         }else {
@@ -79,7 +80,7 @@ public class MomentAdapter extends BaseAdapter{
         vh.publicTimeTv.setText(DateUtils.getStandardDate(moments.get(position).getCreateTime()));
 
         if (moments.get(position).getUser().getHeadPath() != null) {
-//            MyUtil.loadImg(vh.avatarImg, moments.get(position).getUser().getHeadPath());
+            MyUtil.loadImg(vh.avatarImg, moments.get(position).getUser().getHeadPath());
         }
 
         if (!checkData(moments.get(position).getImgPathsLimit()).isEmpty()) {
@@ -124,6 +125,14 @@ public class MomentAdapter extends BaseAdapter{
             }
         });
 
+
+//        List<Image> images = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            Image image = new Image();
+//            image.setUrl("http://cdn.v2ex.co/avatar/829a/a70e/68604_large.png?m=1407164781");
+//            images.add(image);
+//        }
+//        vh.imagesGv.setAdapter(new StatusGridImgsAdapter(context,images));
         return convertView;
     }
 
@@ -140,6 +149,8 @@ public class MomentAdapter extends BaseAdapter{
         ImageView mainImg;
 
         ImageButton commentBtn;
+
+        GridView imagesGv;
     }
 
     private String checkData(String str){

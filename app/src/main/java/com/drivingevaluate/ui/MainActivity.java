@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
@@ -37,11 +36,10 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-
 		initView();
 		initEvent();
+		Loc();
 		setSelect(0);
 		VersionManager versionManager = new VersionManager(MainActivity.this,0);
 		versionManager.checkUpdate();

@@ -77,14 +77,17 @@
             android:layout_marginTop="8dp"
             android:textColor="@color/md_grey_600"
             android:text="无" />
-
+        <com.drivingevaluate.view.WrapHeightGridView
+            android:id="@+id/images_gv"
+            style="@style/GridViewImages"
+            android:layout_width="272dp" />
 
         <ImageView
             android:id="@+id/img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

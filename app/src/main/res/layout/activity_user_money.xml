@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_toolbar"/>
+    <TextView
+        android:id="@+id/tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_centerInParent="true"
+        android:text="我的红包金额"/>
+    <TextView
+        android:id="@+id/money_user_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tag"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:textSize="40sp"
+        android:text="0.0元"/>
+    <TextView
+        android:id="@+id/tip_user_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/money_user_tv"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/md_grey_500"
+        android:padding="16dp"/>
+</RelativeLayout>

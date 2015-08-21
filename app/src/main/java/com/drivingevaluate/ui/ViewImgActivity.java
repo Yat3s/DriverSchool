@@ -3,7 +3,6 @@ package com.drivingevaluate.ui;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.ImageView;
 
 import com.drivingevaluate.R;
@@ -14,7 +13,6 @@ public class ViewImgActivity extends Yat3sActivity implements OnClickListener{
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_img_view);
         initView();
         initEvent();

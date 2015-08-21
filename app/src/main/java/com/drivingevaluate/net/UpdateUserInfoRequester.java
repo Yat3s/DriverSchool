@@ -8,9 +8,9 @@ import java.util.Map;
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
-import retrofit.http.Body;
+import retrofit.http.FieldMap;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
-import retrofit.http.QueryMap;
 
 /**
  * Created by Yat3s on 8/17/15.
@@ -26,8 +26,9 @@ public class UpdateUserInfoRequester {
     }
 
     private interface UpdateUserInfoService{
+        @FormUrlEncoded
         @POST("/api/user/save_userinfo.htm")
-        void updateUserInfo(@Body String body,@QueryMap Map<String,Object> param,Callback<String> callback);
+        void updateUserInfo(@FieldMap Map<String,Object> param,Callback<String> callback);
     }
 
     public void request(){
@@ -42,6 +43,6 @@ public class UpdateUserInfoRequester {
                 .setRequestInterceptor(requestInterceptor)
                 .build();
         UpdateUserInfoService UpdateUserInfoService = restAdapter.create(UpdateUserInfoService.class);
-        UpdateUserInfoService.updateUserInfo("",param, callback);
+        UpdateUserInfoService.updateUserInfo(param, callback);
     }
 }

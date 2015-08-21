@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <include layout="@layout/layout_toolbar"/>
     <EditText
         android:id="@+id/consult_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_edittext"
         android:layout_margin="10dp"
-        android:hint="请输入咨询内容"
+        android:hint="请输入咨询或者意见"
+        android:textSize="12sp"
         android:gravity="left|top"
         android:lines="5"/>
 
@@ -21,5 +22,5 @@
         android:background="@drawable/bg_blue"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        android:text="提交咨询"/>
+        android:text="提交"/>
 </LinearLayout>

@@ -1,82 +1,98 @@
 package com.drivingevaluate.model;
 
 public class Order {
-    private int orderId;
-    private int userId;
-    private int dSchoolId;
-    private String dSchoolName;
+    private String orderNo;
+    private int goodsId;
+    private int sid;
+    private int totalFee;
+    private String goodsTitle;
+    private String photoPath;
+    private String sname;
 
-    private int coachId;
-    private String coachName;
-
-    private String createTime;
-    private float prePay;//预付价
+    private long createdTime;
+    private int prePay;//预付价
     private int status;//订单状态 1表示成功 0表示失败
     private int judgeStatus;
 
     private String result;
 
-    public int getOrderId() {
-        return orderId;
+    public String getResult() {
+        return result;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setResult(String result) {
+        this.result = result;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getOrderNo() {
+        return orderNo;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
-    public int getdSchoolId() {
-        return dSchoolId;
+    public int getGoodsId() {
+        return goodsId;
     }
 
-    public void setdSchoolId(int dSchoolId) {
-        this.dSchoolId = dSchoolId;
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
     }
 
-    public String getdSchoolName() {
-        return dSchoolName;
+    public int getSid() {
+        return sid;
     }
 
-    public void setdSchoolName(String dSchoolName) {
-        this.dSchoolName = dSchoolName;
+    public void setSid(int sid) {
+        this.sid = sid;
     }
 
-    public int getCoachId() {
-        return coachId;
+    public int getTotalFee() {
+        return totalFee;
     }
 
-    public void setCoachId(int coachId) {
-        this.coachId = coachId;
+    public void setTotalFee(int totalFee) {
+        this.totalFee = totalFee;
     }
 
-    public String getCoachName() {
-        return coachName;
+    public String getGoodsTitle() {
+        return goodsTitle;
     }
 
-    public void setCoachName(String coachName) {
-        this.coachName = coachName;
+    public void setGoodsTitle(String goodsTitle) {
+        this.goodsTitle = goodsTitle;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getPhotoPath() {
+        return photoPath;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
     }
 
-    public float getPrePay() {
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname;
+    }
+
+    public long getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(long createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public int getPrePay() {
         return prePay;
     }
 
-    public void setPrePay(float prePay) {
+    public void setPrePay(int prePay) {
         this.prePay = prePay;
     }
 
@@ -94,13 +110,5 @@ public class Order {
 
     public void setJudgeStatus(int judgeStatus) {
         this.judgeStatus = judgeStatus;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
     }
 }

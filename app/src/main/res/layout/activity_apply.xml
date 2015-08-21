@@ -1,68 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/layout_toolbar" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:orientation="vertical" >
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/md_grey_300" />
-
-        <TextView
-            android:id="@+id/tv_selectCoach"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#EEEEEE"
-            android:padding="10dp"
-            android:text="填写报名信息" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp" >
+            android:background="#FFFFFF"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="真实姓名:"
-                    android:textColor="@color/theme_blue" />
-
-                <EditText
-                    android:id="@+id/et_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:hint="请输入真实姓名"
-                    android:textColorHint="@color/font_gray_light" />
-            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -70,125 +23,181 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/md_grey_300" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_selectCoach"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal" >
+                android:padding="20dp"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="身份证号:"
-                    android:textColor="@color/theme_blue" />
-
-                <EditText
-                    android:id="@+id/et_idNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:digits="0123456789xX"
-                    android:hint="请输入身份证号"
-                    android:inputType="number"
-                    android:textColorHint="@color/font_gray_light" />
-            </LinearLayout>
-
-            <View
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/md_grey_300" />
+                android:layout_height="wrap_content"
+                android:background="#EEEEEE"
+                android:padding="10dp"
+                android:text="填写报名信息" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal" >
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="手机号码:"
-                    android:textColor="@color/theme_blue" />
-
-                <EditText
-                    android:id="@+id/et_tel"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:hint="请输入手机号码"
-                    android:inputType="phone"
-                    android:textColorHint="@color/font_gray_light" />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/md_grey_300" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal" >
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="详细地址:"
-                    android:textColor="@color/theme_blue" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="真实姓名:"
+                        android:textColor="@color/theme_blue" />
 
-                <EditText
-                    android:id="@+id/etAddr"
+                    <EditText
+                        android:id="@+id/et_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:hint="请输入真实姓名"
+                        android:textColorHint="@color/font_gray_light" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/md_grey_300" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:hint="请输入详细地址"
-                    android:textColorHint="@color/font_gray_light" />
-            </LinearLayout>
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/md_grey_300" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="身份证号:"
+                        android:textColor="@color/theme_blue" />
 
-            <LinearLayout
-                android:id="@+id/layout_selectSchool"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/bg_white_nopading"
-                android:clickable="true"
-                android:orientation="horizontal" >
+                    <EditText
+                        android:id="@+id/et_idNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:digits="0123456789xX"
+                        android:hint="请输入身份证号"
+                        android:inputType="number"
+                        android:textColorHint="@color/font_gray_light" />
+                </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="就读院校:"
-                    android:textColor="@color/theme_blue" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/md_grey_300" />
 
-                <TextView
-                    android:id="@+id/et_school"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:drawableRight="@mipmap/ic_forward"
-                    android:hint="请选择就读院校"
-                    android:textColorHint="@color/font_gray_light"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/md_grey_300" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="手机号码:"
+                        android:textColor="@color/theme_blue" />
 
-            <!--<LinearLayout-->
+                    <EditText
+                        android:id="@+id/et_tel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:hint="请输入手机号码"
+                        android:inputType="phone"
+                        android:textColorHint="@color/font_gray_light" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/md_grey_300" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="详细地址:"
+                        android:textColor="@color/theme_blue" />
+
+                    <EditText
+                        android:id="@+id/etAddr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:hint="请输入详细地址"
+                        android:textColorHint="@color/font_gray_light" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/md_grey_300" />
+
+                <LinearLayout
+                    android:id="@+id/layout_selectSchool"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/bg_white_nopading"
+                    android:clickable="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="就读院校:"
+                        android:textColor="@color/theme_blue" />
+
+                    <TextView
+                        android:id="@+id/et_school"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:drawableRight="@mipmap/ic_forward"
+                        android:hint="请选择就读院校"
+                        android:textColorHint="@color/font_gray_light"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/md_grey_300" />
+
+                <!--<LinearLayout-->
                 <!--android:id="@+id/layout_selectTime"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
@@ -199,127 +208,128 @@
                 <!--android:orientation="horizontal" >-->
 
                 <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="接送时间:"-->
-                    <!--android:textColor="@color/theme_blue" />-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="接送时间:"-->
+                <!--android:textColor="@color/theme_blue" />-->
 
                 <!--<TextView-->
-                    <!--android:id="@+id/et_takeMeUp"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:text="2012-4-4 上午"-->
-                    <!--android:background="@null"-->
-                    <!--android:textColor="@color/font_gray_dark"-->
-                    <!--android:textSize="14sp" />-->
-                 <!--<TextView-->
-                     <!--android:layout_width="wrap_content"-->
-                     <!--android:layout_height="match_parent"-->
-                     <!--android:text="或"-->
-                     <!--android:textColor="@color/font_black"/>-->
+                <!--android:id="@+id/et_takeMeUp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:text="2012-4-4 上午"-->
+                <!--android:background="@null"-->
+                <!--android:textColor="@color/font_gray_dark"-->
+                <!--android:textSize="14sp" />-->
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="或"-->
+                <!--android:textColor="@color/font_black"/>-->
 
                 <!--<TextView-->
-                    <!--android:id="@+id/et_takeMeUp2"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:text="2015-4-4 下午"-->
-                    <!--android:background="@null"-->
-                    <!--android:textColor="@color/font_gray_dark"-->
-                    <!--android:textSize="14sp" />-->
-            <!--</LinearLayout>-->
+                <!--android:id="@+id/et_takeMeUp2"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:text="2015-4-4 下午"-->
+                <!--android:background="@null"-->
+                <!--android:textColor="@color/font_gray_dark"-->
+                <!--android:textSize="14sp" />-->
+                <!--</LinearLayout>-->
 
-            <!--<View-->
+                <!--<View-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="0.5dp"-->
                 <!--android:layout_marginTop="5dp"-->
                 <!--android:background="@color/md_grey_300" />-->
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#EEEEEE"
-            android:padding="10dp"
-            android:text="支付方式" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="预付款:"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/prePay_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="10元"
-                android:textColor="@color/theme_blue"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#EEEEEE" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/alipay_logo" />
-
-            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp" >
+                android:background="#EEEEEE"
+                android:padding="10dp"
+                android:text="支付方式" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tag_z"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="支付宝" />
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="预付款:"
+                    android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/prePay_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tag_z"
-                    android:text="推荐支付宝用户使用" />
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="10元"
+                    android:textColor="@color/theme_blue"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-                <RadioButton
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#EEEEEE" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
+                    android:src="@mipmap/alipay_logo" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/tag_z"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="支付宝" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tag_z"
+                        android:text="推荐支付宝用户使用" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_commitOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/selector_blue"
+                android:text="确认订单，去支付"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_commitOrder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/selector_blue"
-            android:text="确认订单，去支付"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

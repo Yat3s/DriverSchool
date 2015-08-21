@@ -5,46 +5,49 @@ package com.drivingevaluate.model;
  * Email:hawkoyates@gmail.com
  */
 public class LuckyMoney {
-    private int id;
-    private String name;
-    private String time;
-    private int sumOfMoney;
+    private int userId;
+    private String account;
+    private int hongbao;
+    private int balance;
+    private long createdTime;
 
-    public LuckyMoney(String name, String time, int sumOfMoney) {
-        this.name = name;
-        this.time = time;
-        this.sumOfMoney = sumOfMoney;
+    public int getUserId() {
+        return userId;
     }
 
-    public int getId() {
-        return id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getAccount() {
+        return account;
     }
 
-    public String getName() {
-        return name;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getHongbao() {
+        return hongbao;
     }
 
-    public String getTime() {
-        return time;
+    public void setHongbao(int hongbao) {
+        this.hongbao = hongbao;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public int getBalance() {
+        return balance;
     }
 
-    public int getSumOfMoney() {
-        return sumOfMoney;
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
-    public void setSumOfMoney(int sumOfMoney) {
-        this.sumOfMoney = sumOfMoney;
+    public long getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(long createdTime) {
+        this.createdTime = createdTime;
     }
 }

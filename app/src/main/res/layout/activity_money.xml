@@ -6,7 +6,7 @@
     android:background="@color/md_grey_900"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <include layout="@layout/layout_toolbar"/>
     <ImageButton
         android:id="@+id/get_money_btn"
         android:layout_width="wrap_content"
@@ -32,6 +32,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
+        android:layout_marginBottom="24dp"
         app:cardCornerRadius="10dp"
         app:cardBackgroundColor="@color/md_yellow_100">
 

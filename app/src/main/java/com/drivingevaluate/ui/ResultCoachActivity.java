@@ -3,6 +3,7 @@ package com.drivingevaluate.ui;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.CoachHorizontalAdapter;
@@ -19,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -29,12 +32,15 @@ public class ResultCoachActivity extends Yat3sActivity{
     private CoachHorizontalAdapter coachHorizontalAdapter;
     private List<Coach> coaches = new ArrayList<>();
     private int merchantId;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBackTitleBar();
         setContentView(R.layout.activity_result_coachs);
 
+        ButterKnife.bind(this);
+        setToolbarWithNavigation(toolbar, "选择教练");
         initView();
         initEvent();
 
@@ -76,7 +82,6 @@ public class ResultCoachActivity extends Yat3sActivity{
 
     private void initView() {
         showLoading();
-        setTitleBarTitle("选择教练");
         coachRv = (RecyclerView) findViewById(R.id.coach_rv);
         coachRvLayoutManager = new GridLayoutManager(ResultCoachActivity.this,3);
         coachRv.setLayoutManager(coachRvLayoutManager);

@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
-
+    <include
+        android:id="@+id/toolbar" layout="@layout/layout_toolbar"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         android:layout_marginBottom="50dp">
 
         <LinearLayout
@@ -64,6 +66,8 @@
 
             <include layout="@layout/layout_comment" />
 
+            <include layout="@layout/layout_consult" />
+
             <include layout="@layout/layout_pick_line" />
         </LinearLayout>
     </ScrollView>
@@ -81,7 +85,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/bg_grid_gray"
-            android:text="在线咨询"
+            android:text="在线咨询驾校"
             android:textColor="#FFFFFF" />
 
         <com.balysv.materialripple.MaterialRippleLayout

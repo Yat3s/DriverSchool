@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:background="#EEEEEE"
         android:orientation="vertical" >
-		<include layout="@layout/titlebar_back_commit"/>
+        <include layout="@layout/titlebar_back_commit"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,6 +31,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:clickable="true"
+                android:scaleType="centerCrop"
                 android:src="@drawable/bg_addpic" />
         </LinearLayout>
 
@@ -72,7 +73,7 @@
         <LinearLayout
             android:id="@+id/layout_emo"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="gone" >
 

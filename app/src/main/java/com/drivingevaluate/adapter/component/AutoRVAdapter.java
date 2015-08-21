@@ -27,7 +27,7 @@ public abstract class AutoRVAdapter extends RecyclerView.Adapter<RVHolder> {
 
     @Override
     public RVHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(onCreateViewLayoutID(viewType), null);
+        View view = LayoutInflater.from(context).inflate(onCreateViewLayoutID(viewType),parent,false);
 
         return new RVHolder(view);
     }

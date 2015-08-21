@@ -1,12 +1,9 @@
 package com.drivingevaluate.ui;
 
 
-import com.drivingevaluate.R;
-import com.drivingevaluate.view.BackTitleBar;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +13,23 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ResultSchoolActivity extends Activity{
+import com.drivingevaluate.R;
+import com.drivingevaluate.ui.base.Yat3sActivity;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class ResultSchoolActivity extends Yat3sActivity{
     private ListView lvSchool;
     private String[] schoolList ;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BackTitleBar titleBar = new BackTitleBar(this);
         setContentView(R.layout.activity_result_school);
-        titleBar.setTitle("选择学校");
+        ButterKnife.bind(this);
+        setToolbarWithNavigation(toolbar, "选择学校");
         initView();
     }
 
@@ -39,7 +44,7 @@ public class ResultSchoolActivity extends Activity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = getIntent();
-                intent.putExtra("name", schoolList[position]);
+                intent.putExtra("schoolName", schoolList[position]);
                 setResult(1,intent);
                 finish();
             }

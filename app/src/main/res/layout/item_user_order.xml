@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_border_corner"
+    android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/id_order_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单号:1506151056297820000000900000004"
+            android:padding="8dp"
+            android:textSize="13sp"
+            android:textColor="@color/md_grey_500"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/md_grey_300"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <com.drivingevaluate.view.RoundAngleImageView
+                android:id="@+id/image_merchant_order_img"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@mipmap/pic_test"
+                android:scaleType="centerCrop"
+                app:roundWidth="8dp"
+                app:roundHeight="8dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp">
+
+                <TextView
+                    android:id="@+id/name_merchant_order_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="蓝翔驾校"
+                    android:textColor="@color/md_grey_900"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/subject_order_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name_merchant_order_tv"
+                    android:layout_marginTop="16dp"
+                    android:text="科目二教练"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/status_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_alignParentRight="true"
+                    android:text="预定成功"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/md_green_500" />
+            </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/md_grey_300" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <View
+            android:id="@+id/dot"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/shape_circle_green"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:id="@+id/pre_pay_order_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/dot"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/md_red_300"
+            android:text="预付10元"/>
+        <TextView
+            android:id="@+id/date_order_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/md_grey_500"
+            android:layout_marginLeft="12dp"
+            android:layout_marginBottom="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="8月12日"/>
+    </RelativeLayout>
+
+</LinearLayout>

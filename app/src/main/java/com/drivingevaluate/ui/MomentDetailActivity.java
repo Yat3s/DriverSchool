@@ -3,6 +3,7 @@ package com.drivingevaluate.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +38,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -57,12 +60,14 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
     private Moment mMoment;
     private List<Comment> mComments = new ArrayList<>();
     private CommentAdapter commentAdapter;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        setBackTitleBar();
         setContentView(R.layout.activity_moment_detail);
-
+        ButterKnife.bind(this);
+        setToolbarWithNavigation(toolbar, "动态详情");
         initView();
         initEvent();
 
@@ -230,7 +235,6 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         postCommentRequester.request();
     }
     private void initView() {
-        setTitleBarTitle("详情");
 
         avatarImg = (ImageView) findViewById(R.id.avatar_img);
         img = (ImageView) findViewById(R.id.img);

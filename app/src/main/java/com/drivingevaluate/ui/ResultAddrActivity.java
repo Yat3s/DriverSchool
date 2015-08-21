@@ -2,6 +2,7 @@ package com.drivingevaluate.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -16,9 +17,13 @@ import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.drivingevaluate.R;
 
+import butterknife.Bind;
+
 public class ResultAddrActivity extends Activity implements OnGetPoiSearchResultListener{
     private ListView lvAddr;
     private PoiSearch mPoiSearch = null;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

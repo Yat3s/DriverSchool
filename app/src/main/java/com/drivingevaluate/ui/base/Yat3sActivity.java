@@ -3,7 +3,8 @@ package com.drivingevaluate.ui.base;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -17,10 +18,12 @@ import android.widget.Toast;
 import com.drivingevaluate.R;
 import com.drivingevaluate.app.DEApplication;
 import com.drivingevaluate.config.Config;
+import com.drivingevaluate.ui.LoginActivity;
 import com.drivingevaluate.util.MyUtil;
+import com.drivingevaluate.util.SharedPreferencesUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class Yat3sActivity extends FragmentActivity {
+public class Yat3sActivity extends AppCompatActivity {
     protected DEApplication mApplication;
     protected Dialog mLoading;
 
@@ -70,7 +73,7 @@ public class Yat3sActivity extends FragmentActivity {
         Log.e("Yat3s", msg);
     }
     protected void loadImg(ImageView img,String url) {
-        ImageLoader.getInstance().displayImage("http://121.43.234.220:8090/upload/"+url, img,Config.ImageOptions);
+        ImageLoader.getInstance().displayImage( url, img, Config.ImageOptions);
     }
     /**
      * 开始定位
@@ -100,6 +103,34 @@ public class Yat3sActivity extends FragmentActivity {
         if (paramBundle != null)
             localIntent.putExtras(paramBundle);
         startActivity(localIntent);
+    }
+    /**
+     * 检查是否登录。为什么不用异常401来引导到登陆界面 是有原因的
+     * @param paramClass
+     * @param paramBundle
+     */
+    protected void checkLogin2startActivity(Class<?> paramClass, Bundle paramBundle){
+        if(SharedPreferencesUtils.contains(this, "token")){
+            startActivity(paramClass, paramBundle);
+        }
+        else {
+            startActivity(LoginActivity.class);
+            showShortToast("请先登录");
+        }
+    }
+
+    protected void setToolbarWithNavigation(Toolbar toolbar, String title) {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     protected void setBackTitleBar() {

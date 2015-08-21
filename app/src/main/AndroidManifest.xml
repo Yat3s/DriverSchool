@@ -28,16 +28,17 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:name=".app.DEApplication"
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:theme="@style/MyTheme">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".ui.SplashActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,8 +47,8 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.MerchantInfoActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.ApplyDSchoolActivity" android:screenOrientation="portrait"/>
@@ -61,7 +62,7 @@
         <activity android:name=".ui.UserInfoActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.AlterPwdActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.AboutActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.MyOrderActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.UserOrderActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.MomentActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.MsgActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.SelectCityActivity" android:screenOrientation="portrait"/>
@@ -71,8 +72,9 @@
         <activity android:name=".ui.SearchActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.ConsultActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.EvaluationActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.GetMoneyActivity" android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+        <activity android:name=".ui.GetMoneyActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.UserMoneyActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.MerchantConsultActivity" android:screenOrientation="portrait" />
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

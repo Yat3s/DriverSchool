@@ -3,6 +3,7 @@ package com.drivingevaluate.ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -11,7 +12,7 @@ import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.EvaluationAdapter;
 import com.drivingevaluate.model.Evaluation;
 import com.drivingevaluate.model.Merchant;
-import com.drivingevaluate.net.GetEvaluationListRequester;
+import com.drivingevaluate.net.GetAllEvaluationListRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -38,11 +41,15 @@ public class EvaluationActivity extends Yat3sActivity {
 
     private int merchantId;
     private Merchant merchant;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        setBackTitleBar();
         setContentView(R.layout.activity_merchant_evaluation);
+
+        ButterKnife.bind(this);
+        setToolbarWithNavigation(toolbar, "评价列表");
 
         initView();
         getData();
@@ -76,12 +83,11 @@ public class EvaluationActivity extends Yat3sActivity {
         Map<String,Object> param = new HashMap<>();
         param.put("merchantId",merchantId);
         param.put("timestamp",System.currentTimeMillis());
-        GetEvaluationListRequester getEvaluationListRequester = new GetEvaluationListRequester(callback,param);
-        getEvaluationListRequester.request();
+        GetAllEvaluationListRequester getAllEvaluationListRequester = new GetAllEvaluationListRequester(callback,param);
+        getAllEvaluationListRequester.request();
     }
 
     private void initView() {
-        setTitleBarTitle("评价列表");
 
         evaluationRv = (RecyclerView) findViewById(R.id.evaluation_merchant_rv);
         layoutManager = new LinearLayoutManager(this);

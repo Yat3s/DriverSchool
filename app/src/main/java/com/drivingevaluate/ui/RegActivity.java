@@ -2,6 +2,7 @@ package com.drivingevaluate.ui;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -28,12 +31,14 @@ public class RegActivity extends Yat3sActivity implements OnClickListener{
 
     private String account, pwd,verityCode;
 
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        setBackTitleBar();
         setContentView(R.layout.activity_reg);
-
+        ButterKnife.bind(this);
+        setToolbarWithNavigation(toolbar, "填写注册信息");
         initView();
         initEvent();
     }
@@ -44,7 +49,6 @@ public class RegActivity extends Yat3sActivity implements OnClickListener{
     }
 
     private void initView() {
-        setTitleBarTitle("填写注册信息");
 
         etPhone = (EditText) findViewById(R.id.et_phone);
         etPswd = (EditText) findViewById(R.id.et_password);

@@ -2,6 +2,7 @@ package com.drivingevaluate.ui;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +18,12 @@ import com.baidu.mapapi.search.route.RoutePlanSearch;
 import com.baidu.mapapi.search.route.TransitRoutePlanOption;
 import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
-import com.drivingevaluate.app.DEApplication;
 import com.drivingevaluate.R;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.MyUtil;
-import com.drivingevaluate.view.BackTitleBar;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MerchantMapActivity extends Yat3sActivity implements OnGetRoutePlanResultListener {
     private TextView tvRoutePlan;
@@ -33,13 +35,17 @@ public class MerchantMapActivity extends Yat3sActivity implements OnGetRoutePlan
     private LatLng myLl,endLatLng;
     private TransitRouteResult transitRouteResult;
     private Dialog loading;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BackTitleBar titleBar = new BackTitleBar(this);
         setContentView(R.layout.activity_merchant_map);
-        titleBar.setTitle("路线");
-        DEApplication.getInstance().initBaiduLocClient();
+
+        ButterKnife.bind(this);
+        setToolbarWithNavigation(toolbar, "路线");
+
+        Loc();
         initView();
         getData();
         startRoutePlan();

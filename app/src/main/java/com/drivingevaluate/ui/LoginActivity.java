@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,7 +33,6 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         initView();
     }
@@ -95,6 +93,9 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
             public void success(User user, Response response) {
                 SharedPreferencesUtils.put(LoginActivity.this, "token", user.getAccessToken());
                 SharedPreferencesUtils.put(LoginActivity.this, "userId", user.getUserId());
+                if (user.getUserName()!=null)
+                    SharedPreferencesUtils.put(LoginActivity.this, "userName", user.getUserName());
+                SharedPreferencesUtils.put(LoginActivity.this, "phone", user.getAccount());
                 AppConf.TOKEN = SharedPreferencesUtils.get(LoginActivity.this,"token","").toString();
                 AppConf.USER_ID = (int) SharedPreferencesUtils.get(LoginActivity.this,"userId",-1);
                 startActivity(MainActivity.class);
@@ -110,7 +111,7 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
                 int code = error.getResponse().getStatus();
                 switch (code) {
                     case 401:
-                        showShortToast("账号密码错误");
+                        showShortToast("账号或密码错误");
                         break;
                     case 404:
                         showShortToast("该账号不存在");

@@ -1,5 +1,7 @@
 package com.drivingevaluate.app;
 
+import android.app.Application;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -8,13 +10,12 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
-import android.app.Application;
+import com.testin.agent.TestinAgent;
 
 public class DEApplication extends Application {
     public static DEApplication mInstance;
     public LocationClient blocation;
-    public LatLng myLl = null;
+    public LatLng myLl ;
     public String myAddr = "";
     public String cityCode = "";
     @Override
@@ -27,6 +28,7 @@ public class DEApplication extends Application {
     private void init() {
         initBaidu();
         initImageLoader();
+        TestinAgent.init(this, "b5901b96b9b368ed5353139ee7ab5932", "WeTesting");
     }
 
     private void initImageLoader() {
@@ -67,6 +69,7 @@ public class DEApplication extends Application {
                     return;
                 myLl = new LatLng(location.getLatitude(), location.getLongitude());
                 myAddr = location.getAddrStr();
+                cityCode = location.getCityCode();
             }
         });
         LocationClientOption option = new LocationClientOption();
@@ -76,7 +79,6 @@ public class DEApplication extends Application {
         option.setAddrType("all");
         option.setScanSpan(500); // 设置定位模式，小于1秒则一次定位;大于等于1秒则定时定位
         blocation.setLocOption(option);
-
         blocation.start();
     }
 }

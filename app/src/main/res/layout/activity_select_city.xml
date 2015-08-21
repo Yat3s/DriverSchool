@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#EEEEEE"
     android:orientation="vertical" >
-
+    <include layout="@layout/layout_toolbar"/>
     <EditText
         android:id="@+id/et_searchCity"
         android:layout_width="match_parent"
@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/selector_common"
         android:drawableRight="@mipmap/ic_true"
+        android:padding="8dp"
         android:gravity="center_vertical"
         android:text="南昌" />
 
@@ -44,6 +45,7 @@
         android:background="@drawable/selector_common"
         android:drawableRight="@mipmap/ic_current_loc"
         android:gravity="center_vertical"
+        android:padding="8dp"
         android:text="南昌" />
 
     <TextView
@@ -63,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="8dp"
             android:background="@drawable/bg_white_border"
             android:text="北京" />
 
@@ -71,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="8dp"
             android:background="@drawable/bg_white_border"
             android:text="上海" />
 
@@ -79,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="8dp"
             android:background="@drawable/bg_white_border"
             android:text="广州" />
     </LinearLayout>
@@ -93,6 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="8dp"
             android:background="@drawable/bg_white_border"
             android:text="重庆" />
 
@@ -101,6 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="8dp"
             android:background="@drawable/bg_white_border"
             android:text="长沙" />
 
@@ -109,6 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:padding="8dp"
             android:background="@drawable/bg_white_border"
             android:text="深圳" />
     </LinearLayout>

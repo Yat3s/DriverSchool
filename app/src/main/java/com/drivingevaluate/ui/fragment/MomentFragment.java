@@ -19,8 +19,10 @@ import com.drivingevaluate.model.Moment;
 import com.drivingevaluate.net.GetMomentListRequester;
 import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.AddMomentActivity;
+import com.drivingevaluate.ui.LoginActivity;
 import com.drivingevaluate.ui.MomentDetailActivity;
 import com.drivingevaluate.ui.base.Yat3sFragment;
+import com.drivingevaluate.util.SharedPreferencesUtils;
 import com.drivingevaluate.view.RefreshLayout;
 
 import org.json.JSONException;
@@ -166,8 +168,13 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
                 getActivity().finish();
                 break;
             case R.id.add_moment_fab:
-                Intent toAddNewsIntent = new Intent(getActivity(), AddMomentActivity.class);
-                startActivityForResult(toAddNewsIntent, 0);
+                if (SharedPreferencesUtils.contains(getActivity(),"token")) {
+                    Intent toAddNewsIntent = new Intent(getActivity(), AddMomentActivity.class);
+                    startActivityForResult(toAddNewsIntent, 0);
+                }
+                else {
+                    startActivity(LoginActivity.class);
+                }
                 break;
             default:
                 break;

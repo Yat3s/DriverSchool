@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:colorPrimaryDark">@color/theme_blue</item>
-        <item name="android:textColor">@color/md_grey_800</item>
+        <item name="android:textColor">@color/md_grey_700</item>
     </style>
     <style name="StatusBarBackground">
         <item name="android:background">@color/theme_blue</item>
@@ -31,5 +31,16 @@
         <item name="android:progressDrawable">@drawable/room_rating_bar</item>
         <item name="android:minHeight">12dp</item>
         <item name="android:maxHeight">12dp</item>
+    </style>
+
+    <style name="GridViewImages">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:numColumns">3</item>
+        <item name="android:horizontalSpacing">4dp</item>
+        <item name="android:verticalSpacing">4dp</item>
+        <item name="android:cacheColorHint">@color/transparent</item>
+        <item name="android:listSelector">@color/transparent</item>
+        <item name="android:scrollbars">none</item>
     </style>
 </resources>

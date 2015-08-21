@@ -2,32 +2,33 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#EEEEEE"
         android:orientation="vertical" >
+        <include layout="@layout/layout_toolbar"/>
 
         <RelativeLayout
+            android:id="@+id/avatar_user_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp" >
-
-            <ImageView
-                android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_common"
+            android:clickable="true"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/img_bg_user" />
-
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:text="更换头像"/>
             <ImageView
-                android:id="@+id/img_avatar"
+                android:id="@+id/avatar_user_img"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/avatar" />
+                android:scaleType="centerCrop"
+                android:src="@mipmap/pic_test"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -35,49 +36,89 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="#FFFFFF"
-            android:padding="10dp" >
+            android:padding="12dp" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="昵         称:" />
+                android:text="昵称:" />
 
-            <TextView
-                android:id="@+id/tv_nickName"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/name_et"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:gravity="right"
                 android:text="Yat3s"
+                android:background="@null"
                 android:textColor="@color/font_gray_light" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/md_grey_300"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:background="#FFFFFF"
-            android:padding="10dp" >
+            android:padding="12dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="性别:" />
+
+            <TextView
+                android:id="@+id/gender_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:gravity="right"
+                android:text="男"
+                android:background="@null"
+                android:textColor="@color/font_gray_light" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/md_grey_300"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:padding="12dp" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="个性签名:" />
 
-            <TextView
-                android:id="@+id/tv_emotions"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/sign_et"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:background="@null"
+                android:gravity="right"
                 android:text="我喜欢我，是颜色不一样的烟火"
                 android:textColor="@color/font_gray_light" />
         </LinearLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/md_grey_300"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:background="#FFFFFF"
-            android:padding="10dp" >
+            android:padding="12dp" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,45 +126,71 @@
                 android:text="绑定手机:" />
 
             <TextView
-                android:id="@+id/tv_phone"
-                android:layout_width="wrap_content"
+                android:id="@+id/phone_tv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:gravity="right"
                 android:text="151****7774"
                 android:textColor="@color/font_gray_light" />
         </LinearLayout>
-        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/md_grey_300"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:background="#FFFFFF"
-            android:padding="10dp" >
+            android:padding="12dp" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="注册时间:" />
+                android:text="学车状态:" />
 
             <TextView
-                android:id="@+id/tv_regDate"
-                android:layout_width="wrap_content"
+                android:id="@+id/status_tv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="2015-7-1"
+                android:gravity="right"
+                android:text="正在学车"
                 android:textColor="@color/font_gray_light" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/md_grey_300"/>
+
+        <LinearLayout
+            android:id="@+id/modify_pwd_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_common"
+            android:clickable="true"
+            android:padding="12dp" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/ic_forward"
+                android:text="修改密码" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_alterPwd"
+            android:id="@+id/save_user_info_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
+            android:textSize="18sp"
             android:background="@drawable/selector_blue"
-            android:text="修改密码"
+            android:text="保存"
             android:textColor="#FFFFFF" />
     </LinearLayout>
-
 </ScrollView>

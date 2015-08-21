@@ -3,6 +3,7 @@ package com.drivingevaluate.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +26,8 @@ import com.drivingevaluate.util.AppMethod;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -82,11 +85,14 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
             }
         };
     };
+    @Bind(R.id.toolbar) Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBackTitleBar();
         setContentView(R.layout.activity_apply);
+
+        ButterKnife.bind(this);
+        setToolbarWithNavigation(toolbar, "报名信息");
 
         initView();
         initEvent();
@@ -107,7 +113,6 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         layoutSelectSchool.setOnClickListener(this);
     }
     private void initView() {
-        setTitleBarTitle("报名信息");
 
         etName = (EditText) findViewById(R.id.et_name);
         etIdNo = (EditText) findViewById(R.id.et_idNo);
@@ -195,8 +200,15 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
             showShortToast("请选择学校");
         }
         else {
+            showShortToast("正在检查支付宝账户...");
             checkAlipay();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        etSchool.setText(data.getStringExtra("schoolName"));
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

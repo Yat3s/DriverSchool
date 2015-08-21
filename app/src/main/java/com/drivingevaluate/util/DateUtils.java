@@ -44,7 +44,7 @@ public class DateUtils {
     public static String getHourDateStr(Long timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         String date = sdf.format(new Date(timestamp));
-        return date;
+        return "昨天 "+date;
     }
 
     public static String getStandardDate(long timestamp) {

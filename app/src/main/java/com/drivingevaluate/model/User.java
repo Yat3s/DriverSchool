@@ -18,11 +18,20 @@ public class User implements Serializable{
     private Float lat;//纬度
     private Float lon;//经度
     private String sign;
+    private int status;
 
     private Integer grade;//等级
     private String identifyCode;//验证码
     private Date identifyCodeSendTime;//验证码发送时间  用以检查验证码是否过期
     private String headPath;//头像路径
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getAccessToken() {
         return accessToken;
