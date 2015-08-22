@@ -18,6 +18,7 @@ import com.drivingevaluate.net.LuckyMoneyRequester;
 import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.ui.fragment.LuckMoneyDialogFragment;
+import com.drivingevaluate.util.SharedPreferencesUtils;
 
 import org.json.JSONException;
 
@@ -93,7 +94,12 @@ public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.get_money_btn:
-                grabMoney();
+                if (SharedPreferencesUtils.contains(this,"token")){
+                    grabMoney();
+                }
+                else {
+                    startActivity(LoginActivity.class);
+                }
                 break;
         }
     }

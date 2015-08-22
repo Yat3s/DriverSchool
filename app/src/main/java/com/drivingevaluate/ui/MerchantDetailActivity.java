@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -30,6 +29,7 @@ import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.DateUtils;
 import com.drivingevaluate.view.FullyLinearLayoutManager;
+import com.drivingevaluate.view.SlideShowView;
 
 import org.json.JSONException;
 
@@ -45,7 +45,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MerchantInfoActivity extends Yat3sActivity implements OnClickListener {
+public class MerchantDetailActivity extends Yat3sActivity implements OnClickListener {
     private LinearLayout navigateLl, evaluationLl,evaluationPreLl,loading;
     private Button btnApply, btnConsult, moreCoachBtn,moreEvaluationBtn;
     private TextView tvName, merchantIntroTv, tvCoachAmount, studentAmountTextView, gradeTextView,addressTv,evaluationMerchantTtv;
@@ -55,7 +55,6 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
     private RecyclerView courseRv;
     private CoachHorizontalAdapter coachHorizontalAdapter;
     private CourseAdapter courseAdapter;
-    private ImageButton btnMap;
     private List<Coach> coaches = new ArrayList<>();
     private List<Course> courses = new ArrayList<>();
     private int merchantId;
@@ -63,10 +62,11 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.consult_merchant_pre_ll) LinearLayout consultLayout;
     @Bind(R.id.all_consult_btn) Button allConsultBtn;
+    @Bind(R.id.ads) SlideShowView adBanner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_merchant_info);
+        setContentView(R.layout.activity_merchant_detail);
         ButterKnife.bind(this);
         setToolbarWithNavigation(toolbar, "驾校详情");
         initView();
@@ -79,7 +79,6 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
         btnConsult.setOnClickListener(this);
         btnApply.setOnClickListener(this);
         moreCoachBtn.setOnClickListener(this);
-        btnMap.setOnClickListener(this);
         merchantIntroTv.setOnClickListener(this);
         navigateLl.setOnClickListener(this);
         evaluationLl.setOnClickListener(this);
@@ -105,6 +104,9 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
                 addressTv.setText(merchant.getSaddress());
                 merchantIntroTv.setText(merchant.getSintroduction());
 
+                //轮播
+                adBanner.startAds(merchant.getImgUrls());
+                Log.e("Yat3s", "img" + merchant.getImgUrls().get(0).getUrl());
                 //评分
                 gradeTextView.setText(merchant.getAvgGrade()+"");
                 timeGradeRb.setRating(merchant.getItem1());
@@ -116,7 +118,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
 
                 //暂时只有单个课程价格
                 Course course = new Course();
-                course.setPrice(merchant.getOurPrice());
+                course.setPrice(merchant.getMarketPrice());
                 course.setSubject("自选教学时间");
                 course.setType("普通班");
                 course.setMerchantId(merchant.getSid());
@@ -127,7 +129,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
 
             @Override
             public void failure(RetrofitError error) {
-                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(MerchantInfoActivity.this);
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(MerchantDetailActivity.this);
                 try {
                     requestErrorHandler.handError(error);
                 } catch (IOException e) {
@@ -146,14 +148,14 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
             public void success(List<Coach> coachList, Response response) {
                 coaches.addAll(coachList);
                 tvCoachAmount.setText("精品教练(" + coaches.size() + ")");
-                moreCoachBtn.setText("查看全部" + coaches.size() + "位教练");
+                moreCoachBtn.setText("查看全部教练");
                 coachHorizontalAdapter.notifyDataSetChanged();
                 loading.setVisibility(View.GONE);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(MerchantInfoActivity.this);
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(MerchantDetailActivity.this);
                 try {
                     requestErrorHandler.handError(error);
                 } catch (IOException e) {
@@ -183,12 +185,11 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
                     showSize = 2;
                 }
                 for (int i = 0;i < showSize;i++) {
-                    View v = LayoutInflater.from(MerchantInfoActivity.this).inflate(R.layout.item_evaluation_rv, null);
+                    View v = LayoutInflater.from(MerchantDetailActivity.this).inflate(R.layout.item_evaluation_rv, null);
                     TextView nameTv = (TextView) v.findViewById(R.id.name_tv);
                     TextView pubTimeTv = (TextView) v.findViewById(R.id.pubTime_tv);
                     TextView contentTv = (TextView) v.findViewById(R.id.content_tv);
                     RatingBar gradeRb = (RatingBar) v.findViewById(R.id.grade_rb);
-
                     nameTv.setText(evaluations.get(i).getUser().getUserName());
                     pubTimeTv.setText(DateUtils.getStandardDate(evaluations.get(i).getCreateTime()));
                     contentTv.setText(evaluations.get(i).getJudgeWord());
@@ -199,7 +200,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
 
             @Override
             public void failure(RetrofitError error) {
-                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(MerchantInfoActivity.this);
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(MerchantDetailActivity.this);
                 try {
                     requestErrorHandler.handError(error);
                 } catch (IOException e) {
@@ -228,7 +229,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
                     showSize = 2;
                 }
                 for (int i = 0;i < showSize;i++) {
-                    View v = LayoutInflater.from(MerchantInfoActivity.this).inflate(R.layout.item_consult, null);
+                    View v = LayoutInflater.from(MerchantDetailActivity.this).inflate(R.layout.item_consult, null);
                     TextView nameTv = (TextView) v.findViewById(R.id.name_tv);
                     TextView contentTv = (TextView) v.findViewById(R.id.content_consult_tv);
 
@@ -256,7 +257,7 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
 
         courseRv = (RecyclerView) findViewById(R.id.price_merchant_rv);
         FullyLinearLayoutManager courseLinearLayoutManager = new FullyLinearLayoutManager(this);
-        courseAdapter = new CourseAdapter(courses,MerchantInfoActivity.this);
+        courseAdapter = new CourseAdapter(courses,MerchantDetailActivity.this);
         courseRv.setLayoutManager(courseLinearLayoutManager);
         courseRv.setAdapter(courseAdapter);
 
@@ -286,7 +287,6 @@ public class MerchantInfoActivity extends Yat3sActivity implements OnClickListen
         placeGradeTv = (TextView) findViewById(R.id.place_grade_tv);
         serviceGradeTv = (TextView) findViewById(R.id.service_grade_tv);
 
-        btnMap = (ImageButton) findViewById(R.id.btn_map);
     }
 
     @Override

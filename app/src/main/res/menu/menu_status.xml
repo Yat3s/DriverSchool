@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/no_status_study" android:title="未学车" />
+    <item android:id="@+id/ing_status_study" android:title="学车中"/>
+    <item android:id="@+id/complete_status_study" android:title="已拿驾照"/>
+    <item android:id="@+id/god_status_study" android:title="开车开的起飞"/>
+</menu>

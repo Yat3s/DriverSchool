@@ -1,9 +1,8 @@
 package com.drivingevaluate.util;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+import android.util.Log;
+
+import com.drivingevaluate.config.AppConf;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -15,7 +14,11 @@ import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 
-import android.util.Log;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 /**
  * 我的post请求方式工具类
  *
@@ -31,6 +34,7 @@ public class MyPost {
 		String result = null;
 		HttpResponse httpResponse = null;
 		HttpPost post = new HttpPost(url);
+		post.addHeader("token", AppConf.TOKEN);
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.getParams().setIntParameter(HttpConnectionParams.SO_TIMEOUT,	20000); // 超时设置
 		client.getParams().setIntParameter(HttpConnectionParams.CONNECTION_TIMEOUT, 10000);// 连接超时

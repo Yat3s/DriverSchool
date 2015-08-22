@@ -34,6 +34,7 @@ public class ResultCoachActivity extends Yat3sActivity{
     private int merchantId;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    private int pageNo = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class ResultCoachActivity extends Yat3sActivity{
         initView();
         initEvent();
 
-        getDate();
+        getCoachListData();
     }
 
 
@@ -52,14 +53,19 @@ public class ResultCoachActivity extends Yat3sActivity{
 
     }
 
-    private void getDate() {
+    private void getCoachListData() {
         merchantId = getIntent().getExtras().getInt("merchantId");
         Callback<List<Coach>> callback = new Callback<List<Coach>>() {
             @Override
             public void success(List<Coach> coachList, Response response) {
-                coaches.addAll(coachList);
-                coachHorizontalAdapter.notifyDataSetChanged();
-                dismissLoading();
+                if (coachList.size() !=0 ) {
+                    coaches.addAll(coachList);
+                    pageNo++;
+                    getCoachListData();
+                }else{
+                    dismissLoading();
+                    coachHorizontalAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -76,6 +82,7 @@ public class ResultCoachActivity extends Yat3sActivity{
         };
         Map<String,Object> param = new HashMap<>();
         param.put("merchantId",merchantId);
+        param.put("pageNo",pageNo);
         GetCoachListRequester getCoachListRequester = new GetCoachListRequester(callback,param);
         getCoachListRequester.request();
     }

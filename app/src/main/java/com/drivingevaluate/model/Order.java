@@ -1,6 +1,8 @@
 package com.drivingevaluate.model;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable{
     private String orderNo;
     private int goodsId;
     private int sid;
@@ -10,7 +12,7 @@ public class Order {
     private String sname;
 
     private long createdTime;
-    private int prePay;//预付价
+    private float prePay;//预付价
     private int status;//订单状态 1表示成功 0表示失败
     private int judgeStatus;
 
@@ -88,11 +90,11 @@ public class Order {
         this.createdTime = createdTime;
     }
 
-    public int getPrePay() {
+    public float getPrePay() {
         return prePay;
     }
 
-    public void setPrePay(int prePay) {
+    public void setPrePay(float prePay) {
         this.prePay = prePay;
     }
 
@@ -110,5 +112,23 @@ public class Order {
 
     public void setJudgeStatus(int judgeStatus) {
         this.judgeStatus = judgeStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderNo='" + orderNo + '\'' +
+                ", goodsId=" + goodsId +
+                ", sid=" + sid +
+                ", totalFee=" + totalFee +
+                ", goodsTitle='" + goodsTitle + '\'' +
+                ", photoPath='" + photoPath + '\'' +
+                ", sname='" + sname + '\'' +
+                ", createdTime=" + createdTime +
+                ", prePay=" + prePay +
+                ", status=" + status +
+                ", judgeStatus=" + judgeStatus +
+                ", result='" + result + '\'' +
+                '}';
     }
 }

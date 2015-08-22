@@ -20,18 +20,23 @@ import retrofit.mime.TypedFile;
 public class UploadFileRequester {
     private Callback<Image> callback;
     private TypedFile file;
-
+    private UploadFileService uploadFileService;
     public UploadFileRequester(Callback<Image> callback, TypedFile file) {
         this.callback = callback;
         this.file = file;
+        createREST();
     }
 
     public interface UploadFileService {
         @Multipart
         @POST("/api/upload.htm")
-        void uploadFile(@Part("file") TypedFile file,@Query("tag") int id,Callback<Image> callback);
+        void uploadFileForId(@Part("file") TypedFile file,@Query("tag") int id,Callback<Image> callback);
+
+        @Multipart
+        @POST("/api/upload.htm")
+        void uploadFileForPath(@Part("file") TypedFile file,Callback<Image> callback);
     }
-    public void request(){
+    public void createREST(){
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
@@ -42,7 +47,15 @@ public class UploadFileRequester {
                 .setEndpoint(ServerConf.SERVER_IP)
                 .setRequestInterceptor(requestInterceptor)
                 .build();
-        UploadFileService uploadFileService = restAdapter.create(UploadFileService.class);
-        uploadFileService.uploadFile(file,1,callback);
+        uploadFileService = restAdapter.create(UploadFileService.class);
+
+    }
+
+    public void uploadFileForId(){
+        uploadFileService.uploadFileForId(file,1,callback);
+    }
+
+    public void uploadFileForPath(){
+        uploadFileService.uploadFileForPath(file,callback);
     }
 }

@@ -40,12 +40,20 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
-public class UserInfoActivity extends Yat3sActivity{
+/**
+ * Created by Yat3s on 8/22/15.
+ * Email:hawkoyates@gmail.com
+ */
+public class FirstSettingInfoActivity extends Yat3sActivity{
     private User user;
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.avatar_user_img) ImageView avatarImg;
-    @Bind(R.id.sign_tv) TextView signTv;
-    @Bind(R.id.name_et) EditText nameEt;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.avatar_user_img)
+    ImageView avatarImg;
+    @Bind(R.id.sign_tv)
+    TextView signTv;
+    @Bind(R.id.name_et)
+    EditText nameEt;
     @Bind(R.id.phone_tv) TextView phoneTv;
     @Bind(R.id.gender_tv) TextView genderTv;
     @Bind(R.id.status_tv) TextView statusTv;
@@ -57,10 +65,9 @@ public class UserInfoActivity extends Yat3sActivity{
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        setContentView(R.layout.activity_user_info);
+        setContentView(R.layout.activity_first_setting_info);
         ButterKnife.bind(this);
-        setToolbarWithNavigation(toolbar, "个人信息");
-        nameEt.clearFocus();
+        setToolbarWithNavigation(toolbar, "开始");
         getDate();
     }
 
@@ -96,10 +103,6 @@ public class UserInfoActivity extends Yat3sActivity{
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, 1);
-    }
-    @OnClick(R.id.modify_pwd_layout)
-    void modifyPwd(){
-        startActivity(AlterPwdActivity.class);
     }
 
     @OnClick(R.id.gender_layout)

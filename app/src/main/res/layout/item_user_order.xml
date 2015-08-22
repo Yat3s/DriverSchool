@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -26,14 +25,11 @@
             android:orientation="horizontal"
             android:padding="8dp">
 
-            <com.drivingevaluate.view.RoundAngleImageView
+            <ImageView
                 android:id="@+id/image_merchant_order_img"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@mipmap/pic_test"
-                android:scaleType="centerCrop"
-                app:roundWidth="8dp"
-                app:roundHeight="8dp"/>
+                android:scaleType="centerCrop"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -102,9 +98,17 @@
             android:textColor="@color/md_grey_500"
             android:layout_marginLeft="12dp"
             android:layout_marginBottom="8dp"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/pre_pay_order_tv"
             android:layout_centerVertical="true"
             android:text="8月12日"/>
+        <Button
+            android:id="@+id/evaluate_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_blue"
+            android:textColor="@color/md_white_1000"
+            android:text="评价教练"/>
     </RelativeLayout>
 
 </LinearLayout>

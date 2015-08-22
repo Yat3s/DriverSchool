@@ -41,6 +41,7 @@ public class EvaluationActivity extends Yat3sActivity {
 
     private int merchantId;
     private Merchant merchant;
+    private int pageNo = 1;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Override
@@ -61,18 +62,22 @@ public class EvaluationActivity extends Yat3sActivity {
         Callback<List<Evaluation>> callback = new Callback<List<Evaluation>>() {
             @Override
             public void success(List<Evaluation> remoteEvaluations, Response response) {
-                evaluations.addAll(remoteEvaluations);
-                evaluationAdapter.notifyDataSetChanged();
-                evaluationNumTv.setText(evaluations.size()+"人评价");
-                //评分
-                gradeTv.setText(merchant.getAvgGrade()+"");
-                timeGradeRb.setRating(merchant.getItem1());
-                placeGradeRb.setRating(merchant.getItem2());
-                serviceGradeRb.setRating(merchant.getItem3());
-                timeGradeTv.setText(merchant.getItem1() + "分");
-                placeGradeTv.setText(merchant.getItem2() + "分");
-                serviceGradeTv.setText(merchant.getItem3() + "分");
-
+                if (remoteEvaluations.size()!=0 ){
+                    evaluations.addAll(remoteEvaluations);
+                    pageNo++;
+                }
+                else {
+                    evaluationAdapter.notifyDataSetChanged();
+                    evaluationNumTv.setText(evaluations.size()+"人评价");
+                    //评分
+                    gradeTv.setText(merchant.getAvgGrade()+"");
+                    timeGradeRb.setRating(merchant.getItem1());
+                    placeGradeRb.setRating(merchant.getItem2());
+                    serviceGradeRb.setRating(merchant.getItem3());
+                    timeGradeTv.setText(merchant.getItem1() + "分");
+                    placeGradeTv.setText(merchant.getItem2() + "分");
+                    serviceGradeTv.setText(merchant.getItem3() + "分");
+                }
             }
 
             @Override
@@ -88,7 +93,6 @@ public class EvaluationActivity extends Yat3sActivity {
     }
 
     private void initView() {
-
         evaluationRv = (RecyclerView) findViewById(R.id.evaluation_merchant_rv);
         layoutManager = new LinearLayoutManager(this);
         evaluationAdapter = new EvaluationAdapter(evaluations,this);

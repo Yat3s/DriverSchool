@@ -25,7 +25,7 @@ import com.drivingevaluate.model.Merchant;
 import com.drivingevaluate.net.GetMerchantListRequester;
 import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.LoginActivity;
-import com.drivingevaluate.ui.MerchantInfoActivity;
+import com.drivingevaluate.ui.MerchantDetailActivity;
 import com.drivingevaluate.ui.SelectCityActivity;
 import com.drivingevaluate.ui.base.Yat3sFragment;
 import com.drivingevaluate.util.SharedPreferencesUtils;
@@ -134,7 +134,7 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
                 }else {
                     Bundle paramBundle = new Bundle();
                     paramBundle.putInt("merchantId", merchants.get(position - 1).getSid());
-                    startActivity(MerchantInfoActivity.class, paramBundle);
+                    startActivity(MerchantDetailActivity.class, paramBundle);
                 }
             }
         });
@@ -169,8 +169,10 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
         Map<String,Object> parameter = new HashMap<>();
         parameter.put("pageNo",page);
         parameter.put("orderBy",sort);
-        parameter.put("lat",mApplication.myLl.latitude);
-        parameter.put("lon", mApplication.myLl.longitude);
+        if (mApplication.myLl != null){
+            parameter.put("lat",mApplication.myLl.latitude);
+            parameter.put("lon", mApplication.myLl.longitude);
+        }
         GetMerchantListRequester getMerchantListRequester = new GetMerchantListRequester(callback,parameter);
         getMerchantListRequester.request();
 

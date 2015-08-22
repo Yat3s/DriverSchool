@@ -13,7 +13,6 @@ public class Moment {
     private String title;
 
     private String imgPathsLimit;
-    private String[] images;
 
     private User user;
 
@@ -123,11 +122,4 @@ public class Moment {
         this.imgPathsLimit = imgPathsLimit;
     }
 
-    public String[] getImages() {
-        return images;
-    }
-
-    public void setImages(String[] images) {
-        this.images = images;
-    }
 }

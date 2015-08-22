@@ -1,14 +1,7 @@
 package com.drivingevaluate.view;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
@@ -16,7 +9,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -24,10 +19,15 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 import com.drivingevaluate.R;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.drivingevaluate.model.Image;
+import com.drivingevaluate.util.MyUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -50,7 +50,7 @@ public class SlideShowView extends FrameLayout {
     private final static boolean isAutoPlay = true;
 
     //自定义轮播图的资源
-    private String[] imageUrls;
+    private List<Image> images;
     //放轮播图片的ImageView 的list
     private List<ImageView> imageViewsList;
     //放圆点的View的list
@@ -88,8 +88,6 @@ public class SlideShowView extends FrameLayout {
         super(context, attrs, defStyle);
         this.context = context;
 
-        initImageLoader(context);
-
         initData();
         if(isAutoPlay){
             startPlay();
@@ -113,17 +111,14 @@ public class SlideShowView extends FrameLayout {
      * 初始化相关Data
      */
     private void initData(){
-        imageViewsList = new ArrayList<ImageView>();
-        dotViewsList = new ArrayList<View>();
-
-        // 一步任务获取图片
-        new GetListTask().execute("");
+        imageViewsList = new ArrayList<>();
+        dotViewsList = new ArrayList<>();
     }
     /**
      * 初始化Views等UI
      */
     private void initUI(Context context){
-        if(imageUrls == null || imageUrls.length == 0)
+        if(images == null || images.size() == 0)
             return;
 
         LayoutInflater.from(context).inflate(R.layout.layout_slideshow, this, true);
@@ -132,25 +127,44 @@ public class SlideShowView extends FrameLayout {
         dotLayout.removeAllViews();
 
         // 热点个数与图片特殊相等
-        for (int i = 1; i < 4; i++) {
-            ImageView view =  new ImageView(context);
-//            view.setTag(imageUrls[i]);
-//            if(i==0)//给一个默认图
-//                view.setBackgroundResource(R.drawable.banner1);
-            view.setImageDrawable(getResources().getDrawable(R.drawable.banner+i));
-            view.setScaleType(ScaleType.FIT_XY);
-            imageViewsList.add(view);
-
+        for (int i = 0; i < images.size(); i++) {
             ImageView dotView =  new ImageView(context);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
             params.leftMargin = 4;
             params.rightMargin = 4;
             dotLayout.addView(dotView, params);
+            if (i==0){
+                dotView.setBackgroundResource(R.mipmap.ic_dot_selected);
+            }else {
+                dotView.setBackgroundResource(R.mipmap.ic_dot_normal);
+            }
             dotViewsList.add(dotView);
+
+            ImageView view =  new ImageView(context);
+            Log.e("Yat3s","img"+images.get(i).getUrl());
+            MyUtil.loadImg(view,images.get(i).getUrl());
+            view.setScaleType(ScaleType.FIT_XY);
+            imageViewsList.add(view);
         }
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setFocusable(true);
+
+        //点击广告时候重新计时 避免用户手动滑动轮播图的时候轮播还在转动
+        viewPager.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        scheduledExecutorService.shutdown();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        startPlay();
+                        break;
+                }
+                return false;
+            }
+        });
 
         viewPager.setAdapter(new MyPagerAdapter());
         viewPager.setOnPageChangeListener(new MyPageChangeListener());
@@ -165,17 +179,12 @@ public class SlideShowView extends FrameLayout {
         @Override
         public void destroyItem(View container, int position, Object object) {
             // TODO Auto-generated method stub
-            //((ViewPag.er)container).removeView((View)object);
             ((ViewPager)container).removeView(imageViewsList.get(position));
         }
 
         @Override
         public Object instantiateItem(View container, int position) {
-//            ImageView imageView = imageViewsList.get(position);
-
-//            imageLoader.displayImage(imageView.getTag() + "", imageView);
-
-            ((ViewPager)container).addView(imageViewsList.get(position));
+            ((ViewPager) container).addView(imageViewsList.get(position));
             return imageViewsList.get(position);
         }
 
@@ -301,61 +310,8 @@ public class SlideShowView extends FrameLayout {
             }
         }
     }
-
-
-    /**
-     * 异步任务,获取数据
-     *
-     */
-    class GetListTask extends AsyncTask<String, Integer, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            try {
-                // 这里一般调用服务端接口获取一组轮播图片，下面是从百度找的几个图片
-
-                imageUrls = new String[]{
-                        "http://image.zcool.com.cn/56/35/1303967876491.jpg",
-                        "http://image.zcool.com.cn/59/54/m_1303967870670.jpg",
-                        "http://image.zcool.com.cn/47/19/1280115949992.jpg",
-                        "http://image.zcool.com.cn/59/11/m_1303967844788.jpg",
-                        "http://image.zcool.com.cn/56/35/1303967876491.jpg",
-                        "http://image.zcool.com.cn/59/54/m_1303967870670.jpg",
-                        "http://image.zcool.com.cn/47/19/1280115949992.jpg",
-                };
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if (result) {
-                initUI(context);
-            }
-        }
-    }
-
-    /**
-     * ImageLoader 图片组件初始化
-     *
-     * @param context
-     */
-    public static void initImageLoader(Context context) {
-        // This configuration tuning is custom. You can tune every option, you
-        // may tune some of them,
-        // or you can create default configuration by
-        // ImageLoaderConfiguration.createDefault(this);
-        // method.
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs() // Remove
-                // for
-                // release
-                // app
-                .build();
-        // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(config);
+    public void startAds(List<Image> ads){
+        images = ads;
+        initUI(context);
     }
 }

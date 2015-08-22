@@ -135,8 +135,8 @@
 
         </LinearLayout>
         <View
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="12dp"
+            android:layout_height="16dp"
             android:layout_gravity="center_vertical|right"
             android:background="@mipmap/ic_forward"/>
     </LinearLayout>

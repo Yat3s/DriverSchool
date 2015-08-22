@@ -75,7 +75,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
     }
 
     private void getData() {
-        momentId = getIntent().getIntExtra("momentId", -1);
+        momentId = getIntent().getExtras().getInt("momentId");
         getMoment();
     }
 

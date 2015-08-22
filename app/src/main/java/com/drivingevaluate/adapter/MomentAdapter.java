@@ -16,6 +16,7 @@ import com.drivingevaluate.model.Moment;
 import com.drivingevaluate.ui.MomentDetailActivity;
 import com.drivingevaluate.ui.ViewImgActivity;
 import com.drivingevaluate.util.DateUtils;
+import com.drivingevaluate.util.Infliter;
 import com.drivingevaluate.util.MyUtil;
 import com.drivingevaluate.view.EmoticonsTextView;
 
@@ -63,6 +64,7 @@ public class MomentAdapter extends BaseAdapter{
             vh.distanceTv = (TextView) convertView.findViewById(R.id.distance_moment_tv);
             vh.likeAmountTv = (TextView) convertView.findViewById(R.id.like_moment_tv);
             vh.publicTimeTv = (TextView) convertView.findViewById(R.id.time_moment_tv);
+            vh.statusTv = (TextView) convertView.findViewById(R.id.status_moment_tv);
             vh.commentBtn = (ImageButton) convertView.findViewById(R.id.comment_moment_btn);
             vh.avatarImg = (ImageView) convertView.findViewById(R.id.avatar_img);
             vh.mainImg = (ImageView) convertView.findViewById(R.id.img);
@@ -78,9 +80,12 @@ public class MomentAdapter extends BaseAdapter{
         vh.contentTv.setText(checkData(moments.get(position).getDescription()));
         vh.likeAmountTv.setText(moments.get(position).getPraiseCount() + "赞");
         vh.publicTimeTv.setText(DateUtils.getStandardDate(moments.get(position).getCreateTime()));
-
+        vh.statusTv.setText(Infliter.statusInfliter(moments.get(position).getUser().getStatus()));
         if (moments.get(position).getUser().getHeadPath() != null) {
             MyUtil.loadImg(vh.avatarImg, moments.get(position).getUser().getHeadPath());
+        }
+        else {
+            vh.avatarImg.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_user_default));
         }
 
         if (!checkData(moments.get(position).getImgPathsLimit()).isEmpty()) {
@@ -143,6 +148,7 @@ public class MomentAdapter extends BaseAdapter{
         TextView distanceTv ;
         TextView nameTv ;
         TextView publicTimeTv ;
+        TextView statusTv ;
         EmoticonsTextView contentTv;
 
         ImageView avatarImg;

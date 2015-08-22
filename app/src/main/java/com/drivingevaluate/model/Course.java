@@ -7,25 +7,9 @@ package com.drivingevaluate.model;
 public class Course {
     private String type;
     private String subject;
-    private int price;
+    private float price;
     private int merchantId;
     private String merchantName;
-
-    public String getMerchantName() {
-        return merchantName;
-    }
-
-    public void setMerchantName(String merchantName) {
-        this.merchantName = merchantName;
-    }
-
-    public int getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(int merchantId) {
-        this.merchantId = merchantId;
-    }
 
     public String getType() {
         return type;
@@ -43,11 +27,27 @@ public class Course {
         this.subject = subject;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
+    }
+
+    public int getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(int merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
     }
 }

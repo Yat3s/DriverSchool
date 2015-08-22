@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.app.DEApplication;
-import com.drivingevaluate.config.VersionManager;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.ui.fragment.FindFragment;
 import com.drivingevaluate.ui.fragment.MerchantFragment;
@@ -41,8 +40,6 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 		initEvent();
 		Loc();
 		setSelect(0);
-		VersionManager versionManager = new VersionManager(MainActivity.this,0);
-		versionManager.checkUpdate();
 	}
 
 	private void initEvent() {

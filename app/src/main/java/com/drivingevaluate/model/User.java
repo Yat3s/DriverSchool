@@ -6,7 +6,7 @@ import java.util.Date;
 public class User implements Serializable{
     private Integer userId;
     private String account;
-    private String userName;
+    private String userName = "";
     private String password;
     private String accessToken;
     private String enable;

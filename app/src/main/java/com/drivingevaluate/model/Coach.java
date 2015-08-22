@@ -11,10 +11,10 @@ public class Coach {
     @SerializedName("discountPirce")
     private int discountPrice;
     private int goodsId;
-    private int item1;
-    private int item2;
-    private int item3;
-    private int item4;
+    private double item1;
+    private double item2;
+    private double item3;
+    private double item4;
     private int judgeCount;
     private int marketPrice;
     private double prepayPrice;
@@ -25,8 +25,8 @@ public class Coach {
 
     private long createdTime;
 
-    public float getAvgGrade() {
-        return (item1 + item2 + item3) / 3.0f;
+    public double getAvgGrade() {
+        return (item1 + item2 + item3) / 3.0;
     }
 
     public int getMerchantId() {
@@ -85,35 +85,35 @@ public class Coach {
         this.goodsId = goodsId;
     }
 
-    public int getItem1() {
+    public double getItem1() {
         return item1;
     }
 
-    public void setItem1(int item1) {
+    public void setItem1(double item1) {
         this.item1 = item1;
     }
 
-    public int getItem2() {
+    public double getItem2() {
         return item2;
     }
 
-    public void setItem2(int item2) {
+    public void setItem2(double item2) {
         this.item2 = item2;
     }
 
-    public int getItem3() {
+    public double getItem3() {
         return item3;
     }
 
-    public void setItem3(int item3) {
+    public void setItem3(double item3) {
         this.item3 = item3;
     }
 
-    public int getItem4() {
+    public double getItem4() {
         return item4;
     }
 
-    public void setItem4(int item4) {
+    public void setItem4(double item4) {
         this.item4 = item4;
     }
 

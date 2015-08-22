@@ -50,7 +50,7 @@
             android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.MerchantInfoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.MerchantDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.ApplyDSchoolActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.MerchantMapActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.ResultCoachActivity" android:screenOrientation="portrait"/>
@@ -75,6 +75,8 @@
         <activity android:name=".ui.GetMoneyActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.UserMoneyActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.MerchantConsultActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.UserSignActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.EvaluateActivity" android:screenOrientation="portrait" />
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

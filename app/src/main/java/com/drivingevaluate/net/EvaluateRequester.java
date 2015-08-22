@@ -2,32 +2,33 @@ package com.drivingevaluate.net;
 
 import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.config.ServerConf;
-import com.drivingevaluate.model.Moment;
 
 import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
-import retrofit.http.GET;
-import retrofit.http.QueryMap;
+import retrofit.http.FieldMap;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.POST;
 
 /**
- * Created by Yat3s on 8/14/15.
+ * Created by Yat3s on 8/22/15.
  * Email:hawkoyates@gmail.com
  */
-public class GetMomentDetailRequester {
-    private Callback<Moment> callback;
+public class EvaluateRequester {
+    private Callback<String> callback;
     private Map<String,Object> param;
 
-    public GetMomentDetailRequester(Callback<Moment> callback, Map<String, Object> param) {
+    public EvaluateRequester(Callback<String> callback, Map<String, Object> param) {
         this.callback = callback;
         this.param = param;
     }
 
-    private interface GetMomentDetailService {
-        @GET("/api/publish/get_details.htm")
-        void getMomentDetail(@QueryMap Map<String, Object> param, Callback<Moment> callback);
+    private interface EvaluateService{
+        @FormUrlEncoded
+        @POST("/api/goods/judge.htm")
+        void evaluate(@FieldMap Map<String,Object> param,Callback<String> callback);
     }
 
     public void request(){
@@ -41,8 +42,7 @@ public class GetMomentDetailRequester {
                 .setEndpoint(ServerConf.SERVER_IP)
                 .setRequestInterceptor(requestInterceptor)
                 .build();
-        GetMomentDetailService getMomentDetailService = restAdapter.create(GetMomentDetailService.class);
-        getMomentDetailService.getMomentDetail(this.param, this.callback);
+        EvaluateService evaluateService = restAdapter.create(EvaluateService.class);
+        evaluateService.evaluate(param,callback);
     }
-
 }

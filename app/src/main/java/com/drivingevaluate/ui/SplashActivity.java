@@ -43,7 +43,6 @@ public class SplashActivity extends Yat3sActivity {
             }
         }).start();
     }
-
     private void runApp() {
         if (SharedPreferencesUtils.contains(SplashActivity.this,"token")){
             AppConf.TOKEN = SharedPreferencesUtils.get(SplashActivity.this,"token","").toString();

@@ -1,32 +1,18 @@
 package com.drivingevaluate.api;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import org.w3c.dom.Comment;
-
-import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.drivingevaluate.config.Config;
-import com.drivingevaluate.config.Constants;
-import com.drivingevaluate.model.Good;
-import com.drivingevaluate.model.Merchant;
-import com.drivingevaluate.model.Publish;
-import com.drivingevaluate.model.User;
-import com.drivingevaluate.model.UserAccount;
-import com.drivingevaluate.util.AppMethod;
-import com.drivingevaluate.util.HttpUtil;
-import com.drivingevaluate.util.MyGet;
+import com.drivingevaluate.config.ServerConf;
 import com.drivingevaluate.util.MyPost;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @fileName JsonResolveUtils.java
@@ -110,294 +96,14 @@ public class JsonResolveUtils {
     }
     static String buildFullPath(String apiPath,Map<String,Object> params){
         StringBuilder sb = new StringBuilder();
-        sb.append(Config.HTTPURL1).append(apiPath);
+        sb.append(ServerConf.SERVER_IP).append(apiPath);
         if(params==null){
             return sb.toString();
         }
         sb.append(WENHAO);
         return generateParamentersString(sb,apiPath,params).toString();
     }
-    /**
-     * 用户登录
-     */
-    public static void userLogin(String username,String password,final Handler handler) {
-        final Map<String,Object> param = new HashMap<String, Object>();
-        param.put(ACCOUNT, username);
-        param.put(PASSWORD, password);
-        new Thread() {
-            public void run() {
-                try {
-                    String json = MyGet.doGet(JsonResolveUtils.buildFullPath(userLoginAPI, param));
-                    JSONObject jobj = JSON.parseObject(json);
-                    Integer status = (Integer)jobj.get(RESULT_STATUS);
-                    if(null !=status){
-                        AppMethod.sendMessage(handler, status, Constants.CODE_REFRESH_LOGIN);
-                    }else{
-                        AppMethod.sendMessage(handler, JSON.parseObject(json, User.class), Constants.CODE_REFRESH_LOGIN);
-                    }
-                    Log.e("exc", "JsonUser----------"+JSON.parseObject(json, User.class).getAccount());
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                    Log.e("exc", "JsonUser----------"+e.toString());
-                }
-            }
-        }.start();
-    }
-    /**
-     * 请求验证码
-     */
-    public static void getIdentifyCode(final Map<String,String> param,final Handler handler){
-        new Thread() {
-            public void run() {
-                try {
-                    String json = HttpUtil.postRequest(Config.HTTPURL1+getIdentifyCodeAPI, param);
-                    Log.e("exc", "IdentifyCode----------"+json);
-                    JSONObject jobj = JSON.parseObject(json);
-                    Integer status = (Integer)jobj.get(RESULT_STATUS);
-                    AppMethod.sendMessage(handler, status, Constants.CODE_IDENTIFY_CODE_REQUEST);
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-    }
-    /**
-     *用户注册
-     */
-    public static void userReg(final Map<String,Object> param,final Handler handler){
-        new Thread() {
-            public void run() {
-                try {
-                    String json = MyGet.doGet(JsonResolveUtils.buildFullPath(userRegAPI, param));
-                    JSONObject jobj = JSON.parseObject(json);
-                    Integer status = (Integer)jobj.get(RESULT_STATUS);
-                    Log.e("exc", "JsonStatus----------"+status);
-                    AppMethod.sendMessage(handler, status, Constants.CODE_USER_ADD_RESPONSE);
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-    }
-    /**
-     * 找回密码
-     */
 
-    /**
-     * 获得商户列表
-     */
-    public static void getMerchantList(final Map<String,Object> param,final Handler handler){
-        new Thread() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(merchantListAPI, param);
-                    String json = MyGet.doGet(url);
-                    List<Merchant> list = JSON.parseArray(json, Merchant.class);
-                    AppMethod.sendMessage(handler, list, Constants.CODE_REFRASH_MERCHANT_LIST);
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-    }
-    /**
-     * 获得发表列表
-     */
-    public static void getPublishList(final Map<String,Object> param,final Handler handler) throws Exception{
-        new Thread() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(publishListAPI, param);
-                    String json = MyGet.doGet(url);
-                    List<Publish> list = JSON.parseArray(json, Publish.class);
-                    AppMethod.sendMessage(handler, list, Constants.CODE_REFRASH_PUBLISH_LIST);
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-    }
-    /**
-     * 获得发布详情
-     */
-    public static void getPublishById(final Map<String,Object> param,final Handler handler){
-        new Thread() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(publishDetailAPI, param);
-                    String json = MyGet.doGet(url);
-                    Publish p = JSON.parseObject(json, Publish.class);
-                    AppMethod.sendMessage(handler, p, Constants.CODE_REFRASH_PUBLIC_DETAIL);
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-    }
-    /**
-     * 获得发布下的评论
-     */
-    public static void getCommentsOfPublish(final Map<String,Object> param,final Handler handler){
-        new Thread() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(commentsOfPublishAPI, param);
-                    //Log.d("======url-=======", url);
-                    String json = MyGet.doGet(url);
-                    //Log.d("------", json);
-                    List<Comment> p = JSON.parseArray(json, Comment.class);
-                    AppMethod.sendMessage(handler, p, Constants.CODE_REFRASH_COMMENT_LIST);
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-
-    }
-    /**
-     * 提交评论
-     */
-    public static void commitPublishComment(final Map<String,Object> param,final Handler handler){
-        new Thread() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(commitPublishCommentAPI, null);
-                    //Log.d("======url-=======", url);
-                    String json = MyPost.doPost(url, param);
-                    Log.e("exc", "commitComment---------url:"+url);
-                    Log.e("exc", "commitComment---------json:"+json);
-                    JSONObject jo = JSON.parseObject(json);
-                    if(jo!=null){
-                        Integer status = jo.getInteger(RESULT_STATUS);
-                        if(status != null)
-                            AppMethod.sendMessage(handler, status, Constants.CODE_SHOW_COMMENT_STATUS);
-                    }
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-
-    }
-    /**
-     * 获得商户下的商品
-     */
-    public static void getGoodsOfMerchant(final Map<String,Object> param,final Handler handler) {
-        new Thread() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(goodsOfMerchantAPI, param);
-                    String json = MyGet.doGet(url);
-                    List<Good> list = JSON.parseArray(json, Good.class);
-                    AppMethod.sendMessage(handler, list, Constants.CODE_REFRESH_GOODS_LIST);
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-    }
-    /**
-     * 获得商品详情
-     */
-    public static void getGoodsDetails(final Map<String,Object> param,final Handler handler){
-        new Thread() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(getGoodsDetailsAPI, param);
-                    //Log.d("======url-=======", url);
-                    String json = MyGet.doGet(url);
-                    Good good = JSON.parseObject(json, Good.class);
-                    if(good !=null){
-                        AppMethod.sendMessage(handler, good, Constants.CODE_REFRASH_GOODS_DETAIL);
-                    }
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-    }
-    /**
-     * 获得商品简单信息
-     */
-    public static void getGoodsSimpleInfo(final Map<String,Object> param,final Handler handler){
-        new Thread() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(getGoodsSimpleInfoAPI, param);
-                    String json = MyGet.doGet(url);
-                    Good good = JSON.parseObject(json, Good.class);
-                    if(good !=null){
-                        AppMethod.sendMessage(handler, good, Constants.CODE_REFRASH_GOODS_DETAIL);
-                    }
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-    }
-    /**
-     * 提交用户的发布
-     */
-    public static void commitPublish(final Map<String,Object> param,final Handler handler){
-        new Thread() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(publishCommitAPI, null);
-                    String json = MyPost.doPost(url, param);
-                    JSONObject jobj = JSON.parseObject(json);
-                    Integer status = jobj.getInteger(RESULT_STATUS);
-                    AppMethod.sendMessage(handler, status, Constants.CODE_REFRASH_PUBLISH_PAGE);
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-    }
-    /**
-     * 获取用户账户
-     */
-    public static void getUserAccount(final Map<String,Object> param,final Handler handler){
-        new Thread() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(getUserAccountAPI, param);
-                    String json = MyGet.doGet(url);
-                    UserAccount ua = JSON.parseObject(json, UserAccount.class);
-                    if(ua==null || ua.getUserId()==null){
-                        JSONObject jobj = JSON.parseObject(json);
-                        Integer status = jobj.getInteger(RESULT_STATUS);
-                        AppMethod.sendMessage(handler, status, Constants.CODE_ORDER_USER_ACCOUNT);
-                    }else{
-                        AppMethod.sendMessage(handler, ua, Constants.CODE_ORDER_USER_ACCOUNT);
-                    }
-                } catch (Exception e) {
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        }.start();
-    }
-    /**
-     * 提交购买订单
-     */
-    public static void commitBuyOrder(final Map<String,Object> param,final Handler handler){
-        threadPools.execute(new Runnable() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(commitBuyOrderAPI, null);
-                    String json = MyPost.doPost(url, param);
-                    System.out.println(json);
-                    if(!TextUtils.isEmpty(json)){
-                        AppMethod.sendMessage(handler, json, Constants.CODE_COMMIT_ORDER);
-                    }else{
-                        AppMethod.sendMessage(handler, null,Constants.CODE_COMMIT_ORDER);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        });
-    }
     /**
      * 根据支付宝返回的订单信息处理服务端订单
      */
@@ -412,32 +118,16 @@ public class JsonResolveUtils {
                     String json = MyPost.doPost(url,map);
                     JSONObject jobj = JSON.parseObject(json);
                     Integer status = jobj.getInteger(RESULT_STATUS);
+                    Log.e("Yat3s","status:"+status);
                     if(status==0){//再次请求
                         MyPost.doPost(url,map);
                     }
                 } catch (Exception e) {
-
+                    Log.e("Yat3s","status:"+e.toString());
                 }
             }
         });
     }
 
-    /**
-     * 获取用户购买订单
-     */
-    public static void getUserOrders(final Map<String,Object> param,final Handler handler){
-        threadPools.execute(new Runnable() {
-            public void run() {
-                try {
-                    String url = JsonResolveUtils.buildFullPath(getUserOrdersAPI, param);
-                    String json = MyGet.doGet(url);
-                    Log.e("Yat3s", "getUserOrders---->"+json);
-                    AppMethod.sendMessage(handler, json, Constants.CODE_GET_USER_ORDERS);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    AppMethod.sendMessage(handler, null, Constants.CODE_NET_DATA_REQUEST_FAIL);
-                }
-            }
-        });
-    }
+
 }

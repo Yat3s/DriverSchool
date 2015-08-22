@@ -28,8 +28,6 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
     private ImageButton backBtn;
 
     private EditText etAccount,etPassword;
-
-    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,11 +91,11 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
             public void success(User user, Response response) {
                 SharedPreferencesUtils.put(LoginActivity.this, "token", user.getAccessToken());
                 SharedPreferencesUtils.put(LoginActivity.this, "userId", user.getUserId());
-                if (user.getUserName()!=null)
-                    SharedPreferencesUtils.put(LoginActivity.this, "userName", user.getUserName());
-                SharedPreferencesUtils.put(LoginActivity.this, "phone", user.getAccount());
                 AppConf.TOKEN = SharedPreferencesUtils.get(LoginActivity.this,"token","").toString();
                 AppConf.USER_ID = (int) SharedPreferencesUtils.get(LoginActivity.this,"userId",-1);
+                if (user.getUserName().equals("")) {
+                    uploadInfo();
+                }
                 startActivity(MainActivity.class);
                 finish();
             }
@@ -130,5 +128,23 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
         param.put("password",password);
         LoginRequester loginRequester = new LoginRequester(callback,param);
         loginRequester.request();
+    }
+
+    private void uploadInfo(){
+        final Map<String,Object> param = new HashMap<>();
+        param.put("userId",AppConf.USER_ID);
+        param.put("nickName","驾考用户3"+AppConf.USER_ID);
+        param.put("sex","0");
+        param.put("sign","马路杀手");
+        param.put("status", "1");
+        final Callback<String> callback = new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+            }
+        };
     }
 }

@@ -16,6 +16,7 @@
             android:id="@+id/img_pre"
             android:layout_width="90dp"
             android:layout_height="60dp"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_default" />
 
         <LinearLayout

@@ -10,6 +10,10 @@ public class Image {
     private String imgPath;
     private String imgId;
 
+    public Image(String url) {
+        this.url = url;
+    }
+
     public String getImgId() {
         return imgId;
     }

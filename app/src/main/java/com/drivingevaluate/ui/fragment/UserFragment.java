@@ -14,13 +14,13 @@ import android.widget.TextView;
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.drivingevaluate.R;
 import com.drivingevaluate.config.AppConf;
-import com.drivingevaluate.config.VersionManager;
 import com.drivingevaluate.model.User;
 import com.drivingevaluate.net.GetUserInfoRequester;
 import com.drivingevaluate.ui.AboutActivity;
 import com.drivingevaluate.ui.ConsultActivity;
 import com.drivingevaluate.ui.LoginActivity;
 import com.drivingevaluate.ui.UserInfoActivity;
+import com.drivingevaluate.ui.UserOrderActivity;
 import com.drivingevaluate.ui.base.Yat3sFragment;
 import com.drivingevaluate.util.SharedPreferencesUtils;
 
@@ -53,33 +53,30 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
     }
 
     private void getUserInfo() {
-//        if (SharedPreferencesUtils.contains(getActivity(),"token")){
-//            nameTv.setText(SharedPreferencesUtils.get(getActivity(),"userName","").toString());
-//            phoneTv.setText(SharedPreferencesUtils.get(getActivity(),"phone","").toString());
-//            loginOutBtn.setVisibility(View.VISIBLE);
-//        }
-//        else {
-//            loginOutBtn.setVisibility(View.INVISIBLE);
-//            nameTv.setText("点击登录");
-//            phoneTv.setText("登录后查看更多优惠信息");
-//        }
-
         Callback<User> callback = new Callback<User>() {
             @Override
             public void success(User user, Response response) {
                 nameTv.setText(user.getUserName());
-                phoneTv.setText(user.getAccount());
+                phoneTv.setText(user.getSign());
                 if (user.getHeadPath()!= null)
                     loadImg(avatarImg, user.getHeadPath());
             }
 
             @Override
             public void failure(RetrofitError error) {
-//                showShortToast(error.getMessage());
+
             }
         };
         GetUserInfoRequester getUserInfoRequester = new GetUserInfoRequester(callback, AppConf.USER_ID);
-        getUserInfoRequester.request();
+        if (SharedPreferencesUtils.contains(getActivity(),"token")) {
+            getUserInfoRequester.request();
+            loginOutBtn.setVisibility(View.VISIBLE);
+        }
+        else {
+            loginOutBtn.setVisibility(View.INVISIBLE);
+            nameTv.setText("点击登录");
+            phoneTv.setText("登录后查看更多优惠信息");
+        }
 
     }
     private void initView() {
@@ -129,27 +126,24 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
         aboutLayout.setOnClickListener(this);
         nameTv.setOnClickListener(this);
         avatarImg.setOnClickListener(this);
-
         loginOutBtn.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_out_btn:
-                if (SharedPreferencesUtils.contains(getActivity(),"token")){
-                    SharedPreferencesUtils.clear(getActivity());
-                }
+                SharedPreferencesUtils.clear(getActivity());
                 startActivity(LoginActivity.class);
                 break;
             case R.id.info_user_layout:
                 checkLogin2startActivity(UserInfoActivity.class, null);
                 break;
             case R.id.update_user_layout:
-                VersionManager versionManager = new VersionManager(getActivity(),1);
-                versionManager.checkUpdate();
+//                VersionManager versionManager = new VersionManager(getActivity(),1);
+//                versionManager.checkUpdate();
                 break;
             case R.id.order_user_layout:
-
+                checkLogin2startActivity(UserOrderActivity.class,null);
                 break;
             case R.id.feedback_user_layout:
                 checkLogin2startActivity(ConsultActivity.class,null);

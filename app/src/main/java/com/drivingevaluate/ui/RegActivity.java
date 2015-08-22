@@ -28,7 +28,6 @@ import retrofit.client.Response;
 public class RegActivity extends Yat3sActivity implements OnClickListener{
     private EditText etPhone,etPswd,etRePswd,etVerityCode;
     private Button btnCommit,btnGetVerityCode;
-
     private String account, pwd,verityCode;
 
     @Bind(R.id.toolbar)

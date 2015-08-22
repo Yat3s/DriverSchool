@@ -1,5 +1,20 @@
 package com.drivingevaluate.util;
 
+import android.util.Log;
+
+import com.drivingevaluate.config.Config;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.util.EntityUtils;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,21 +29,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.CoreConnectionPNames;
-import org.apache.http.util.EntityUtils;
-
-import android.util.Log;
-
-import com.drivingevaluate.config.Config;
 
 public class UploadUtil {
     private static final String TAG = "uploadFile";
@@ -131,7 +131,7 @@ public class UploadUtil {
                  res = conn.getResponseCode();
                 Log.e(TAG, "response code:" + res);
                 if (res == 200) {
-                    Log.e(TAG, "request success");
+                    Log.e(TAG, "createREST success");
                     InputStream input = conn.getInputStream();
                     StringBuffer sb1 = new StringBuffer();
                     int ss;
@@ -141,7 +141,7 @@ public class UploadUtil {
                     result = sb1.toString();
                     Log.e(TAG, "result : " + result);
                 } else {
-                    Log.e(TAG, "request error");
+                    Log.e(TAG, "createREST error");
                 }
             }
         } catch (MalformedURLException e) {

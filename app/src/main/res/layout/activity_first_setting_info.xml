@@ -8,7 +8,6 @@
         android:background="#EEEEEE"
         android:orientation="vertical" >
         <include layout="@layout/layout_toolbar"/>
-
         <RelativeLayout
             android:id="@+id/avatar_user_layout"
             android:layout_width="match_parent"
@@ -166,27 +165,6 @@
                 android:textColor="@color/font_gray_light" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/md_grey_300"/>
-
-        <LinearLayout
-            android:id="@+id/modify_pwd_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selector_common"
-            android:clickable="true"
-            android:padding="12dp" >
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/ic_forward"
-                android:text="修改密码" />
-        </LinearLayout>
-
         <Button
             android:id="@+id/save_user_info_btn"
             android:layout_width="match_parent"
@@ -196,7 +174,7 @@
             android:layout_marginTop="20dp"
             android:textSize="18sp"
             android:background="@drawable/selector_blue"
-            android:text="保存"
+            android:text="进入驾考点评"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 </ScrollView>

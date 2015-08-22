@@ -24,7 +24,7 @@
                 android:background="#FFFFFF">
 
                 <com.drivingevaluate.view.SlideShowView
-                    android:id="@+id/ssv_ad"
+                    android:id="@+id/ads"
                     android:layout_width="match_parent"
                     android:layout_height="180dp" />
 
@@ -67,6 +67,8 @@
             <include layout="@layout/layout_comment" />
 
             <include layout="@layout/layout_consult" />
+
+            <include layout="@layout/layout_platform_intro" />
 
             <include layout="@layout/layout_pick_line" />
         </LinearLayout>

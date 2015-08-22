@@ -1,6 +1,8 @@
 package com.drivingevaluate.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Merchant implements Serializable{
     private int sid;
@@ -21,9 +23,9 @@ public class Merchant implements Serializable{
     private String sflag_promise;
     private String photoPath;
 
-    private int marketPrice;
-    private int ourPrice;
-    private int prePay;
+    private float marketPrice;
+    private float ourPrice;
+    private float prePay;
 
     private Float distance;
 
@@ -40,6 +42,14 @@ public class Merchant implements Serializable{
     private float item4;
     public float getAvgGrade() {
         return (item1 + item2 + item3) / 3.0f;
+    }
+    public List<Image> getImgUrls(){
+        List<Image> images = new ArrayList<>();
+        String[] imgs = photoPath.split(",");
+        for (int i = 0; i < imgs.length; i++) {
+            images.add(new Image(imgs[i]));
+        }
+        return images;
     }
 
     public int getSid() {
@@ -178,27 +188,27 @@ public class Merchant implements Serializable{
         this.photoPath = photoPath;
     }
 
-    public int getMarketPrice() {
+    public float getMarketPrice() {
         return marketPrice;
     }
 
-    public void setMarketPrice(int marketPrice) {
+    public void setMarketPrice(float marketPrice) {
         this.marketPrice = marketPrice;
     }
 
-    public int getOurPrice() {
+    public float getOurPrice() {
         return ourPrice;
     }
 
-    public void setOurPrice(int ourPrice) {
+    public void setOurPrice(float ourPrice) {
         this.ourPrice = ourPrice;
     }
 
-    public int getPrePay() {
+    public float getPrePay() {
         return prePay;
     }
 
-    public void setPrePay(int prePay) {
+    public void setPrePay(float prePay) {
         this.prePay = prePay;
     }
 
@@ -264,39 +274,5 @@ public class Merchant implements Serializable{
 
     public void setItem4(float item4) {
         this.item4 = item4;
-    }
-
-    @Override
-    public String toString() {
-        return "Merchant{" +
-                "sid=" + sid +
-                ", sname='" + sname + '\'' +
-                ", stype='" + stype + '\'' +
-                ", saddress='" + saddress + '\'' +
-                ", snear='" + snear + '\'' +
-                ", stel='" + stel + '\'' +
-                ", createdTime='" + createdTime + '\'' +
-                ", smembercard='" + smembercard + '\'' +
-                ", slevel='" + slevel + '\'' +
-                ", sflag_tuan='" + sflag_tuan + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", sintroduction='" + sintroduction + '\'' +
-                ", sdetails='" + sdetails + '\'' +
-                ", stips='" + stips + '\'' +
-                ", sflag_promise='" + sflag_promise + '\'' +
-                ", photoPath='" + photoPath + '\'' +
-                ", marketPrice=" + marketPrice +
-                ", ourPrice=" + ourPrice +
-                ", prePay=" + prePay +
-                ", distance=" + distance +
-                ", buyInMonth=" + buyInMonth +
-                ", sellCount=" + sellCount +
-                ", spendTime=" + spendTime +
-                ", item1=" + item1 +
-                ", item2=" + item2 +
-                ", item3=" + item3 +
-                ", item4=" + item4 +
-                '}';
     }
 }

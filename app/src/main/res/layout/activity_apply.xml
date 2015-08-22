@@ -149,7 +149,7 @@
                         android:textColor="@color/theme_blue" />
 
                     <EditText
-                        android:id="@+id/etAddr"
+                        android:id="@+id/address_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -158,38 +158,32 @@
                         android:textColorHint="@color/font_gray_light" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/md_grey_300" />
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/layout_selectSchool"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="15dp"-->
+                    <!--android:background="@drawable/bg_white_nopading"-->
+                    <!--android:clickable="true"-->
+                    <!--android:orientation="horizontal">-->
 
-                <LinearLayout
-                    android:id="@+id/layout_selectSchool"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/bg_white_nopading"
-                    android:clickable="true"
-                    android:orientation="horizontal">
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="就读院校:"-->
+                        <!--android:textColor="@color/theme_blue" />-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="就读院校:"
-                        android:textColor="@color/theme_blue" />
-
-                    <TextView
-                        android:id="@+id/et_school"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:background="@null"
-                        android:drawableRight="@mipmap/ic_forward"
-                        android:hint="请选择就读院校"
-                        android:textColorHint="@color/font_gray_light"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                    <!--<TextView-->
+                        <!--android:id="@+id/et_school"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:background="@null"-->
+                        <!--android:drawableRight="@mipmap/ic_forward"-->
+                        <!--android:hint="请选择就读院校"-->
+                        <!--android:textColorHint="@color/font_gray_light"-->
+                        <!--android:textSize="18sp" />-->
+                <!--</LinearLayout>-->
 
                 <View
                     android:layout_width="match_parent"

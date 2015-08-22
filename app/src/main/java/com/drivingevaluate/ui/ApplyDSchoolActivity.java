@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
@@ -33,10 +32,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListener{
-    private TextView tvSelectCoach,etSchool,prePayTv;
+    private TextView tvSelectCoach,addressTv,prePayTv;
     private EditText etName,etIdNo,etTel;
     private Button btnCommitOrder;
-    private LinearLayout layoutSelectSchool;
     private int coachId;
     private double prePay;
 
@@ -67,6 +65,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
                     if (resultStatus.equals("9000")) {//支付成功
                         //CommitOrderActivity.this.showCustomToast("支付成功");
                         //发送支付成功请求
+                        Log.e("yat3s","resInfo"+resultInfo);
                         JsonResolveUtils.notifyPayService(resultInfo);
                         finish();
                     } else {
@@ -110,7 +109,6 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
     private void initEvent() {
         tvSelectCoach.setOnClickListener(this);
         btnCommitOrder.setOnClickListener(this);
-        layoutSelectSchool.setOnClickListener(this);
     }
     private void initView() {
 
@@ -118,11 +116,9 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         etIdNo = (EditText) findViewById(R.id.et_idNo);
         etTel = (EditText) findViewById(R.id.et_tel);
 
-        etSchool = (TextView) findViewById(R.id.et_school);
+        addressTv = (TextView) findViewById(R.id.address_tv);
         tvSelectCoach = (TextView) findViewById(R.id.tv_selectCoach);
         prePayTv = (TextView) findViewById(R.id.prePay_tv);
-
-        layoutSelectSchool = (LinearLayout) findViewById(R.id.layout_selectSchool);
 
         btnCommitOrder = (Button) findViewById(R.id.btn_commitOrder);
 
@@ -136,6 +132,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
             @Override
             public void success(final Order order, Response response) {
                 //传递给支付宝接口处理,必须异步调用
+                Log.e("Yat3s",order.toString());
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -158,7 +155,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         Map<String,Object> param =new HashMap<>();
         param.put(Constants.GOODS_ID, coachId);
         param.put(Constants.USER_ID, AppConf.USER_ID);
-        param.put(Constants.ADDRESS, etSchool.getText().toString());
+        param.put(Constants.ADDRESS, addressTv.getText().toString());
         param.put(Constants.REAL_RName, etName.getText().toString());
         param.put(Constants.ID_CARD_NO, etIdNo.getText().toString());
         param.put(Constants.TEL_NO, this.etTel.getText().toString());
@@ -168,15 +165,8 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_selectCoach:
-
-                break;
             case R.id.btn_commitOrder:
                 inputFilter();
-                break;
-            case R.id.layout_selectSchool:
-                Intent schoolIntent = new Intent(ApplyDSchoolActivity.this,ResultSchoolActivity.class);
-                startActivityForResult(schoolIntent, 1);
                 break;
             default:
                 break;
@@ -196,8 +186,8 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         else if (etTel.getText().toString().isEmpty()||etTel.getText().toString().length() !=11) {
             showShortToast("请输入正确联系人电话");
         }
-        else if (etSchool.getText().toString().isEmpty()) {
-            showShortToast("请选择学校");
+        else if (addressTv.getText().toString().isEmpty()) {
+            showShortToast("请填写联系地址");
         }
         else {
             showShortToast("正在检查支付宝账户...");
@@ -207,7 +197,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        etSchool.setText(data.getStringExtra("schoolName"));
+        addressTv.setText(data.getStringExtra("schoolName"));
         super.onActivityResult(requestCode, resultCode, data);
     }
 

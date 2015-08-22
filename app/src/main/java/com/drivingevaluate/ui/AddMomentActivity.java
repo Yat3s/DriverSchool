@@ -107,6 +107,7 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
             case R.id.img_addPic:
                 Intent intent = new Intent();
                 intent.setType("image/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, 1);
                 break;
@@ -167,7 +168,6 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
                             setResult(Activity.RESULT_OK, back);
                             finish();
                         }
-
                         @Override
                         public void failure(RetrofitError error) {
                             showShortToast("commit-->"+error.getMessage());
@@ -184,7 +184,7 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
             };
             UploadFileRequester uploadFileRequester = new UploadFileRequester(callback,new TypedFile("image/jpg", new File(picPath)));
             Log.e("Yat3s", picPath);
-            uploadFileRequester.request();
+            uploadFileRequester.uploadFileForId();
         }
         else {
             Callback<String> callback = new Callback<String>() {
@@ -206,7 +206,6 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
             PostMomentRequester postMomentRequester = new PostMomentRequester(callback,param);
             postMomentRequester.request();
         }
-
     }
 
 

@@ -82,9 +82,9 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         momentLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent commentIntent = new Intent(getActivity(), MomentDetailActivity.class);
-                commentIntent.putExtra("momentId", mMoments.get(position).getId());
-                getActivity().startActivity(commentIntent);
+                Bundle bundle = new Bundle();
+                bundle.putInt("momentId",mMoments.get(position).getId());
+                checkLogin2startActivity(MomentDetailActivity.class,bundle);
             }
         });
         backButton.setOnClickListener(this);
