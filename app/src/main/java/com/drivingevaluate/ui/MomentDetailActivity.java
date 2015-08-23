@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.drivingevaluate.R;
 import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.model.Comment;
+import com.drivingevaluate.model.Image;
 import com.drivingevaluate.model.Moment;
 import com.drivingevaluate.net.GetCommentListRequester;
 import com.drivingevaluate.net.GetMomentDetailRequester;
@@ -29,6 +31,10 @@ import com.drivingevaluate.net.PostCommentRequester;
 import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.DateUtils;
+import com.drivingevaluate.util.Infliter;
+import com.drivingevaluate.view.CustomImageView;
+import com.drivingevaluate.view.NineGridlayout;
+import com.drivingevaluate.view.ScreenTools;
 
 import org.json.JSONException;
 
@@ -49,7 +55,7 @@ import retrofit.client.Response;
  *
  */
 public class MomentDetailActivity extends Yat3sActivity implements OnClickListener{
-    private ImageView avatarImg,img,likeImg;
+    private ImageView avatarImg,likeImg;
     private TextView tvName,tvPubTime,tvContent,likeCountTv,commentCountTv,likeTv;
     private ListView lvComment;
     private EditText etComment;
@@ -60,8 +66,10 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
     private Moment mMoment;
     private List<Comment> mComments = new ArrayList<>();
     private CommentAdapter commentAdapter;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.status_tv) TextView statusTv;
+    @Bind(R.id.images_gv) NineGridlayout nineImages;
+    @Bind(R.id.one_iv) CustomImageView oneIv;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -89,6 +97,10 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
                 mMoment = moment;
                 setMomentDetails();
                 getComment(mMoment.getFirstReply());
+
+
+
+
             }
 
             @Override
@@ -119,12 +131,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         tvPubTime.setText(DateUtils.getStandardDate(mMoment.getCreateTime()));
         likeCountTv.setText(mMoment.getPraiseCount() + "赞");
         commentCountTv.setText(mMoment.getCommentCount() + "评论");
-        if (mMoment.getImgPathsLimit() ==null || mMoment.getImgPathsLimit().isEmpty()) {
-            img.setVisibility(View.GONE);
-        }
-        else {
-            loadImg(img, mMoment.getImgPathsLimit());
-        }
+        statusTv.setText(Infliter.statusInfliter(mMoment.getUser().getStatus()));
 
         if (mMoment.isPraised()){
             likeTv.setText("已赞");
@@ -133,8 +140,62 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         }
 
         loadImg(avatarImg, mMoment.getUser().getHeadPath());
+
+        //图像处理
+        List<Image> imgList = mMoment.getImages();
+        Log.e("Yat3s", imgList.size() + "");
+        if (imgList.isEmpty() || imgList.isEmpty()) {
+            nineImages.setVisibility(View.GONE);
+            oneIv.setVisibility(View.GONE);
+        } else if (imgList.size() == 1) {
+            nineImages.setVisibility(View.GONE);
+            oneIv.setVisibility(View.VISIBLE);
+            handlerOneImage(imgList.get(0));
+        } else {
+            nineImages.setVisibility(View.VISIBLE);
+            oneIv.setVisibility(View.GONE);
+
+            nineImages.setImagesData(imgList);
+        }
+
+        oneIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewImgIntent = new Intent(MomentDetailActivity.this, ViewImgActivity.class);
+                viewImgIntent.putExtra("imgUrl", mMoment.getImgPathsLimit());
+                startActivity(viewImgIntent);
+            }
+        });
+
     }
 
+    private void handlerOneImage(Image image) {
+        int totalWidth;
+        int imageWidth;
+        int imageHeight;
+        ScreenTools screentools = ScreenTools.instance(this);
+        totalWidth = screentools.getScreenWidth() - screentools.dip2px(80);
+        imageWidth = screentools.dip2px(image.getWidth());
+        imageHeight = screentools.dip2px(image.getHeight());
+        if (image.getWidth() <= image.getHeight()) {
+            if (imageHeight > totalWidth) {
+                imageHeight = totalWidth;
+                imageWidth = (imageHeight * image.getWidth()) / image.getHeight();
+            }
+        } else {
+            if (imageWidth > totalWidth) {
+                imageWidth = totalWidth;
+                imageHeight = (imageWidth * image.getHeight()) / image.getWidth();
+            }
+        }
+        ViewGroup.LayoutParams layoutparams = oneIv.getLayoutParams();
+        layoutparams.height = imageHeight;
+        layoutparams.width = imageWidth;
+        oneIv.setLayoutParams(layoutparams);
+        oneIv.setClickable(true);
+        oneIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        oneIv.setImageUrl(image.getImgPath());
+    }
     /**
      * 网络获取评论
      */
@@ -237,7 +298,6 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
     private void initView() {
 
         avatarImg = (ImageView) findViewById(R.id.avatar_img);
-        img = (ImageView) findViewById(R.id.img);
         tvName = (TextView) findViewById(R.id.name_tv);
         tvPubTime = (TextView) findViewById(R.id.time_moment_tv);
         tvContent = (TextView) findViewById(R.id.content_moment_tv);
@@ -258,15 +318,6 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         btnCommit.setOnClickListener(this);
         likeLayout.setOnClickListener(this);
 
-        img.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent viewImgIntent = new Intent(MomentDetailActivity.this, ViewImgActivity.class);
-                viewImgIntent.putExtra("imgUrl", mMoment.getImgPathsLimit());
-                startActivity(viewImgIntent);
-            }
-        });
     }
     @Override
     public void onClick(View v) {

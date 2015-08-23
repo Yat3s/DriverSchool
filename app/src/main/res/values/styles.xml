@@ -49,4 +49,11 @@
         <item name="android:listSelector">@color/transparent</item>
         <item name="android:scrollbars">none</item>
     </style>
+
+    <style name="MIP_theme" parent="AppTheme">
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
 </resources>

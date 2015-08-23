@@ -26,13 +26,10 @@ public class AppConf {
     }
 
     public static String getToken(Context context){
-        if (TOKEN.isEmpty()){
-            if (SharedPreferencesUtils.contains(context,"token")){
+        if (SharedPreferencesUtils.contains(context, "token")){
                 return SharedPreferencesUtils.get(context,"token","").toString();
-            }
-            else
-                return "";
         }
-        return TOKEN;
+        else
+            return "empty_token";
     }
 }

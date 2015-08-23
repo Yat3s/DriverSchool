@@ -1,15 +1,9 @@
 package com.drivingevaluate.ui;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.EditText;
@@ -28,7 +22,11 @@ import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.BitmapUtil;
 import com.drivingevaluate.util.Infliter;
 
+import net.yazeed44.imagepicker.model.ImageEntry;
+import net.yazeed44.imagepicker.util.Picker;
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +48,7 @@ public class UserInfoActivity extends Yat3sActivity{
     @Bind(R.id.gender_tv) TextView genderTv;
     @Bind(R.id.status_tv) TextView statusTv;
 
-    private String avatarUrl;
+    private String avatarUrl,compressPath;
     private String gender;
     private int status;
 
@@ -92,11 +90,31 @@ public class UserInfoActivity extends Yat3sActivity{
 
     @OnClick(R.id.avatar_user_layout)
     void changeAvatar(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
+        new Picker.Builder(this,new MyPickListener(),R.style.AppTheme)
+                .setLimit(1)
+                .setImageBackgroundColorWhenChecked(getResources().getColor(R.color.theme_blue))
+                .setAlbumBackgroundColor(getResources().getColor(R.color.theme_blue))
+                .setFabBackgroundColor(getResources().getColor(R.color.theme_blue))
+                .setFabBackgroundColorWhenPressed(getResources().getColor(R.color.md_purple_300))
+                .build()
+                .startActivity();
     }
+
+    private class MyPickListener implements Picker.PickListener
+    {
+        @Override
+        public void onPickedSuccessfully(ArrayList<ImageEntry> arrayList) {
+                avatarUrl = arrayList.get(0).path;
+                Bitmap bitmap = BitmapUtil.getSmallBitmap(avatarUrl,240,400);
+                avatarImg.setImageBitmap(bitmap);
+                compressPath = BitmapUtil.saveBitmap2file(bitmap);
+        }
+        @Override
+        public void onCancel(){
+            //User cancled the pick activity
+        }
+    }
+
     @OnClick(R.id.modify_pwd_layout)
     void modifyPwd(){
         startActivity(AlterPwdActivity.class);
@@ -169,7 +187,6 @@ public class UserInfoActivity extends Yat3sActivity{
                 dismissLoading();
                 finish();
             }
-
             @Override
             public void failure(RetrofitError error) {
                 showShortToast(error.getMessage());
@@ -191,7 +208,7 @@ public class UserInfoActivity extends Yat3sActivity{
                     showShortToast("uploadImg-->" + error.getMessage());
                 }
             };
-            UploadFileRequester uploadFileRequester = new UploadFileRequester(imageCallback, new TypedFile("image/jpg", new File(avatarUrl)));
+            UploadFileRequester uploadFileRequester = new UploadFileRequester(imageCallback, new TypedFile("image/jpg", new File(compressPath)));
             uploadFileRequester.uploadFileForPath();
         }
         else {
@@ -204,47 +221,9 @@ public class UserInfoActivity extends Yat3sActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            Uri uri = data.getData();
-            try {
-                String[] pojo = { MediaStore.Images.Media.DATA };
-                Cursor cursor = managedQuery(uri, pojo, null, null, null);
-                if (cursor != null) {
-                    ContentResolver cr = this.getContentResolver();
-                    int colunm_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    String path = cursor.getString(colunm_index);
-                    /***
-                     * 这里加这样一个判断主要是为了第三方的软件选择，比如：使用第三方的文件管理器的话，你选择的文件就不一定是图片了，
-                     * 这样的话，我们判断文件的后缀名 如果是图片格式的话，那么才可以
-                     */
-                    if (path.endsWith("jpg") || path.endsWith("png")) {
-                        avatarUrl = path;
-                        avatarImg.setImageBitmap(BitmapUtil.getSmallBitmap(avatarUrl));
-                    } else {
-                        alert();
-                    }
-                } else {
-                    alert();
-                }
-
-            } catch (Exception e) {
-            }
-        }
-
         if (resultCode == 100){
             signTv.setText(data.getStringExtra("sign"));
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void alert() {
-        Dialog dialog = new AlertDialog.Builder(this).setTitle("提示").setMessage("您选择的不是有效的图片")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        avatarUrl = null;
-                    }
-                }).create();
-        dialog.show();
     }
 }

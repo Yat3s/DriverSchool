@@ -27,6 +27,7 @@ public class UserSignActivity extends Yat3sActivity {
         setContentView(R.layout.activity_user_sign);
         ButterKnife.bind(this);
         setToolbarWithNavigation(toolbar,"我的签名");
+        signEt.setText(getIntent().getStringExtra("sign"));
     }
 
     @Override
@@ -42,7 +43,8 @@ public class UserSignActivity extends Yat3sActivity {
         if (item.getItemId() == R.id.right_toolbar_menu){
             Intent intent = getIntent();
             intent.putExtra("sign",signEt.getText().toString());
-            setResult(100,intent);
+            setResult(100, intent);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

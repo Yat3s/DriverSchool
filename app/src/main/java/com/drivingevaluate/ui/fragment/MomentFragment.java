@@ -47,8 +47,6 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
     private ImageButton backButton;
     private MomentAdapter momentAdapter;
     private int sort = 1; // 1按照时间 2按照距离
-    private int loadType = 0;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (root == null) {
@@ -66,7 +64,7 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         momentRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadType = 0;
+                mMoments.clear();
                 getData(System.currentTimeMillis());
             }
         });
@@ -74,8 +72,8 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         momentRefresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                loadType = 1;
                 getData(mMoments.get(mMoments.size()-1).getCreateTime());
+                momentRefresh.setLoading(false);
             }
         });
 
@@ -101,11 +99,6 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         Callback<List<Moment>> callback = new Callback<List<Moment>>() {
             @Override
             public void success(List<Moment> moments, Response response) {
-                if (loadType == 0){
-                    mMoments.clear();
-                }else {
-                    momentRefresh.setLoading(false);
-                }
                 mMoments.addAll(moments);
                 momentAdapter.notifyDataSetChanged();
                 momentRefresh.setRefreshing(false);
@@ -124,7 +117,6 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         };
         Map<String,Object> param = new HashMap<>();
         param.put("timestamp",timestamp);
-//        param.put("pageNum",page);
         GetMomentListRequester getMomentListRequester = new GetMomentListRequester(callback,param);
         getMomentListRequester.request();
     }

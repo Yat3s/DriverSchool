@@ -4,14 +4,40 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.util.Log;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.io.OutputStream;
 
 
 public class BitmapUtil {
+
+    // 图片转为文件
+    public static String saveBitmap2file(Bitmap bmp)
+    {
+        Bitmap.CompressFormat format = Bitmap.CompressFormat.JPEG;
+        int quality = 50;
+        OutputStream stream = null;
+        String filename = "jkdp"+System.currentTimeMillis()+".jpg";
+        try
+        {
+            stream = new FileOutputStream("/sdcard/" + filename);
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+            Log.e("Yat3s", "exc");
+        }
+        bmp.compress(format, quality, stream);
+        return "/sdcard/"+filename;
+    }
 
     public static byte[] Bitmap2Bytes(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -92,14 +118,14 @@ public class BitmapUtil {
     }
 
 
-    public static Bitmap getSmallBitmap(String filePath) {
+    public static Bitmap getSmallBitmap(String filePath,int reqWidth,int reqHeight) {
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, options);
 
         // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, 480, 800);
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
@@ -186,4 +212,28 @@ public class BitmapUtil {
         return degree;
     }
 
+
+    public static Bitmap revitionImageSize(String path) throws IOException {
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(
+                new File(path)));
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(in, null, options);
+        in.close();
+        int i = 0;
+        Bitmap bitmap = null;
+        while (true) {
+            if ((options.outWidth >> i <= 1000)
+                    && (options.outHeight >> i <= 1000)) {
+                in = new BufferedInputStream(
+                        new FileInputStream(new File(path)));
+                options.inSampleSize = (int) Math.pow(2.0D, i);
+                options.inJustDecodeBounds = false;
+                bitmap = BitmapFactory.decodeStream(in, null, options);
+                break;
+            }
+            i += 1;
+        }
+        return bitmap;
+    }
 }

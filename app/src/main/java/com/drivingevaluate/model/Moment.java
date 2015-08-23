@@ -1,4 +1,8 @@
 package com.drivingevaluate.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Moment {
     private int id;
     private double distance;
@@ -13,10 +17,29 @@ public class Moment {
     private String title;
 
     private String imgPathsLimit;
-
+    private List<Image> images;
     private User user;
 
     private boolean praised;
+
+    public List<Image> getImgList(){
+        List<Image> images = new ArrayList<>();
+        if (imgPathsLimit != null) {
+            String[] imgs = imgPathsLimit.split(",");
+            for (int i = 0; i < imgs.length; i++) {
+                images.add(new Image(imgs[i]));
+            }
+        }
+        return images;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 
     public boolean isPraised() {
         return praised;

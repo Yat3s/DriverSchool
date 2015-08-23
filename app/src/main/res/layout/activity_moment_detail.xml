@@ -29,11 +29,12 @@
 
                     <com.drivingevaluate.view.RoundAngleImageView
                         android:id="@+id/avatar_img"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         app:roundWidth="8dp"
                         app:roundHeight="8dp"
-                        android:src="@drawable/avatar" />
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_user_default" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -85,13 +86,17 @@
                             android:textColor="@color/md_grey_600"
                             android:text="无" />
 
+                        <com.drivingevaluate.view.NineGridlayout
+                            android:id="@+id/images_gv"
+                            android:layout_marginTop="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
-                        <ImageView
-                            android:id="@+id/img"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp" />
+                        <com.drivingevaluate.view.CustomImageView
+                            android:id="@+id/one_iv"
+                            android:layout_marginTop="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
                         <RelativeLayout
                             android:layout_width="match_parent"

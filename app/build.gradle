@@ -24,6 +24,9 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/DEPENDENCIES'
     }
+    repositories {
+        maven { url 'https://dl.bintray.com/yazeed44/maven' }
+    }
     sourceSets.main {
         //让AS识别libs下的.so第三方包
         jniLibs.srcDirs = ['libs']
@@ -42,4 +45,5 @@ dependencies {
     compile 'com.mikepenz:iconics:1.2.0@aar'
     compile 'com.cocosw:bottomsheet:1.+@aar'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'net.yazeed44.imagepicker:imagepicker:1.2.1'
 }

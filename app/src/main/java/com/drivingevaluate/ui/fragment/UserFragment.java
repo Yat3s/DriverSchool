@@ -58,10 +58,9 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
             public void success(User user, Response response) {
                 nameTv.setText(user.getUserName());
                 phoneTv.setText(user.getSign());
-                if (user.getHeadPath()!= null)
+                if (user.getHeadPath()!= null && !user.getHeadPath().equals(""))
                     loadImg(avatarImg, user.getHeadPath());
             }
-
             @Override
             public void failure(RetrofitError error) {
 
@@ -162,7 +161,9 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
             default:
                 break;
         }
-    }
+        }
+
+
 
     @Override
     public void onResume() {

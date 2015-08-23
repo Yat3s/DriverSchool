@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,8 +15,8 @@
 
     <com.drivingevaluate.view.RoundAngleImageView
         android:id="@+id/avatar_img"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:scaleType="centerCrop"
         app:roundWidth="8dp"
         app:roundHeight="8dp"
@@ -58,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_below="@id/status_tv"
+                android:layout_below="@id/status_moment_tv"
                 android:textSize="12sp"
                 android:layout_marginTop="4dp"
                 android:text="0.0km"
@@ -78,17 +82,18 @@
             android:layout_marginTop="8dp"
             android:textColor="@color/md_grey_600"
             android:text="无" />
-        <com.drivingevaluate.view.WrapHeightGridView
+        <com.drivingevaluate.view.NineGridlayout
             android:id="@+id/images_gv"
-            style="@style/GridViewImages"
-            android:layout_width="272dp" />
-
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:scaleType="centerCrop"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.drivingevaluate.view.CustomImageView
+            android:id="@+id/one_iv"
+            android:layout_marginTop="8dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/pic_test"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -125,3 +130,4 @@
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
+</FrameLayout>

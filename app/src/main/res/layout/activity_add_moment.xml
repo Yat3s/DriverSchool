@@ -26,13 +26,17 @@
                 android:hint="吐槽一下教练吧"
                 android:lines="5" />
 
-            <ImageView
-                android:id="@+id/img_addPic"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:clickable="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bg_addpic" />
+                <com.drivingevaluate.view.WrapHeightGridView
+                    android:id="@+id/gv_write_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:horizontalSpacing="8dp"
+                    android:listSelector="@color/transparent"
+                    android:numColumns="4"
+                    android:scrollbars="none"
+                    android:verticalSpacing="8dp"/>
+
         </LinearLayout>
 
         <View

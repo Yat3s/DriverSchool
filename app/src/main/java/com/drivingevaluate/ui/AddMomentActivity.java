@@ -1,15 +1,8 @@
 package com.drivingevaluate.ui;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.Selection;
 import android.text.Spannable;
@@ -24,29 +17,38 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.EmoViewPagerAdapter;
 import com.drivingevaluate.adapter.EmoteAdapter;
+import com.drivingevaluate.adapter.WriteStatusGridImgsAdapter;
 import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.model.FaceText;
 import com.drivingevaluate.model.Image;
 import com.drivingevaluate.net.PostMomentRequester;
 import com.drivingevaluate.net.UploadFileRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.util.BitmapUtil;
 import com.drivingevaluate.util.FaceTextUtils;
 import com.drivingevaluate.view.EmoticonsEditText;
+import com.drivingevaluate.view.WrapHeightGridView;
+
+import net.yazeed44.imagepicker.model.ImageEntry;
+import net.yazeed44.imagepicker.util.Picker;
+
+import org.json.JSONException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -54,25 +56,50 @@ import retrofit.mime.TypedFile;
 
 public class AddMomentActivity extends Yat3sActivity implements OnClickListener {
     private TextView tvAddr;
-    private ImageView imgAddPic;
     private EmoticonsEditText etContent;
     private boolean located = false;
     private Button  btnCommit;
     private ImageButton btnBack;
     private ImageButton btnAddEmo;
-    private String picPath;
+    private List<ImageEntry> picPaths;
+    private List<Image> compressPaths = new ArrayList<>();
     private LinearLayout layout_emo;
+    private StringBuffer picPath = new StringBuffer();
+    private WriteStatusGridImgsAdapter imageAdapter;
+    @Bind(R.id.gv_write_status)
+    WrapHeightGridView imagesRv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_moment);
+        ButterKnife.bind(this);
         Loc();
         initView();
+        initEvent();
+    }
+
+    private void initEvent() {
+        imagesRv.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == imageAdapter.getCount() - 1) {
+                    // 如果点击了最后一个加号图标,则显示选择图片对话框
+                    new Picker.Builder(AddMomentActivity.this,new MyPickListener(),R.style.AppTheme)
+                            .setLimit(9)
+                            .setImageBackgroundColorWhenChecked(getResources().getColor(R.color.theme_blue))
+                            .setAlbumBackgroundColor(getResources().getColor(R.color.theme_blue))
+                            .setFabBackgroundColor(getResources().getColor(R.color.theme_blue))
+                            .setFabBackgroundColorWhenPressed(getResources().getColor(R.color.md_purple_300))
+                            .setAlbumImagesCountTextColor(getResources().getColor(R.color.md_white_1000))
+                            .build()
+                            .startActivity();
+                }
+            }
+        });
     }
 
     private void initView() {
         tvAddr = (TextView) findViewById(R.id.tv_address);
-        imgAddPic = (ImageView) findViewById(R.id.img_addPic);
         etContent = (EmoticonsEditText) findViewById(R.id.et_content);
 
         btnCommit = (Button) findViewById(R.id.btn_commit);
@@ -82,9 +109,11 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
         layout_emo = (LinearLayout) findViewById(R.id.layout_emo);
 
         initEmoView();
+        picPaths = new ArrayList<>();
+        imageAdapter = new WriteStatusGridImgsAdapter(this,picPaths,imagesRv);
+        imagesRv.setAdapter(imageAdapter);
 
         tvAddr.setOnClickListener(this);
-        imgAddPic.setOnClickListener(this);
         btnCommit.setOnClickListener(this);
         btnAddEmo.setOnClickListener(this);
         btnBack.setOnClickListener(this);
@@ -103,13 +132,6 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
                     tvAddr.setTextColor(getResources().getColor(R.color.theme_blue));
                     tvAddr.setText(mApplication.myAddr);
                 }
-                break;
-            case R.id.img_addPic:
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, 1);
                 break;
             case R.id.btn_addEmo:
                 if (layout_emo.getVisibility() == View.GONE) {
@@ -130,14 +152,28 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
         }
     }
 
-    private void alert() {
-        Dialog dialog = new AlertDialog.Builder(this).setTitle("提示").setMessage("您选择的不是有效的图片")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        picPath = null;
-                    }
-                }).create();
-        dialog.show();
+    private class MyPickListener implements Picker.PickListener
+    {
+        @Override
+        public void onPickedSuccessfully(ArrayList<ImageEntry> arrayList) {
+            picPaths.addAll(arrayList);
+//            for (int i = 0; i < picPaths.size(); i++) {
+//                Bitmap bitmap = BitmapUtil.getSmallBitmap(picPaths.get(i).path);
+//                compressPaths.add(new Image(BitmapUtil.saveBitmap2file(bitmap)));
+//            }
+            if(arrayList.size() > 0) {
+                // 如果有图片则显示GridView,同时更新内容
+                imagesRv.setVisibility(View.VISIBLE);
+                imageAdapter.notifyDataSetChanged();
+            } else {
+                // 无图则不显示GridView
+                imagesRv.setVisibility(View.GONE);
+            }
+        }
+        @Override
+        public void onCancel(){
+            //User cancled the pick activity
+        }
     }
 
     private void commitMoment() {
@@ -146,105 +182,68 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
         final Map<String,Object> param = new HashMap<>();
         param.put("userId", AppConf.USER_ID);
         param.put("content", content);
+        Log.e("Yat3s","userID---->"+AppConf.USER_ID);
+        /////////
+        final Callback<String> callback = new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                dismissLoading();
+                showShortToast("发布成功");
+                Intent back = getIntent();
+                setResult(Activity.RESULT_OK, back);
+                finish();
+            }
+            @Override
+            public void failure(RetrofitError error) {
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(AddMomentActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+       /////////////
+
+
         if (located) {
             param.put("pubAddr", mApplication.myAddr);
             param.put("latitude", mApplication.myLl.latitude);
             param.put("longitude", mApplication.myLl.longitude);
             param.put("city_code", mApplication.cityCode);
         }
-        if (picPath != null){
-            Callback<Image> callback = new Callback<Image>() {
-                @Override
-                public void success(Image image, Response response) {
-                    param.put("imgPath", image.getImgId());
-                    Log.e("Yat3s","imgPath-->"+image.getImgId());
-                    Callback<String> callback = new Callback<String>() {
-                        @Override
-                        public void success(String s, Response response) {
-                            dismissLoading();
-                            showShortToast("发布成功");
-                            Intent back = getIntent();
-                            back.putExtra("picPath", picPath);
-                            setResult(Activity.RESULT_OK, back);
-                            finish();
-                        }
-                        @Override
-                        public void failure(RetrofitError error) {
-                            showShortToast("commit-->"+error.getMessage());
-                        }
-                    };
-                    PostMomentRequester postMomentRequester = new PostMomentRequester(callback,param);
-                    postMomentRequester.request();
-                }
+        if (compressPaths.size() > 0){
+            for (int i = 0; i < compressPaths.size(); i++) {
+                final int finalI = i;
+                Callback<Image> ImageCallback = new Callback<Image>() {
+                    @Override
+                    public void success(Image image, Response response) {
+                        picPath.append(image.getImgId() + ",");
 
-                @Override
-                public void failure(RetrofitError error) {
-                    showShortToast("uploadImg-->"+error.getMessage());
-                }
-            };
-            UploadFileRequester uploadFileRequester = new UploadFileRequester(callback,new TypedFile("image/jpg", new File(picPath)));
-            Log.e("Yat3s", picPath);
-            uploadFileRequester.uploadFileForId();
+                        if (finalI == compressPaths.size()-1){
+                            param.put("imgPath", picPath.substring(0,picPath.length()-1));
+                            Log.e("Yat3s","multi_pic"+picPath.substring(0,picPath.length()-1));
+                            PostMomentRequester postMomentRequester = new PostMomentRequester(callback,param);
+                            postMomentRequester.request();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        showShortToast("uploadImg-->"+error.getMessage());
+                    }
+                };
+                UploadFileRequester uploadFileRequester = new UploadFileRequester(ImageCallback,new TypedFile("image/jpg", new File(compressPaths.get(i).getImgPath())));
+                uploadFileRequester.uploadFileForId();
+            }
         }
         else {
-            Callback<String> callback = new Callback<String>() {
-                @Override
-                public void success(String s, Response response) {
-                    dismissLoading();
-                    showShortToast("发布成功");
-                    Intent back = getIntent();
-                    back.putExtra("picPath", picPath);
-                    setResult(Activity.RESULT_OK, back);
-                    finish();
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    showShortToast("commit-->"+error.getMessage());
-                }
-            };
             PostMomentRequester postMomentRequester = new PostMomentRequester(callback,param);
             postMomentRequester.request();
         }
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            /**
-             * 当选择的图片不为空的话，在获取到图片的途径
-             */
-            Uri uri = data.getData();
-            try {
-                String[] pojo = { MediaStore.Images.Media.DATA };
-
-                Cursor cursor = managedQuery(uri, pojo, null, null, null);
-                if (cursor != null) {
-                    ContentResolver cr = this.getContentResolver();
-                    int colunm_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    String path = cursor.getString(colunm_index);
-                    /***
-                     * 这里加这样一个判断主要是为了第三方的软件选择，比如：使用第三方的文件管理器的话，你选择的文件就不一定是图片了，
-                     * 这样的话，我们判断文件的后缀名 如果是图片格式的话，那么才可以
-                     */
-                    if (path.endsWith("jpg") || path.endsWith("png")) {
-                        picPath = path;
-//                        Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));
-                        imgAddPic.setImageBitmap(BitmapUtil.getSmallBitmap(picPath));
-                    } else {
-                        alert();
-                    }
-                } else {
-                    alert();
-                }
-
-            } catch (Exception e) {
-            }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     List<FaceText> emos;

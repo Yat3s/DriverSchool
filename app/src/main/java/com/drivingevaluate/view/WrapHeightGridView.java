@@ -21,8 +21,13 @@ public class WrapHeightGridView extends GridView {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-		int heightSpec = MeasureSpec.makeMeasureSpec(
-					Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+		int heightSpec;
+
+		if (getLayoutParams().height == LayoutParams.WRAP_CONTENT) {
+			heightSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+		} else {
+			heightSpec = heightMeasureSpec;
+		}
 
 		super.onMeasure(widthMeasureSpec, heightSpec);
 	}

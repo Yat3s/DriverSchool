@@ -1,15 +1,10 @@
 package com.drivingevaluate.ui;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.EditText;
@@ -25,7 +20,6 @@ import com.drivingevaluate.net.GetUserInfoRequester;
 import com.drivingevaluate.net.UpdateUserInfoRequester;
 import com.drivingevaluate.net.UploadFileRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.util.BitmapUtil;
 import com.drivingevaluate.util.Infliter;
 
 import java.io.File;
@@ -207,34 +201,6 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            Uri uri = data.getData();
-            try {
-                String[] pojo = { MediaStore.Images.Media.DATA };
-                Cursor cursor = managedQuery(uri, pojo, null, null, null);
-                if (cursor != null) {
-                    ContentResolver cr = this.getContentResolver();
-                    int colunm_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    String path = cursor.getString(colunm_index);
-                    /***
-                     * 这里加这样一个判断主要是为了第三方的软件选择，比如：使用第三方的文件管理器的话，你选择的文件就不一定是图片了，
-                     * 这样的话，我们判断文件的后缀名 如果是图片格式的话，那么才可以
-                     */
-                    if (path.endsWith("jpg") || path.endsWith("png")) {
-                        avatarUrl = path;
-                        avatarImg.setImageBitmap(BitmapUtil.getSmallBitmap(avatarUrl));
-                    } else {
-                        alert();
-                    }
-                } else {
-                    alert();
-                }
-
-            } catch (Exception e) {
-            }
-        }
-
         if (resultCode == 100){
             signTv.setText(data.getStringExtra("sign"));
         }

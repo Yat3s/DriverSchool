@@ -5,41 +5,49 @@
     android:orientation="vertical" >
 	<include layout="@layout/layout_toolbar"/>
     <com.drivingevaluate.view.CleanableEditText 
-	    android:id="@+id/et_oldPwd"
+	    android:id="@+id/oldPwd_et"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:background="@drawable/bg_edittext"
-	    android:layout_marginTop="20dp"
 	    android:inputType="textPassword"
+		android:layout_marginTop="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginRight="16dp"
 	    android:drawableRight="@mipmap/ic_clean"
 	    android:textColorHint="@color/font_gray_light"
 	    android:hint="请输入旧密码"/>
 	<com.drivingevaluate.view.CleanableEditText 
-	    android:id="@+id/et_newPwd"
+	    android:id="@+id/newPwd_et"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:background="@drawable/bg_edittext"
 	    android:drawableRight="@mipmap/ic_clean"
-	    android:layout_marginTop="20dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginRight="16dp"
 	    android:inputType="textPassword"
 	    android:textColorHint="@color/font_gray_light"
 	    android:hint="请输入新密码"/>
 	<com.drivingevaluate.view.CleanableEditText 
-	    android:id="@+id/et_repeatNewPwd"
+	    android:id="@+id/reNewPwd_et"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:background="@drawable/bg_edittext"
 	    android:drawableRight="@mipmap/ic_clean"
-	    android:layout_marginTop="20dp"
 	    android:inputType="textPassword"
+		android:layout_marginTop="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginRight="16dp"
 	    android:textColorHint="@color/font_gray_light"
 	    android:hint="请重复输入新密码"/>
 	<Button 
-	    android:id="@+id/btn_commit"
+	    android:id="@+id/commit_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:textColor="#FFFFFF"
+		android:layout_marginTop="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginRight="16dp"
         android:textSize="16sp"
         android:background="@drawable/selector_blue"
         android:text="修改密码"/>
