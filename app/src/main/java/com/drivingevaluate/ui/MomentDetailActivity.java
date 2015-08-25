@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.model.Comment;
 import com.drivingevaluate.model.Image;
 import com.drivingevaluate.model.Moment;
@@ -118,7 +117,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
 
         Map<String,Object> param = new HashMap<>();
         param.put("publishId",momentId);
-        param.put("userId", AppConf.USER_ID);
+        param.put("userId", App.getUserId());
         GetMomentDetailRequester getMomentDetailRequester = new GetMomentDetailRequester(callback,param);
         getMomentDetailRequester.request();
     }
@@ -142,31 +141,31 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         loadImg(avatarImg, mMoment.getUser().getHeadPath());
 
         //图像处理
-        List<Image> imgList = mMoment.getImages();
-        Log.e("Yat3s", imgList.size() + "");
-        if (imgList.isEmpty() || imgList.isEmpty()) {
-            nineImages.setVisibility(View.GONE);
-            oneIv.setVisibility(View.GONE);
-        } else if (imgList.size() == 1) {
-            nineImages.setVisibility(View.GONE);
-            oneIv.setVisibility(View.VISIBLE);
-            handlerOneImage(imgList.get(0));
-        } else {
-            nineImages.setVisibility(View.VISIBLE);
-            oneIv.setVisibility(View.GONE);
+        if (mMoment.getImages()!=null) {
+            List<Image> imgList = mMoment.getImages();
+            if (imgList.isEmpty() || imgList.isEmpty()) {
+                nineImages.setVisibility(View.GONE);
+                oneIv.setVisibility(View.GONE);
+            } else if (imgList.size() == 1) {
+                nineImages.setVisibility(View.GONE);
+                oneIv.setVisibility(View.VISIBLE);
+                handlerOneImage(imgList.get(0));
+            } else {
+                nineImages.setVisibility(View.VISIBLE);
+                oneIv.setVisibility(View.GONE);
 
-            nineImages.setImagesData(imgList);
-        }
-
-        oneIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent viewImgIntent = new Intent(MomentDetailActivity.this, ViewImgActivity.class);
-                viewImgIntent.putExtra("imgUrl", mMoment.getImgPathsLimit());
-                startActivity(viewImgIntent);
+                nineImages.setImagesData(imgList);
             }
-        });
 
+            oneIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent viewImgIntent = new Intent(MomentDetailActivity.this, ViewImgActivity.class);
+                    viewImgIntent.putExtra("imgUrl", mMoment.getImgPathsLimit());
+                    startActivity(viewImgIntent);
+                }
+            });
+        }
     }
 
     private void handlerOneImage(Image image) {
@@ -256,7 +255,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         };
 
         Map<String,Object> param = new HashMap<>();
-        param.put("userId",AppConf.USER_ID);
+        param.put("userId",App.getUserId());
         param.put("publishId",mMoment.getId());
         LikeMomentRequester likeMomentRequester = new LikeMomentRequester(callback,param);
         likeMomentRequester.request();
@@ -289,7 +288,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         };
         Map<String,Object> param = new HashMap<>();
         param.put("publishId",mMoment.getId());
-        param.put("userId",AppConf.USER_ID);
+        param.put("userId",App.getUserId());
         param.put("content",commentContent);
 
         PostCommentRequester postCommentRequester = new PostCommentRequester(callback,param);

@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.OrderAdapter;
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.model.Order;
 import com.drivingevaluate.net.GetOrderListRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
@@ -58,7 +58,7 @@ public class UserOrderActivity extends Yat3sActivity{
                 Log.e("yat3s","getOrders---->"+error.getMessage());
             }
         };
-        GetOrderListRequester getOrderListRequester = new GetOrderListRequester(callback, AppConf.USER_ID);
+        GetOrderListRequester getOrderListRequester = new GetOrderListRequester(callback, App.getUserId());
         getOrderListRequester.request();
     }
 

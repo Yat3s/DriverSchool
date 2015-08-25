@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.net.ConsultRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 
@@ -66,7 +66,7 @@ public class ConsultActivity extends Yat3sActivity {
         };
         Map<String,Object> param = new HashMap<>();
         param.put("merchantId",merchantId);
-        param.put("userId", AppConf.USER_ID);
+        param.put("userId", App.getUserId());
         param.put("desc", consultEt.getText().toString());
         ConsultRequester consultRequester = new ConsultRequester(callback,param);
         consultRequester.cousult();

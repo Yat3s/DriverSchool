@@ -10,10 +10,11 @@ import com.drivingevaluate.ui.base.Yat3sActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ResultMerchantIntroActivity extends Yat3sActivity{
+public class ResultMerchantIntroActivity extends Yat3sActivity {
     private TextView introTv;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

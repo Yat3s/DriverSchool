@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.model.Image;
 import com.drivingevaluate.model.User;
 import com.drivingevaluate.net.GetUserInfoRequester;
@@ -26,6 +26,7 @@ import net.yazeed44.imagepicker.model.ImageEntry;
 import net.yazeed44.imagepicker.util.Picker;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class UserInfoActivity extends Yat3sActivity{
     private String avatarUrl,compressPath;
     private String gender;
     private int status;
-
+    private File avatarFile;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -84,7 +85,7 @@ public class UserInfoActivity extends Yat3sActivity{
                 showShortToast(error.getMessage());
             }
         };
-        GetUserInfoRequester getUserInfoRequester = new GetUserInfoRequester(callback, AppConf.USER_ID);
+        GetUserInfoRequester getUserInfoRequester = new GetUserInfoRequester(callback, App.getUserId());
         getUserInfoRequester.request();
     }
 
@@ -93,7 +94,7 @@ public class UserInfoActivity extends Yat3sActivity{
         new Picker.Builder(this,new MyPickListener(),R.style.AppTheme)
                 .setLimit(1)
                 .setImageBackgroundColorWhenChecked(getResources().getColor(R.color.theme_blue))
-                .setAlbumBackgroundColor(getResources().getColor(R.color.theme_blue))
+                .setAlbumBackgroundColor(getResources().getColor(R.color.bg_dialog))
                 .setFabBackgroundColor(getResources().getColor(R.color.theme_blue))
                 .setFabBackgroundColorWhenPressed(getResources().getColor(R.color.md_purple_300))
                 .build()
@@ -105,9 +106,14 @@ public class UserInfoActivity extends Yat3sActivity{
         @Override
         public void onPickedSuccessfully(ArrayList<ImageEntry> arrayList) {
                 avatarUrl = arrayList.get(0).path;
-                Bitmap bitmap = BitmapUtil.getSmallBitmap(avatarUrl,240,400);
+            Bitmap bitmap = null;
+            try {
+                bitmap = BitmapUtil.revitionImageSize(avatarUrl);
                 avatarImg.setImageBitmap(bitmap);
-                compressPath = BitmapUtil.saveBitmap2file(bitmap);
+                avatarFile = BitmapUtil.saveBitmap2file2(bitmap,UserInfoActivity.this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         @Override
         public void onCancel(){
@@ -175,7 +181,7 @@ public class UserInfoActivity extends Yat3sActivity{
     void saveUserInfo(){
         showLoading();
         final Map<String,Object> param = new HashMap<>();
-        param.put("userId",AppConf.USER_ID);
+        param.put("userId",App.getUserId());
         param.put("nickName",nameEt.getText().toString());
         param.put("sex",gender);
         param.put("sign",signTv.getText().toString());
@@ -183,7 +189,7 @@ public class UserInfoActivity extends Yat3sActivity{
         final Callback<String> callback = new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                showShortToast("跟新成功");
+                showShortToast("更新成功");
                 dismissLoading();
                 finish();
             }
@@ -208,7 +214,7 @@ public class UserInfoActivity extends Yat3sActivity{
                     showShortToast("uploadImg-->" + error.getMessage());
                 }
             };
-            UploadFileRequester uploadFileRequester = new UploadFileRequester(imageCallback, new TypedFile("image/jpg", new File(compressPath)));
+            UploadFileRequester uploadFileRequester = new UploadFileRequester(imageCallback, new TypedFile("image/jpg", avatarFile));
             uploadFileRequester.uploadFileForPath();
         }
         else {

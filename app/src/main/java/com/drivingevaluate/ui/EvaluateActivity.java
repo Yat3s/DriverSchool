@@ -8,7 +8,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.model.Order;
 import com.drivingevaluate.net.EvaluateRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
@@ -80,7 +80,7 @@ public class EvaluateActivity extends Yat3sActivity{
         };
         Map<String,Object> param = new HashMap<>();
         param.put("goodsId",order.getGoodsId());
-        param.put("userId", AppConf.USER_ID);
+        param.put("userId", App.getUserId());
         param.put("fengqi",studyRb.getRating());
         param.put("changdi",placeRb.getRating());
         param.put("quality",qualityRb.getRating());

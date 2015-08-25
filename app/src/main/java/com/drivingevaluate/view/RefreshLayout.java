@@ -174,9 +174,9 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
     public void setLoading(boolean loading) {
         isLoading = loading;
         if (isLoading) {
-            mListView.addFooterView(mListViewFooter);
+//            mListView.addFooterView(mListViewFooter);
         } else {
-            mListView.removeFooterView(mListViewFooter);
+//            mListView.removeFooterView(mListViewFooter);
             mYDown = 0;
             mLastY = 0;
         }

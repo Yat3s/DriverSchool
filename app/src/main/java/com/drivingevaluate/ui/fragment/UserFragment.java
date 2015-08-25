@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.model.User;
 import com.drivingevaluate.net.GetUserInfoRequester;
 import com.drivingevaluate.ui.AboutActivity;
@@ -66,7 +66,7 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
 
             }
         };
-        GetUserInfoRequester getUserInfoRequester = new GetUserInfoRequester(callback, AppConf.USER_ID);
+        GetUserInfoRequester getUserInfoRequester = new GetUserInfoRequester(callback, App.getUserId());
         if (SharedPreferencesUtils.contains(getActivity(),"token")) {
             getUserInfoRequester.request();
             loginOutBtn.setVisibility(View.VISIBLE);

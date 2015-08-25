@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.LuckyMoneyAdapter;
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.model.LuckyMoney;
 import com.drivingevaluate.net.LuckyMoneyRequester;
 import com.drivingevaluate.net.component.RequestErrorHandler;
@@ -125,7 +125,7 @@ public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListe
             }
         };
 
-        LuckyMoneyRequester luckyMoneyRequester = new LuckyMoneyRequester(callback, AppConf.USER_ID);
+        LuckyMoneyRequester luckyMoneyRequester = new LuckyMoneyRequester(callback, App.getUserId());
         luckyMoneyRequester.grabLuckyMoney();
     }
 

@@ -1,7 +1,7 @@
 package com.drivingevaluate.net;
 
-import com.drivingevaluate.config.AppConf;
-import com.drivingevaluate.config.ServerConf;
+import com.drivingevaluate.app.App;
+import com.drivingevaluate.app.ServerConf;
 import com.drivingevaluate.model.CustomerService;
 
 import retrofit.Callback;
@@ -29,7 +29,7 @@ public class GetCustomerServiceRequester {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addHeader("token", AppConf.DEFAULT_TOKEN);
+                request.addHeader("token", App.DEFAULT_TOKEN);
             }
         };
 

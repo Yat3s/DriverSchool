@@ -5,7 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.net.ModifyPwdRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 
@@ -85,7 +85,7 @@ public class AlterPwdActivity extends Yat3sActivity{
             }
         };
         Map<String ,Object> param = new HashMap<>();
-        param.put("userId", AppConf.USER_ID);
+        param.put("userId", App.getUserId());
         param.put("oldPwd",oldPwd);
         param.put("newPwd", newPwd);
         ModifyPwdRequester modifyPwdRequester = new ModifyPwdRequester(callback, param);

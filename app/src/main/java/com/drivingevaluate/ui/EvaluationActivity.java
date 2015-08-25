@@ -53,18 +53,18 @@ public class EvaluationActivity extends Yat3sActivity {
         setToolbarWithNavigation(toolbar, "评价列表");
 
         initView();
-        getData();
-    }
-
-    private void getData() {
         merchantId = getIntent().getExtras().getInt("merchantId");
         merchant = (Merchant) getIntent().getExtras().getSerializable("merchant");
+        getData(System.currentTimeMillis());
+    }
+
+    private void getData(long timestamp) {
         Callback<List<Evaluation>> callback = new Callback<List<Evaluation>>() {
             @Override
             public void success(List<Evaluation> remoteEvaluations, Response response) {
                 if (remoteEvaluations.size()!=0 ){
                     evaluations.addAll(remoteEvaluations);
-                    pageNo++;
+                    getData(evaluations.get(evaluations.size()-2).getCreateTime());
                 }
                 else {
                     evaluationAdapter.notifyDataSetChanged();
@@ -87,7 +87,7 @@ public class EvaluationActivity extends Yat3sActivity {
         };
         Map<String,Object> param = new HashMap<>();
         param.put("merchantId",merchantId);
-        param.put("timestamp",System.currentTimeMillis());
+        param.put("timestamp",timestamp);
         GetAllEvaluationListRequester getAllEvaluationListRequester = new GetAllEvaluationListRequester(callback,param);
         getAllEvaluationListRequester.request();
     }

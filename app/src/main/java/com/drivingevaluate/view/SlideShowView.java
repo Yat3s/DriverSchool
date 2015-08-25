@@ -9,7 +9,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -141,8 +140,7 @@ public class SlideShowView extends FrameLayout {
             dotViewsList.add(dotView);
 
             ImageView view =  new ImageView(context);
-            Log.e("Yat3s","img"+images.get(i).getUrl());
-            MyUtil.loadImg(view,images.get(i).getUrl());
+            MyUtil.loadImg(view,images.get(i).getImgPath());
             view.setScaleType(ScaleType.FIT_XY);
             imageViewsList.add(view);
         }

@@ -1,5 +1,6 @@
 package com.drivingevaluate.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -37,6 +38,34 @@ public class BitmapUtil {
         }
         bmp.compress(format, quality, stream);
         return "/sdcard/"+filename;
+    }
+
+    // 图片转为文件
+    public static File saveBitmap2file2(Bitmap bmp,Context context){
+        File imageFileFolder = new File(context.getCacheDir(),"ImgCache");
+        if( !imageFileFolder.exists() ){
+            imageFileFolder.mkdir();
+        }
+
+        FileOutputStream out = null;
+
+        File imageFileName = new File(imageFileFolder, "ImgCache-" + System.currentTimeMillis() + ".jpg");
+        try {
+            out = new FileOutputStream(imageFileName);
+            bmp.compress(Bitmap.CompressFormat.JPEG,50, out);
+            out.flush();
+        } catch (IOException e) {
+            Log.e("Yat3s", "Failed to convert image to JPEG", e);
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                Log.e("Yat3s", "Failed to close output stream", e);
+            }
+        }
+        return imageFileName;
     }
 
     public static byte[] Bitmap2Bytes(Bitmap bm) {

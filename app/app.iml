@@ -133,8 +133,8 @@
     <orderEntry type="library" exported="" name="iconics-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="alipaysecsdk" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
-    <orderEntry type="library" exported="" name="robospice-1.4.14" level="project" />
     <orderEntry type="library" exported="" name="robospice-cache-1.4.14" level="project" />
+    <orderEntry type="library" exported="" name="robospice-1.4.14" level="project" />
     <orderEntry type="library" exported="" name="fab-1.5.5" level="project" />
     <orderEntry type="library" exported="" name="fluent-hc-4.3.5" level="project" />
     <orderEntry type="library" exported="" name="alipaysdk" level="project" />

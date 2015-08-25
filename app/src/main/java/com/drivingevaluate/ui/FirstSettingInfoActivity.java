@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.model.Image;
 import com.drivingevaluate.model.User;
 import com.drivingevaluate.net.GetUserInfoRequester;
@@ -87,7 +87,7 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
                 showShortToast(error.getMessage());
             }
         };
-        GetUserInfoRequester getUserInfoRequester = new GetUserInfoRequester(callback, AppConf.USER_ID);
+        GetUserInfoRequester getUserInfoRequester = new GetUserInfoRequester(callback, App.getUserId());
         getUserInfoRequester.request();
     }
 
@@ -154,7 +154,7 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
     void saveUserInfo(){
         showLoading();
         final Map<String,Object> param = new HashMap<>();
-        param.put("userId",AppConf.USER_ID);
+        param.put("userId",App.getUserId());
         param.put("nickName",nameEt.getText().toString());
         param.put("sex",gender);
         param.put("sign",signTv.getText().toString());

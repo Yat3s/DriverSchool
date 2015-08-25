@@ -45,9 +45,11 @@ public class Merchant implements Serializable{
     }
     public List<Image> getImgUrls(){
         List<Image> images = new ArrayList<>();
-        String[] imgs = photoPath.split(",");
-        for (int i = 0; i < imgs.length; i++) {
-            images.add(new Image(imgs[i]));
+        if(photoPath != null) {
+            String[] imgs = photoPath.split(",");
+            for (int i = 0; i < imgs.length; i++) {
+                images.add(new Image(imgs[i]));
+            }
         }
         return images;
     }

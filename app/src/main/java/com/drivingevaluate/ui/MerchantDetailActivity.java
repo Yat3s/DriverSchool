@@ -106,7 +106,6 @@ public class MerchantDetailActivity extends Yat3sActivity implements OnClickList
 
                 //轮播
                 adBanner.startAds(merchant.getImgUrls());
-                Log.e("Yat3s", "img" + merchant.getImgUrls().get(0).getUrl());
                 //评分
                 gradeTextView.setText(merchant.getAvgGrade()+"");
                 timeGradeRb.setRating(merchant.getItem1());
@@ -176,8 +175,8 @@ public class MerchantDetailActivity extends Yat3sActivity implements OnClickList
         Callback<List<Evaluation>> callback = new Callback<List<Evaluation>>() {
             @Override
             public void success(List<Evaluation> evaluations, Response response) {
-                moreEvaluationBtn.setText("查看全部" + evaluations.size() + "条评论");
-                evaluationMerchantTtv.setText(evaluations.size() + "人评价");
+                moreEvaluationBtn.setText("查看全部评论");
+                evaluationMerchantTtv.setText("");
                 int showSize = 0;
                 if (evaluations.size() == 1){
                     showSize = 1;

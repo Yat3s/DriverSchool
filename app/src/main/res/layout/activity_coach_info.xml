@@ -24,10 +24,10 @@
 
                 <com.drivingevaluate.view.CircleImageView
                     android:id="@+id/img_avatar"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="132dp"
+                    android:layout_height="132dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="16dp"
                     android:src="@mipmap/img_avator_coach" />
 
                 <TextView
@@ -53,13 +53,13 @@
                     android:rating="3.3"
                     android:stepSize="0.15" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="10dp"
-                    android:text="123人报名" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_marginBottom="10dp"-->
+                    <!--android:text="123人报名" />-->
             </RelativeLayout>
 
             <LinearLayout
@@ -104,25 +104,12 @@
                 android:text="教练简介" />
 
             <TextView
-                android:id="@+id/tv_coachIntro"
+                android:id="@+id/intro_coach_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="      吃拿卡要不准有这是蓝翔驾校对我们教练对基本要求，高通过率是我们对学员的承诺，练车的时候我是你们的教练，下了车咱们就是朋友。只要在我这报名了，我会对你全程负责，学车过程有任何问题都可以找我，尽我所能帮你"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/line" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="班型收费:\n\nVIP班 4000元，平台优惠价3780元\n普通班3000元，平台优惠价2780元" />
 
             <View
                 android:layout_width="match_parent"

@@ -7,9 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.baidu.mapapi.model.LatLng;
 import com.drivingevaluate.R;
-import com.drivingevaluate.config.AppConf;
 import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.util.SharedPreferencesUtils;
 
 public class SplashActivity extends Yat3sActivity {
     private Animation animation;
@@ -44,11 +42,6 @@ public class SplashActivity extends Yat3sActivity {
         }).start();
     }
     private void runApp() {
-        if (SharedPreferencesUtils.contains(SplashActivity.this,"token")){
-            AppConf.TOKEN = SharedPreferencesUtils.get(SplashActivity.this,"token","").toString();
-            AppConf.USER_ID = (int) SharedPreferencesUtils.get(SplashActivity.this,"userId",-1);
-
-        }
         startActivity(MainActivity.class);
         finish();
     }

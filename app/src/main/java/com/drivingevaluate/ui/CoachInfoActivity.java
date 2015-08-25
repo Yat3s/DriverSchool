@@ -42,6 +42,7 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
     private EvaluationAdapter evaluationAdapter;
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.evaluation_coach_rv) RecyclerView evaluationRv;
+    @Bind(R.id.intro_coach_tv) TextView introTV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +101,8 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
             public void success(Coach remoteCoach, Response response) {
                 coach = remoteCoach;
                 tvCoachName.setText(coach.getSellerName());
+                if (coach.getDesc()!=null)
+                    introTV.setText(coach.getDesc());
                 MyUtil.loadImg(avatarImg, coach.getPhotoPath());
             }
 

@@ -74,7 +74,6 @@ public class MomentAdapter extends BaseAdapter{
             vh.nineImages = (NineGridlayout) convertView.findViewById(R.id.images_gv);
             vh.oneIv = (CustomImageView) convertView.findViewById(R.id.one_iv);
             convertView.setTag(vh);
-
         }else {
             vh = (ViewHolder)convertView.getTag();
         }

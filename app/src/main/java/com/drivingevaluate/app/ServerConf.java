@@ -1,4 +1,4 @@
-package com.drivingevaluate.config;
+package com.drivingevaluate.app;
 
 /**
  * Created by Yat3s on 15/7/31.

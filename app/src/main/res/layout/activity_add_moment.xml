@@ -1,91 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/md_white_1000"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/titlebar_back_commit" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#EEEEEE"
-        android:orientation="vertical" >
-        <include layout="@layout/titlebar_back_commit"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:orientation="vertical"
-            android:padding="10dp" >
+            android:padding="12dp">
 
             <com.drivingevaluate.view.EmoticonsEditText
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/md_white_1000"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:gravity="top|left"
-                android:hint="吐槽一下教练吧"
-                android:lines="5" />
+                android:hint="分享一下你学车的感受吧"
+                android:textColorHint="@color/md_grey_500"
+                android:minLines="5" />
 
-                <com.drivingevaluate.view.WrapHeightGridView
-                    android:id="@+id/gv_write_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:horizontalSpacing="8dp"
-                    android:listSelector="@color/transparent"
-                    android:numColumns="4"
-                    android:scrollbars="none"
-                    android:verticalSpacing="8dp"/>
+            <com.drivingevaluate.view.WrapHeightGridView
+                android:id="@+id/gv_write_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:horizontalSpacing="8dp"
+                android:listSelector="@color/transparent"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:verticalSpacing="8dp" />
+        </LinearLayout>
+    </ScrollView>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="right"
+            android:background="@drawable/shape_round_corner">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/ic_location" />
+            <TextView
+                android:id="@+id/address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_grey_500"
+                android:text="显示定位"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#DDDDDD" />
-
-        <TextView
-            android:id="@+id/tv_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selector_common"
-            android:clickable="true"
-            android:drawableRight="@mipmap/ic_forward"
-            android:padding="15dp"
-            android:text="地点" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#DDDDDD" />
+            android:background="@color/md_grey_300" />
 
         <LinearLayout
             android:id="@+id/layout_showEmo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:padding="5dp" >
+            android:background="@color/md_grey_100"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-            <ImageButton
-                android:id="@+id/btn_addEmo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/btn_chat_emo_selector" />
+            <ImageView
+                android:id="@+id/picture_iv"
+                android:layout_width="0dp"
+                android:layout_height="26dp"
+                android:layout_weight="1"
+                android:src="@mipmap/ic_picture" />
+
+            <ImageView
+                android:id="@+id/camera_iv"
+                android:layout_width="0dp"
+                android:layout_height="26dp"
+                android:layout_weight="1"
+                android:src="@mipmap/ic_camera" />
+
+            <ImageView
+                android:id="@+id/emotion_iv"
+                android:layout_width="0dp"
+                android:layout_height="26dp"
+                android:layout_weight="1"
+                android:src="@mipmap/ic_emotion" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layout_emo"
+            android:id="@+id/ll_emotion_dashboard"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone" >
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/pager_emo"
+                android:id="@+id/vp_emotion_dashboard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" >
+            </android.support.v4.view.ViewPager>
+
+            <RadioGroup
+                android:id="@+id/rg_emotion_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/rb_emotion_dashboard_recently"
+                    style="@style/RadioButtonEmotionDashboard"
+                    android:text="最近" />
+
+                <RadioButton
+                    android:id="@+id/rb_emotion_dashboard_default"
+                    style="@style/RadioButtonEmotionDashboard"
+                    android:checked="true"
+                    android:text="默认" />
+
+                <RadioButton
+                    android:id="@+id/rb_emotion_dashboard_emoji"
+                    style="@style/RadioButtonEmotionDashboard"
+                    android:text="Emoji" />
+
+                <RadioButton
+                    android:id="@+id/rb_emotion_dashboard_langxiaohua"
+                    style="@style/RadioButtonEmotionDashboard"
+                    android:text="浪小花" />
+            </RadioGroup>
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
+

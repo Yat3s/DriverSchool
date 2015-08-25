@@ -2,8 +2,8 @@ package com.drivingevaluate.net;
 
 import android.util.Log;
 
-import com.drivingevaluate.config.AppConf;
-import com.drivingevaluate.config.ServerConf;
+import com.drivingevaluate.app.App;
+import com.drivingevaluate.app.ServerConf;
 import com.drivingevaluate.config.UrlConfig;
 import com.drivingevaluate.model.Coach;
 
@@ -40,7 +40,7 @@ public class GetCoachListRequester {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addHeader("token", AppConf.TOKEN);
+                request.addHeader("token", App.getToken());
             }
         };
 

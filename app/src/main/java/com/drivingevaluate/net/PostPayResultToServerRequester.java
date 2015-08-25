@@ -1,7 +1,7 @@
 package com.drivingevaluate.net;
 
-import com.drivingevaluate.config.AppConf;
-import com.drivingevaluate.config.ServerConf;
+import com.drivingevaluate.app.App;
+import com.drivingevaluate.app.ServerConf;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -30,7 +30,7 @@ public class PostPayResultToServerRequester {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addHeader("token", AppConf.TOKEN);
+                request.addHeader("token", App.getToken());
             }
         };
         RestAdapter restAdapter = new RestAdapter.Builder()

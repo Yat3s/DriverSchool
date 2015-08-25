@@ -1,6 +1,7 @@
 package com.drivingevaluate.app;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -8,16 +9,18 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
+import com.drivingevaluate.util.SharedPreferencesUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.testin.agent.TestinAgent;
 
-public class DEApplication extends Application {
-    public static DEApplication mInstance;
+public class App extends Application {
+    public static App mInstance;
     public LocationClient blocation;
     public LatLng myLl ;
     public String myAddr = "";
     public String cityCode = "";
+    public final static String DEFAULT_TOKEN = "IUAjX2ppYWthb2RpYW5waW5nXzEyMyNfJF9A";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -37,7 +40,7 @@ public class DEApplication extends Application {
         ImageLoader.getInstance().init(configuration);
     }
 
-    public static DEApplication getInstance() {
+    public static App getInstance() {
         return mInstance;
     }
 
@@ -80,5 +83,16 @@ public class DEApplication extends Application {
         option.setScanSpan(500); // 设置定位模式，小于1秒则一次定位;大于等于1秒则定时定位
         blocation.setLocOption(option);
         blocation.start();
+    }
+
+    public static int getUserId(){
+        return (int) SharedPreferencesUtils.get(getContext(),"userId",-1);
+    }
+    public static String getToken(){
+        return (String) SharedPreferencesUtils.get(getContext(),"token","");
+    }
+    public static Context getContext(){
+        return mInstance.getApplicationContext();
+        // or return instance.getApplicationContext();
     }
 }

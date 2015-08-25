@@ -2,7 +2,7 @@ package com.drivingevaluate.util;
 
 import android.util.Log;
 
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -34,7 +34,7 @@ public class MyPost {
 		String result = null;
 		HttpResponse httpResponse = null;
 		HttpPost post = new HttpPost(url);
-		post.addHeader("token", AppConf.TOKEN);
+		post.addHeader("token", App.getToken());
 		DefaultHttpClient client = new DefaultHttpClient();
 		client.getParams().setIntParameter(HttpConnectionParams.SO_TIMEOUT,	20000); // 超时设置
 		client.getParams().setIntParameter(HttpConnectionParams.CONNECTION_TIMEOUT, 10000);// 连接超时

@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.app.DEApplication;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.config.Config;
 import com.drivingevaluate.ui.LoginActivity;
 import com.drivingevaluate.util.MyUtil;
@@ -24,7 +24,7 @@ import com.drivingevaluate.util.SharedPreferencesUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class Yat3sActivity extends AppCompatActivity {
-    protected DEApplication mApplication;
+    protected App mApplication;
     protected Dialog mLoading;
 
     protected int mScreenWidth;
@@ -33,7 +33,7 @@ public class Yat3sActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        mApplication = DEApplication.getInstance();
+        mApplication = App.getInstance();
         DisplayMetrics metric = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metric);
         mScreenWidth = metric.widthPixels;

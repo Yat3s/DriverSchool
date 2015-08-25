@@ -2,8 +2,8 @@ package com.drivingevaluate.net;
 
 import android.util.Log;
 
-import com.drivingevaluate.config.AppConf;
-import com.drivingevaluate.config.ServerConf;
+import com.drivingevaluate.app.App;
+import com.drivingevaluate.app.ServerConf;
 import com.drivingevaluate.config.UrlConfig;
 import com.drivingevaluate.model.Merchant;
 
@@ -12,7 +12,6 @@ import retrofit.ErrorHandler;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
@@ -38,7 +37,7 @@ public class GetMerchantDetailRequester {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addHeader("token", AppConf.DEFAULT_TOKEN);
+                request.addHeader("token", App.DEFAULT_TOKEN);
             }
         };
 

@@ -11,21 +11,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.util.BitmapUtil;
+import com.drivingevaluate.util.ImageUtils.ImageItem;
 
-import net.yazeed44.imagepicker.model.ImageEntry;
-
-import java.io.IOException;
 import java.util.List;
 
 
 public class WriteStatusGridImgsAdapter extends BaseAdapter {
 
 	private Context context;
-	private List<ImageEntry> datas;
+	private List<ImageItem> datas;
 	private GridView gv;
 
-	public WriteStatusGridImgsAdapter(Context context, List<ImageEntry> datas, GridView gv) {
+	public WriteStatusGridImgsAdapter(Context context, List<ImageItem> datas, GridView gv) {
 		this.context = context;
 		this.datas = datas;
 		this.gv = gv;
@@ -33,11 +30,11 @@ public class WriteStatusGridImgsAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return datas.size() + 1;
+		return datas.size() > 0 ? datas.size() + 1 : 0;
 	}
 
 	@Override
-	public ImageEntry getItem(int position) {
+	public ImageItem getItem(int position) {
 		return datas.get(position);
 	}
 
@@ -69,13 +66,8 @@ public class WriteStatusGridImgsAdapter extends BaseAdapter {
 		
 		if(position < getCount() - 1) {
 			// set data
-			ImageEntry item = getItem(position);
-			try {
-				holder.iv_image.setImageBitmap(BitmapUtil.revitionImageSize(item.path));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
+			ImageItem item = getItem(position);
+			holder.iv_image.setImageBitmap(item.getBitmap());
 			holder.iv_delete_image.setVisibility(View.VISIBLE);
 			holder.iv_delete_image.setOnClickListener(new OnClickListener() {
 				@Override

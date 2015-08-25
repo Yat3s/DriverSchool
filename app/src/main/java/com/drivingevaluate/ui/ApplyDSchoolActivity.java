@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.alipay.sdk.app.PayTask;
 import com.drivingevaluate.R;
 import com.drivingevaluate.api.JsonResolveUtils;
-import com.drivingevaluate.config.AppConf;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.config.Constants;
 import com.drivingevaluate.model.Order;
 import com.drivingevaluate.model.PayResult;
@@ -154,7 +154,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
 
         Map<String,Object> param =new HashMap<>();
         param.put(Constants.GOODS_ID, coachId);
-        param.put(Constants.USER_ID, AppConf.USER_ID);
+        param.put(Constants.USER_ID, App.getUserId());
         param.put(Constants.ADDRESS, addressTv.getText().toString());
         param.put(Constants.REAL_RName, etName.getText().toString());
         param.put(Constants.ID_CARD_NO, etIdNo.getText().toString());

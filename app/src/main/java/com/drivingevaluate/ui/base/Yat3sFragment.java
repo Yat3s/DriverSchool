@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.drivingevaluate.app.DEApplication;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.config.Config;
 import com.drivingevaluate.ui.LoginActivity;
 import com.drivingevaluate.util.MyUtil;
@@ -17,12 +17,12 @@ import com.drivingevaluate.util.SharedPreferencesUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class Yat3sFragment extends Fragment{
-    protected DEApplication mApplication;
+    protected App mApplication;
     protected Dialog mLoading;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApplication = DEApplication.getInstance();
+        mApplication = App.getInstance();
         mLoading = MyUtil.createLoadingDialog(getActivity(), "努力加载中");
     }
 

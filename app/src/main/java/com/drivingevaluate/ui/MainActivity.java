@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.app.DEApplication;
+import com.drivingevaluate.app.App;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.ui.fragment.FindFragment;
 import com.drivingevaluate.ui.fragment.MerchantFragment;
@@ -44,7 +44,7 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 
 	private void initEvent() {
 		//开启定位
-		DEApplication.getInstance().initBaiduLocClient();
+		App.getInstance().initBaiduLocClient();
 		
 		mTabFind.setOnClickListener(this);
 		mTabUser.setOnClickListener(this);

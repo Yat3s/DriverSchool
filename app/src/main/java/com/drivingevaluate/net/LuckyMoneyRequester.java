@@ -1,7 +1,7 @@
 package com.drivingevaluate.net;
 
-import com.drivingevaluate.config.AppConf;
-import com.drivingevaluate.config.ServerConf;
+import com.drivingevaluate.app.App;
+import com.drivingevaluate.app.ServerConf;
 import com.drivingevaluate.model.LuckyMoney;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class LuckyMoneyRequester {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addHeader("token", AppConf.TOKEN);
+                request.addHeader("token", App.getToken());
             }
         };
         RestAdapter restAdapter = new RestAdapter.Builder()

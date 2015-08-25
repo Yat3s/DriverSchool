@@ -7,7 +7,7 @@ public class Coach {
     private String goodsTitle;
     private String photoPath;
     private String sellerName;
-
+    private String desc;
     @SerializedName("discountPirce")
     private int discountPrice;
     private int goodsId;
@@ -24,6 +24,14 @@ public class Coach {
     private String merchantName;
 
     private long createdTime;
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
     public double getAvgGrade() {
         return (item1 + item2 + item3) / 3.0;

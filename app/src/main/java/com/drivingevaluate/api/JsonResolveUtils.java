@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.drivingevaluate.config.ServerConf;
+import com.drivingevaluate.app.ServerConf;
 import com.drivingevaluate.util.MyPost;
 
 import java.util.HashMap;

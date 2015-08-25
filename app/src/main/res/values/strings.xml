@@ -7,4 +7,13 @@
     <string name="title_activity_maps">Map</string>
     <string name="test"><font size='20'>网页内容</font></string>
     <string name="platform">注:由于目前驾考点评app只有安卓版，苹果手机用户可借用安卓手机进行注册，输入自己的手机号获取验证码后在安卓版注册账号，注册成功后填写真实信息进行报名，也可享受平台所有福利！\n\n1:凡通过平台提交报名信息并凭验证码去驾校成功报名者，均可参与抢红包活动，抢多少送多少，凭短信验证码去驾校报名缴费成功，联系客服，立即红包兑现金。\n\n2:如果学车过程中出现教练以练车为由强制收取学员不正当费用者，多收的费用平台双倍赔偿。如有换教练，退费或者投诉等不好解决的问题，可联系客服或者直接通过平台打驾校电话投诉\n\n3:平台价格透明公开，均为驾校提供，学员缴费在驾校进行，并务必索要发票和签订培训合同以保障自身权益，平台预付款十元会随着红包一起发放给通过平台报名成功的学员。如果在线报名后对驾校不满意，可联系客服，退返预付款\n\n4:平台教练数量有限，无法满足所有学员的需求，所以只要你是通过我平台报名成功者，不管你教练是不是我平台的，均可以参与抢红包的活动并可以对教练进行评论，但请务必写出教练的全名，评论内容请讲事实，污蔑辱骂教练的评论平台不予以展示。\n\n5:科目二考完之后可以对教练进行评论，科目三考完后还可以追评科目三的教练。</string>
+    <string name="only_choose_num">超出可选图片张数</string>
+    <string name="finish">完成</string>
+    <string name="invalidSD">sdcard无效或没有插入！</string>
+    <string name="photo">选择相册</string>
+    <string name="album">相册</string>
+    <string name="preview">预览</string>
+    <string name="unfinished">完成</string>
+    <string name="camera_cancel">取消</string>
+    <string name="no_photo">相册没有图片</string>
 </resources>
