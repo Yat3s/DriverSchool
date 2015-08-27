@@ -15,7 +15,7 @@
             android:textColor="@color/md_white_1000"
             android:textSize="32sp"
             android:layout_gravity="center"
-            android:text="￥300元"
+            android:text="￥0元"
             android:gravity="center" />
 
             <Button

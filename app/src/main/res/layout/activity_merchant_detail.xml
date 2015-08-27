@@ -70,7 +70,7 @@
 
             <include layout="@layout/layout_platform_intro" />
 
-            <include layout="@layout/layout_pick_line" />
+            <!--<include layout="@layout/layout_pick_line" />-->
         </LinearLayout>
     </ScrollView>
 

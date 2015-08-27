@@ -1,180 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <include layout="@layout/layout_toolbar"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#EEEEEE"
-        android:orientation="vertical" >
-        <include layout="@layout/layout_toolbar"/>
-        <RelativeLayout
-            android:id="@+id/avatar_user_layout"
-            android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:gravity="center"
+        android:background="@color/theme_blue"
+        android:orientation="vertical">
+
+        <com.drivingevaluate.view.CircleImageView
+            android:id="@+id/avatar_img"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:border_color="@color/md_white_1000"
+            app:border_width="2dp"
+            android:src="@mipmap/ic_default_avatar"/>
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_common"
-            android:clickable="true"
-            android:padding="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="8dp"
-                android:text="更换头像"/>
-            <ImageView
-                android:id="@+id/avatar_user_img"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentRight="true"
-                android:scaleType="centerCrop"/>
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="#FFFFFF"
-            android:padding="12dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="昵称:" />
-
-            <EditText
-                android:id="@+id/name_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:gravity="right"
-                android:background="@null"
-                android:textColor="@color/font_gray_light" />
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/md_grey_300"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:padding="12dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="绑定手机:" />
-
-            <TextView
-                android:id="@+id/phone_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:gravity="right"
-                android:textColor="@color/font_gray_light" />
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/md_grey_300"/>
-
-        <LinearLayout
-            android:id="@+id/gender_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selector_common"
-            android:clickable="true"
-            android:padding="12dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="性别:" />
-
-            <TextView
-                android:id="@+id/gender_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:gravity="right"
-                android:drawableRight="@mipmap/ic_forward"
-                android:drawablePadding="8dp"
-                android:background="@null"
-                android:textColor="@color/font_gray_light" />
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/md_grey_300"/>
-        <LinearLayout
-            android:id="@+id/status_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:padding="12dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="学车状态:" />
-
-            <TextView
-                android:id="@+id/status_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:gravity="right"
-                android:drawablePadding="8dp"
-                android:drawableRight="@mipmap/ic_forward"
-                android:textColor="@color/font_gray_light" />
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/md_grey_300"/>
-        <LinearLayout
-            android:id="@+id/sign_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:padding="12dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="个性签名:" />
-
-            <TextView
-                android:id="@+id/sign_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:background="@null"
-                android:gravity="right"
-                android:singleLine="true"
-                android:drawablePadding="8dp"
-                android:drawableRight="@mipmap/ic_forward"
-                android:textColor="@color/font_gray_light" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/save_user_info_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:textSize="18sp"
-            android:background="@drawable/selector_blue"
-            android:text="进入驾考点评"
-            android:textColor="#FFFFFF" />
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:textColor="@color/md_white_1000"
+            android:text="点击更换头像"/>
     </LinearLayout>
-</ScrollView>
+    <EditText
+        android:id="@+id/nickname_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:hint="取个酷的昵称吧!"/>
+
+    <EditText
+        android:id="@+id/gender_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:editable="false"
+        android:hint="我是帅哥还是美女？!>>"/>
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="56dp"
+        android:layout_marginRight="56dp"
+        app:mrl_rippleAlpha="0.6"
+        app:mrl_rippleColor="@color/md_blue_800"
+        app:mrl_rippleOverlay="true">
+        <Button
+            android:id="@+id/start_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/md_white_1000"
+            android:textSize="16sp"
+            android:text="进入驾考世界"
+            android:background="@drawable/bg_blue"/>
+    </com.balysv.materialripple.MaterialRippleLayout>
+</LinearLayout>

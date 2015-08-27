@@ -5,16 +5,16 @@ import java.util.List;
 
 public class Moment {
     private int id;
-    private double distance;
     private int clicks;
     private int commentCount;
     private int praiseCount;
-
+    private Double distance;
     private long createTime;
     private long firstReply;
     private String description;
     private String imgIds;
     private String title;
+    private String pubAddr;
 
     private String imgPathsLimit;
     private List<Image> images;
@@ -31,6 +31,22 @@ public class Moment {
             }
         }
         return images;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
+
+    public String getPubAddr() {
+        return pubAddr;
+    }
+
+    public void setPubAddr(String pubAddr) {
+        this.pubAddr = pubAddr;
     }
 
     public List<Image> getImages() {
@@ -73,13 +89,7 @@ public class Moment {
         this.id = id;
     }
 
-    public double getDistance() {
-        return distance;
-    }
 
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
 
     public int getClicks() {
         return clicks;

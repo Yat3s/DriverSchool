@@ -1,28 +1,29 @@
 package com.drivingevaluate.ui;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.drivingevaluate.R;
 import com.drivingevaluate.app.App;
 import com.drivingevaluate.model.Image;
 import com.drivingevaluate.model.User;
-import com.drivingevaluate.net.GetUserInfoRequester;
 import com.drivingevaluate.net.UpdateUserInfoRequester;
 import com.drivingevaluate.net.UploadFileRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.util.Infliter;
+import com.drivingevaluate.util.BitmapUtil;
+
+import net.yazeed44.imagepicker.model.ImageEntry;
+import net.yazeed44.imagepicker.util.Picker;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,64 +43,54 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
     private User user;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.avatar_user_img)
-    ImageView avatarImg;
-    @Bind(R.id.sign_tv)
-    TextView signTv;
-    @Bind(R.id.name_et)
-    EditText nameEt;
-    @Bind(R.id.phone_tv) TextView phoneTv;
-    @Bind(R.id.gender_tv) TextView genderTv;
-    @Bind(R.id.status_tv) TextView statusTv;
-
+    @Bind(R.id.avatar_img) ImageView avatarImg;
+    @Bind(R.id.nickname_et) EditText nameEt;
+    @Bind(R.id.gender_et) EditText genderTv;
     private String avatarUrl;
     private String gender;
-    private int status;
-
+    private File avatarFile;
+    private int status = 1;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.activity_first_setting_info);
         ButterKnife.bind(this);
         setToolbarWithNavigation(toolbar, "开始");
-        getDate();
     }
 
-    private void getDate() {
-        Callback<User> callback = new Callback<User>() {
-            @Override
-            public void success(User remoteUser, Response response) {
-                user = remoteUser;
-                nameEt.setText(user.getUserName());
-                phoneTv.setText(user.getAccount());
-                signTv.setText(user.getSign());
-                gender = user.getSex();
-                if (gender.equals("0")){
-                    genderTv.setText("女");
-                }else
-                    genderTv.setText("男");
-                statusTv.setText(Infliter.statusInfliter(user.getStatus()));
-                loadImg(avatarImg,user.getHeadPath());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                showShortToast(error.getMessage());
-            }
-        };
-        GetUserInfoRequester getUserInfoRequester = new GetUserInfoRequester(callback, App.getUserId());
-        getUserInfoRequester.request();
-    }
-
-    @OnClick(R.id.avatar_user_layout)
+    @OnClick(R.id.avatar_img)
     void changeAvatar(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
+        new Picker.Builder(this,new MyPickListener(),R.style.AppTheme)
+                .setLimit(1)
+                .setImageBackgroundColorWhenChecked(getResources().getColor(R.color.theme_blue))
+                .setAlbumBackgroundColor(getResources().getColor(R.color.bg_dialog))
+                .setFabBackgroundColor(getResources().getColor(R.color.theme_blue))
+                .setFabBackgroundColorWhenPressed(getResources().getColor(R.color.md_purple_300))
+                .build()
+                .startActivity();
     }
 
-    @OnClick(R.id.gender_layout)
+    private class MyPickListener implements Picker.PickListener
+    {
+        @Override
+        public void onPickedSuccessfully(ArrayList<ImageEntry> arrayList) {
+            avatarUrl = arrayList.get(0).path;
+            Bitmap bitmap = null;
+            try {
+                bitmap = BitmapUtil.revitionImageSize(avatarUrl);
+                avatarImg.setImageBitmap(bitmap);
+                avatarFile = BitmapUtil.saveBitmap2file2(bitmap,FirstSettingInfoActivity.this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        public void onCancel(){
+            //User cancled the pick activity
+        }
+    }
+
+    @OnClick(R.id.gender_et)
     void changeGender(){
         new BottomSheet.Builder(this).title("选择您的性别").sheet(R.menu.menu_gender).icon(R.mipmap.ic_servicer).listener(new DialogInterface.OnClickListener() {
             @Override
@@ -107,66 +98,38 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
                 switch (which) {
                     case R.id.male:
                         gender = "1";
-                        genderTv.setText("男");
+                        genderTv.setText("帅哥");
                         break;
                     case R.id.female:
                         gender = "0";
-                        genderTv.setText("女");
+                        genderTv.setText("美女");
                         break;
                 }
             }
         }).show();
     }
 
-    @OnClick(R.id.status_layout)
-    void changeStatus(){
-        new BottomSheet.Builder(this).title("选择您的学车状态").sheet(R.menu.menu_status).icon(R.mipmap.ic_servicer).listener(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case R.id.no_status_study:
-                        status = 1;
-                        break;
-                    case R.id.ing_status_study:
-                        status = 2;
-                        break;
-                    case R.id.complete_status_study:
-                        status = 3;
-                        break;
-                    case R.id.god_status_study:
-                        status = 4;
-                        break;
-                }
-                statusTv.setText(Infliter.statusInfliter(status));
-            }
-        }).show();
-    }
-
-    @OnClick(R.id.sign_layout)
-    void changeSign(){
-        Intent intent  = new Intent(this,UserSignActivity.class);
-        intent.putExtra("sign",user.getSign());
-        startActivityForResult(intent,100);
-    }
-
-
-    @OnClick(R.id.save_user_info_btn)
+    @OnClick(R.id.start_btn)
     void saveUserInfo(){
-        showLoading();
+        if (nameEt.getText().toString().isEmpty()){
+            showShortToast("取个帅气的名吧");
+            return;
+        }
+        if (gender == null){
+            showShortToast("告诉大家你的性别吧");
+            return;
+        }
         final Map<String,Object> param = new HashMap<>();
         param.put("userId",App.getUserId());
         param.put("nickName",nameEt.getText().toString());
         param.put("sex",gender);
-        param.put("sign",signTv.getText().toString());
+        param.put("sign","新手起步");
         param.put("status", status);
         final Callback<String> callback = new Callback<String>() {
             @Override
             public void success(String s, Response response) {
-                showShortToast("跟新成功");
-                dismissLoading();
                 finish();
             }
-
             @Override
             public void failure(RetrofitError error) {
                 showShortToast(error.getMessage());
@@ -188,32 +151,12 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
                     showShortToast("uploadImg-->" + error.getMessage());
                 }
             };
-            UploadFileRequester uploadFileRequester = new UploadFileRequester(imageCallback, new TypedFile("image/jpg", new File(avatarUrl)));
+            UploadFileRequester uploadFileRequester = new UploadFileRequester(imageCallback, new TypedFile("image/jpg", avatarFile));
             uploadFileRequester.uploadFileForPath();
         }
         else {
-            param.put("imgPath", user.getHeadPath());
             UpdateUserInfoRequester updateUserInfoRequester = new UpdateUserInfoRequester(callback, param);
             updateUserInfoRequester.request();
         }
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == 100){
-            signTv.setText(data.getStringExtra("sign"));
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void alert() {
-        Dialog dialog = new AlertDialog.Builder(this).setTitle("提示").setMessage("您选择的不是有效的图片")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        avatarUrl = null;
-                    }
-                }).create();
-        dialog.show();
     }
 }

@@ -92,6 +92,8 @@ public class FindFragment extends Yat3sFragment implements OnClickListener{
                 break;
             case R.id.luckyMoney_layout:
                 startActivity(GetMoneyActivity.class);
+
+
                 break;
             default:
                 break;

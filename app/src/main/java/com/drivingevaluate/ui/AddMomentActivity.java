@@ -5,29 +5,21 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.adapter.EmotionGvAdapter;
-import com.drivingevaluate.adapter.EmotionPagerAdapter;
 import com.drivingevaluate.adapter.WriteStatusGridImgsAdapter;
 import com.drivingevaluate.app.App;
-import com.drivingevaluate.model.Emotion;
 import com.drivingevaluate.model.Image;
 import com.drivingevaluate.net.PostMomentRequester;
 import com.drivingevaluate.net.UploadFileRequester;
@@ -35,21 +27,21 @@ import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.BitmapUtil;
 import com.drivingevaluate.util.ImageUtils.Bimp;
-import com.drivingevaluate.util.ImageUtils.DisplayUtils;
 import com.drivingevaluate.util.ImageUtils.FileUtils;
 import com.drivingevaluate.util.ImageUtils.ImageItem;
 import com.drivingevaluate.util.ImageUtils.PublicWay;
 import com.drivingevaluate.util.ImageUtils.Res;
-import com.drivingevaluate.util.StringUtils;
-import com.drivingevaluate.view.EmoticonsEditText;
+import com.drivingevaluate.util.TextWatcherAdapter;
 import com.drivingevaluate.view.WrapHeightGridView;
+import com.rockerhieu.emojicon.EmojiconEditText;
+import com.rockerhieu.emojicon.EmojiconGridFragment;
+import com.rockerhieu.emojicon.EmojiconsFragment;
+import com.rockerhieu.emojicon.emoji.Emojicon;
 
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -60,24 +52,21 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
-public class AddMomentActivity extends Yat3sActivity implements OnClickListener,OnItemClickListener {
-    private EditText etContent;
+public class AddMomentActivity extends Yat3sActivity implements OnClickListener,EmojiconGridFragment.OnEmojiconClickedListener, EmojiconsFragment.OnEmojiconBackspaceClickedListener {
+    private EmojiconEditText etContent;
     private boolean located = false;
     private Button  btnCommit;
     private ImageButton btnBack;
-    private LinearLayout layout_emo;
+
     private StringBuffer picPath = new StringBuffer();
     private StringBuffer count = new StringBuffer();
     private WriteStatusGridImgsAdapter imageAdapter;
+    @Bind(R.id.emotion_layout) LinearLayout emotionLayout;
     @Bind(R.id.gv_write_status)
     WrapHeightGridView imagesRv;
     @Bind(R.id.address_tv) TextView addressTv;
     public static Bitmap bimap ;
 
-    // 表情选择面板
-    @Bind(R.id.ll_emotion_dashboard) LinearLayout ll_emotion_dashboard;
-    @Bind(R.id.vp_emotion_dashboard) ViewPager vp_emotion_dashboard;
-    private EmotionPagerAdapter emotionPagerGvAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +77,6 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener,
         PublicWay.activityList.add(this);
         Loc();
         initView();
-        initEmotion();
         initEvent();
     }
 
@@ -103,15 +91,18 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener,
                 }
             }
         });
+        etContent.addTextChangedListener(new TextWatcherAdapter() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
     }
 
     private void initView() {
-        etContent = (EmoticonsEditText) findViewById(R.id.et_content);
+        etContent = (EmojiconEditText) findViewById(R.id.et_content);
 
         btnCommit = (Button) findViewById(R.id.btn_commit);
         btnBack = (ImageButton) findViewById(R.id.btn_back);
-
-        layout_emo = (LinearLayout) findViewById(R.id.layout_emo);
 
         imageAdapter = new WriteStatusGridImgsAdapter(this, Bimp.tempSelectBitmap,imagesRv);
         imagesRv.setAdapter(imageAdapter);
@@ -147,23 +138,18 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener,
 
     @OnClick(R.id.et_content)
     void clickEditText(){
-        if (ll_emotion_dashboard.VISIBLE == View.VISIBLE) {
-            ll_emotion_dashboard.setVisibility(View.GONE);
+        if (emotionLayout.getVisibility() == View.VISIBLE){
+            emotionLayout.setVisibility(View.GONE);
         }
     }
 
     @OnClick(R.id.emotion_iv)
     void showEmotion(){
-        if(ll_emotion_dashboard.getVisibility() == View.VISIBLE) {
-            // 显示表情面板时点击,将按钮图片设为笑脸按钮,同时隐藏面板
-//            iv_emoji.setImageResource(R.drawable.btn_insert_emotion);
-            ll_emotion_dashboard.setVisibility(View.GONE);
-            showSoftInputView();
-        } else {
-            // 未显示表情面板时点击,将按钮图片设为键盘,同时显示面板
-//            iv_emoji.setImageResource(R.drawable.btn_insert_keyboard);
-            ll_emotion_dashboard.setVisibility(View.VISIBLE);
+        if (emotionLayout.getVisibility() == View.GONE){
+            emotionLayout.setVisibility(View.VISIBLE);
             hideSoftInputView();
+        }else {
+            emotionLayout.setVisibility(View.GONE);
         }
     }
     @OnClick(R.id.address_tv)
@@ -179,12 +165,10 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener,
         }
     }
 
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case TAKE_PICTURE:
                 if (Bimp.tempSelectBitmap.size() < 9 && resultCode == RESULT_OK) {
-
                     String fileName = String.valueOf(System.currentTimeMillis());
                     Bitmap bm = (Bitmap) data.getExtras().get("data");
                     FileUtils.saveBitmap(bm, fileName);
@@ -207,6 +191,14 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener,
         final Map<String,Object> param = new HashMap<>();
         param.put("userId", App.getUserId());
         param.put("content", content);
+        param.put("latitude", mApplication.myLl.latitude);
+        param.put("longitude", mApplication.myLl.longitude);
+        param.put("city_code", mApplication.cityCode);
+        if(located) {
+            param.put("pubAddr", mApplication.myAddr);
+        }else {
+            param.put("pubAddr", "null");
+        }
         /////////
         final Callback<String> callback = new Callback<String>() {
             @Override
@@ -231,12 +223,6 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener,
                 }
             }
         };
-        if (located) {
-            param.put("pubAddr", mApplication.myAddr);
-            param.put("latitude", mApplication.myLl.latitude);
-            param.put("longitude", mApplication.myLl.longitude);
-            param.put("city_code", mApplication.cityCode);
-        }
         if (Bimp.tempSelectBitmap.size() > 0){
             for (int i = 0; i < Bimp.tempSelectBitmap.size(); i++) {
                 final int finalI = i;
@@ -267,120 +253,6 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener,
         }
     }
 
-
-
-    /**
-     *  初始化表情面板内容
-     */
-    private void initEmotion() {
-        // 获取屏幕宽度
-        int gvWidth = DisplayUtils.getScreenWidthPixels(this);
-        // 表情边距
-        int spacing = DisplayUtils.dp2px(this, 8);
-        // GridView中item的宽度
-        int itemWidth = (gvWidth - spacing * 8) / 7;
-        int gvHeight = itemWidth * 3 + spacing * 4;
-
-        List<GridView> gvs = new ArrayList<GridView>();
-        List<String> emotionNames = new ArrayList<String>();
-        // 遍历所有的表情名字
-        for (String emojiName : Emotion.emojiMap.keySet()) {
-            emotionNames.add(emojiName);
-            // 每20个表情作为一组,同时添加到ViewPager对应的view集合中
-            if (emotionNames.size() == 20) {
-                GridView gv = createEmotionGridView(emotionNames, gvWidth, spacing, itemWidth, gvHeight);
-                gvs.add(gv);
-                // 添加完一组表情,重新创建一个表情名字集合
-                emotionNames = new ArrayList<String>();
-            }
-        }
-
-        // 检查最后是否有不足20个表情的剩余情况
-        if (emotionNames.size() > 0) {
-            GridView gv = createEmotionGridView(emotionNames, gvWidth, spacing, itemWidth, gvHeight);
-            gvs.add(gv);
-        }
-
-        // 将多个GridView添加显示到ViewPager中
-        emotionPagerGvAdapter = new EmotionPagerAdapter(gvs);
-        vp_emotion_dashboard.setAdapter(emotionPagerGvAdapter);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(gvWidth, gvHeight);
-        vp_emotion_dashboard.setLayoutParams(params);
-    }
-
-    /**
-     * 创建显示表情的GridView
-     */
-    private GridView createEmotionGridView(List<String> emotionNames, int gvWidth, int padding, int itemWidth, int gvHeight) {
-        // 创建GridView
-        GridView gv = new GridView(this);
-        gv.setBackgroundResource(R.color.gray);
-        gv.setSelector(R.color.transparent);
-        gv.setNumColumns(7);
-        gv.setPadding(padding, padding, padding, padding);
-        gv.setHorizontalSpacing(padding);
-        gv.setVerticalSpacing(padding);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(gvWidth, gvHeight);
-        gv.setLayoutParams(params);
-        // 给GridView设置表情图片
-        EmotionGvAdapter adapter = new EmotionGvAdapter(this, emotionNames, itemWidth);
-        gv.setAdapter(adapter);
-        gv.setOnItemClickListener(this);
-        return gv;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Object itemAdapter = parent.getAdapter();
-            if (itemAdapter instanceof EmotionGvAdapter) {
-            // 点击的是表情
-            EmotionGvAdapter emotionGvAdapter = (EmotionGvAdapter) itemAdapter;
-
-            if (position == emotionGvAdapter.getCount() - 1) {
-                // 如果点击了最后一个回退按钮,则调用删除键事件
-                etContent.dispatchKeyEvent(new KeyEvent(
-                        KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-            } else {
-                // 如果点击了表情,则添加到输入框中
-                String emotionName = emotionGvAdapter.getItem(position);
-
-                // 获取当前光标位置,在指定位置上添加表情图片文本
-                int curPosition = etContent.getSelectionStart();
-                StringBuilder sb = new StringBuilder(etContent.getText().toString());
-                sb.insert(curPosition, emotionName);
-
-                // 特殊文字处理,将表情等转换一下
-                etContent.setText(StringUtils.getWeiboContent(
-                        AddMomentActivity.this, etContent, sb.toString()));
-                Log.e("Yat3s", "span:" + StringUtils.getWeiboContent(
-                        this, etContent, sb.toString()));
-                // 将光标设置到新增完表情的右侧
-                etContent.setSelection(curPosition + emotionName.length());
-            }
-        }
-    }
-
-
-    /**
-     * 根据是否点击笑脸来显示文本输入框的状态
-     *
-     * @Title: showEditState
-     * @Description: TODO
-     * @param @param isEmo: 用于区分文字和表情
-     * @return void
-     * @throws
-     */
-    private void showEditState(boolean isEmo) {
-        etContent.setVisibility(View.VISIBLE);
-        etContent.requestFocus();
-        if (isEmo) {
-            layout_emo.setVisibility(View.VISIBLE);
-            hideSoftInputView();
-        } else {
-            showSoftInputView();
-        }
-    }
-
     // 显示软键盘
     public void showSoftInputView() {
         if (getWindow().getAttributes().softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
@@ -408,5 +280,15 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener,
     protected void onDestroy() {
         super.onDestroy();
         Bimp.tempSelectBitmap.clear();
+    }
+
+    @Override
+    public void onEmojiconBackspaceClicked(View view) {
+        EmojiconsFragment.backspace(etContent);
+    }
+
+    @Override
+    public void onEmojiconClicked(Emojicon emojicon) {
+        EmojiconsFragment.input(etContent, emojicon);
     }
 }

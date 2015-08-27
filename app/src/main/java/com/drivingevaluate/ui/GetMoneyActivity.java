@@ -1,14 +1,13 @@
 package com.drivingevaluate.ui;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.LuckyMoneyAdapter;
@@ -19,6 +18,7 @@ import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.ui.fragment.LuckMoneyDialogFragment;
 import com.drivingevaluate.util.SharedPreferencesUtils;
+import com.drivingevaluate.view.FullyLinearLayoutManager;
 
 import org.json.JSONException;
 
@@ -37,13 +37,14 @@ import retrofit.client.Response;
  * Email:hawkoyates@gmail.com
  */
 public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListener {
-    private ImageButton getMoneyBtn;
 
     private RecyclerView luckyMoneyRv;
     private LuckyMoneyAdapter luckyMoneyAdapter;
     private List<LuckyMoney> mLuckyMoneys = new ArrayList<>();
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.get_money_btn)
+    Button getMoneyBtn;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -80,14 +81,10 @@ public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListe
     }
 
     private void initView() {
-        getMoneyBtn = (ImageButton) findViewById(R.id.get_money_btn);
-
         luckyMoneyRv = (RecyclerView) findViewById(R.id.luckyMoney_rv);
         luckyMoneyAdapter = new LuckyMoneyAdapter(this,mLuckyMoneys);
-        luckyMoneyRv.setLayoutManager(new LinearLayoutManager(this));
+        luckyMoneyRv.setLayoutManager(new FullyLinearLayoutManager(this));
         luckyMoneyRv.setAdapter(luckyMoneyAdapter);
-
-
     }
 
     @Override

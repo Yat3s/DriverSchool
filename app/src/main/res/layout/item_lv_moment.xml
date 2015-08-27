@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:emojicon="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:background="@drawable/bg_white_border_nopading_normal"
     android:descendantFocusability="blocksDescendants"
@@ -27,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:orientation="vertical">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -37,6 +32,32 @@
                 android:layout_height="wrap_content"
                 android:text="username"
                 android:textSize="16sp" />
+            <LinearLayout
+                android:id="@+id/gender_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/name_tv"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/md_blue_200"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="2dp">
+                <ImageView
+                    android:id="@+id/gender_img"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:src="@mipmap/ic_female_small"/>
+                <TextView
+                    android:id="@+id/type_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="9sp"
+                    android:text="学员1级"/>
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/time_moment_tv"
@@ -75,10 +96,11 @@
             android:layout_marginTop="8dp"
             android:background="@color/md_grey_200"/>
 
-        <com.drivingevaluate.view.EmoticonsTextView
+        <com.rockerhieu.emojicon.EmojiconTextView
             android:id="@+id/content_moment_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            emojicon:emojiconAlignment="baseline"
             android:layout_marginTop="8dp"
             android:textColor="@color/md_grey_600"
             android:text="无" />
@@ -86,13 +108,14 @@
             android:id="@+id/images_gv"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="10dp"/>
 
         <com.drivingevaluate.view.CustomImageView
             android:id="@+id/one_iv"
             android:layout_marginTop="8dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:src="@mipmap/pic_test"/>
 
         <RelativeLayout
@@ -107,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/md_grey_500"
+                android:layout_centerVertical="true"
                 android:text="0赞"/>
 
             <TextView
@@ -116,6 +140,7 @@
                 android:textSize="12sp"
                 android:textColor="@color/md_grey_500"
                 android:layout_toRightOf="@id/like_moment_tv"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
                 android:text="0评论"/>
 
@@ -125,9 +150,30 @@
                 android:layout_height="12dp"
                 android:src="@mipmap/ic_comment"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:scaleType="fitCenter"
                 android:background="@null"/>
+            <LinearLayout
+                android:id="@+id/address_moment_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/comment_moment_btn"
+                android:gravity="center_vertical"
+                android:layout_marginRight="16dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/address_moment_img"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+                <TextView
+                    android:id="@+id/address_moment_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textSize="12sp"
+                    android:textColor="@color/md_grey_500"
+                    android:maxEms="8"/>
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
-</FrameLayout>

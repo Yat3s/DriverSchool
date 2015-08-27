@@ -38,6 +38,7 @@ import com.drivingevaluate.view.ScreenTools;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,9 +67,13 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
     private List<Comment> mComments = new ArrayList<>();
     private CommentAdapter commentAdapter;
     @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.status_tv) TextView statusTv;
+    @Bind(R.id.status_moment_tv) TextView statusTv;
     @Bind(R.id.images_gv) NineGridlayout nineImages;
     @Bind(R.id.one_iv) CustomImageView oneIv;
+    @Bind(R.id.gender_layout) LinearLayout genderLayout;
+    @Bind(R.id.type_tv) TextView typeTv;
+    @Bind(R.id.distance_moment_tv) TextView distanceTv;
+    @Bind(R.id.gender_img) ImageView genderImg;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -95,11 +100,8 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
             public void success(Moment moment, Response response) {
                 mMoment = moment;
                 setMomentDetails();
-                getComment(mMoment.getFirstReply());
-
-
-
-
+                mComments.clear();
+                getComment(mMoment.getCreateTime());
             }
 
             @Override
@@ -137,8 +139,29 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         }else {
             likeImg.setImageDrawable(getResources().getDrawable(R.mipmap.ic_like));
         }
-
         loadImg(avatarImg, mMoment.getUser().getHeadPath());
+
+        typeTv.setText("学员"+(mMoment.getUser().getGrade()+1)+"级");
+        //性别处理
+        if (mMoment.getUser().getSex().equals("1")) {
+            genderImg.setImageDrawable(getResources().getDrawable(R.mipmap.ic_male_small));
+            genderLayout.setBackgroundColor(getResources().getColor(R.color.md_blue_200));
+        }
+        else {
+            genderImg.setImageDrawable(getResources().getDrawable(R.mipmap.ic_female_small));
+            genderLayout.setBackgroundColor(getResources().getColor(R.color.md_red_300));
+        }
+        //距离处理
+        if (mMoment.getDistance()!= null) {
+            int distance = mMoment.getDistance().intValue();
+            if (distance > 1000) {
+                distanceTv.setText(new DecimalFormat("#.0").format(distance / 1000) + "km");
+            } else {
+                distanceTv.setText(new DecimalFormat("#").format(distance) + "m");
+            }
+        } else {
+            distanceTv.setText("");
+        }
 
         //图像处理
         if (mMoment.getImages()!=null) {
@@ -161,7 +184,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
                 @Override
                 public void onClick(View v) {
                     Intent viewImgIntent = new Intent(MomentDetailActivity.this, ViewImgActivity.class);
-                    viewImgIntent.putExtra("imgUrl", mMoment.getImgPathsLimit());
+                    viewImgIntent.putExtra("imgUrl", mMoment.getImages().get(0).getImgPath());
                     startActivity(viewImgIntent);
                 }
             });
@@ -202,10 +225,14 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         Callback<List<Comment>> callback = new Callback<List<Comment>>() {
             @Override
             public void success(List<Comment> comments, Response response) {
-                mComments.clear();
-                mComments.addAll(comments);
-                setListViewHeight(lvComment, commentAdapter, mComments.size());
-                commentAdapter.notifyDataSetChanged();
+                if (comments.size() != 0){
+                    mComments.addAll(comments);
+                    getComment(mComments.get(mComments.size() - 1).getCreatedTime());
+                }
+                else {
+                    setListViewHeight(lvComment, commentAdapter, mComments.size());
+                    commentAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -264,6 +291,10 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
      * 提交评论
      */
     private void commitComment() {
+        if (etComment.getText().toString().isEmpty()){
+            showShortToast("评论内容不能为空");
+            return;
+        }
         String commentContent = etComment.getText().toString();
         Callback<String> callback = new Callback<String>() {
             @Override
@@ -369,7 +400,6 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         }
     }
 
-
     private void setListViewHeight(ListView listView, CommentAdapter adapter, int count) {
         int totalHeight = 0;
         for (int i = 0; i < count; i++) {
@@ -381,7 +411,6 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         params.height = totalHeight + (listView.getDividerHeight() * count);
         listView.setLayoutParams(params);
     }
-
 
     public void hideSoftInputView() {
         InputMethodManager manager = ((InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE));

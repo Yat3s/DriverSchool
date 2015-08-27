@@ -1,7 +1,6 @@
 package com.drivingevaluate.util;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -47,7 +46,6 @@ public class DateUtils {
         Date date = new Date(timestamp);
         String dateStr = sdf.format(new Date(timestamp));
         if (date.getDay() == new Date().getDay()) {
-            Log.e("Yat3s","日期："+date.getDay()+":"+new Date().getDay());
             return "今天 " + dateStr;
         }
         else {

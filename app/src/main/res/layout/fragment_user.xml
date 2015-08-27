@@ -66,8 +66,8 @@
                 android:paddingTop="8dp">
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:src="@mipmap/ic_user_setting" />
 
                 <TextView
@@ -97,8 +97,8 @@
                 android:paddingTop="8dp">
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:src="@mipmap/ic_user_order" />
 
                 <TextView
@@ -128,8 +128,8 @@
                 android:paddingTop="8dp">
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:src="@mipmap/ic_user_update" />
 
                 <TextView
@@ -159,8 +159,8 @@
                 android:paddingTop="8dp">
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:src="@mipmap/ic_user_feedback" />
 
                 <TextView
@@ -190,8 +190,8 @@
                 android:paddingTop="8dp">
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:src="@mipmap/ic_user_about" />
 
                 <TextView

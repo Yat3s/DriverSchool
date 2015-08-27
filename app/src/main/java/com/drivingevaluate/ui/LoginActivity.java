@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.app.App;
 import com.drivingevaluate.model.User;
 import com.drivingevaluate.net.LoginRequester;
 import com.drivingevaluate.ui.base.Yat3sActivity;
@@ -92,10 +91,13 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
                 SharedPreferencesUtils.put(LoginActivity.this, "token", user.getAccessToken());
                 SharedPreferencesUtils.put(LoginActivity.this, "userId", user.getUserId());
                 if (user.getUserName().equals("")) {
-                    uploadInfo();
+                    startActivity(FirstSettingInfoActivity.class);
+                    finish();
                 }
-                startActivity(MainActivity.class);
-                finish();
+                else{
+                    startActivity(MainActivity.class);
+                    finish();
+                }
             }
 
             @Override
@@ -126,23 +128,5 @@ public class LoginActivity extends Yat3sActivity implements OnClickListener{
         param.put("password",password);
         LoginRequester loginRequester = new LoginRequester(callback,param);
         loginRequester.request();
-    }
-
-    private void uploadInfo(){
-        final Map<String,Object> param = new HashMap<>();
-        param.put("userId", App.getUserId());
-        param.put("nickName","驾考用户3"+App.getUserId());
-        param.put("sex","0");
-        param.put("sign","马路杀手");
-        param.put("status", "1");
-        final Callback<String> callback = new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-            }
-        };
     }
 }

@@ -117,6 +117,11 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         };
         Map<String,Object> param = new HashMap<>();
         param.put("timestamp",timestamp);
+        if (sort == 2){
+            param.put("city_code",mApplication.cityCode);
+            param.put("latitude",mApplication.myLl.latitude);
+            param.put("longitude",mApplication.myLl.longitude);
+        }
         GetMomentListRequester getMomentListRequester = new GetMomentListRequester(callback,param);
         getMomentListRequester.request();
     }

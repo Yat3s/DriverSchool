@@ -5,16 +5,49 @@
     android:orientation="vertical" >
     <include layout="@layout/layout_toolbar"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical">
     <com.drivingevaluate.view.CleanableEditText
         android:id="@+id/et_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_edittext"
+        android:drawableRight="@mipmap/ic_clean"
+        android:hint="请输入手机号码"
+        android:textSize="14sp"
+        android:inputType="phone"
+        android:textColorHint="@color/font_gray_light" />
+
+
+    <com.drivingevaluate.view.CleanableEditText
+        android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_edittext"
         android:drawableRight="@mipmap/ic_clean"
-        android:hint="请输入手机号码"
-        android:inputType="phone"
+        android:hint="请输入密码"
+        android:textSize="14sp"
+        android:inputType="textPassword"
         android:textColorHint="@color/font_gray_light" />
+
+    <com.drivingevaluate.view.CleanableEditText
+        android:id="@+id/et_rePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_edittext"
+        android:drawableRight="@mipmap/ic_clean"
+        android:hint="请重复输入密码"
+        android:textSize="14sp"
+        android:inputType="textPassword"
+        android:textColorHint="@color/font_gray_light" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,43 +63,20 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/bg_edittext"
             android:drawableRight="@mipmap/ic_clean"
+            android:textSize="14sp"
             android:hint="请输入验证码"
             android:textColorHint="@color/font_gray_light" />
 
         <Button
             android:id="@+id/btn_getVerifyCode"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_white_border"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_blue"
             android:text="获取验证码"
             android:padding="10dp"
-            android:textColor="#000000"
+            android:textColor="@color/md_white_1000"
             android:textSize="16sp" />
     </LinearLayout>
-
-    <com.drivingevaluate.view.CleanableEditText
-        android:id="@+id/et_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_edittext"
-        android:drawableRight="@mipmap/ic_clean"
-        android:hint="请输入密码"
-        android:inputType="textPassword"
-        android:textColorHint="@color/font_gray_light" />
-
-    <com.drivingevaluate.view.CleanableEditText
-        android:id="@+id/et_rePassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/bg_edittext"
-        android:drawableRight="@mipmap/ic_clean"
-        android:hint="请重复输入密码"
-        android:inputType="textPassword"
-        android:textColorHint="@color/font_gray_light" />
-
-
 
     <Button
         android:id="@+id/btn_commit"
@@ -74,8 +84,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/selector_blue"
-        android:text="提交注册"
+        android:text="注册"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
-
+    </LinearLayout>
 </LinearLayout>

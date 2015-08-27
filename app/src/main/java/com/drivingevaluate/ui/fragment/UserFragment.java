@@ -56,7 +56,11 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
         Callback<User> callback = new Callback<User>() {
             @Override
             public void success(User user, Response response) {
-                nameTv.setText(user.getUserName());
+                if (user.getUserName().isEmpty()){
+                    nameTv.setText("未设置昵称");
+                }else {
+                    nameTv.setText(user.getUserName());
+                }
                 phoneTv.setText(user.getSign());
                 if (user.getHeadPath()!= null && !user.getHeadPath().equals(""))
                     loadImg(avatarImg, user.getHeadPath());

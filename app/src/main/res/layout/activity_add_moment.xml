@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     android:background="@color/md_white_1000"
     android:orientation="vertical">
 
@@ -19,11 +20,12 @@
             android:orientation="vertical"
             android:padding="12dp">
 
-            <com.drivingevaluate.view.EmoticonsEditText
+            <com.rockerhieu.emojicon.EmojiconEditText
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/md_white_1000"
+                emojicon:emojiconSize="24sp"
                 android:textSize="16sp"
                 android:gravity="top|left"
                 android:hint="分享一下你学车的感受吧"
@@ -61,7 +63,6 @@
             android:gravity="center_vertical"
             android:layout_gravity="right"
             android:background="@drawable/shape_round_corner">
-
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -111,45 +112,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_emotion_dashboard"
+            android:id="@+id/emotion_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone" >
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/vp_emotion_dashboard"
+            android:visibility="gone">
+            <fragment
+                android:id="@+id/emojicons"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            </android.support.v4.view.ViewPager>
-
-            <RadioGroup
-                android:id="@+id/rg_emotion_dashboard"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/rb_emotion_dashboard_recently"
-                    style="@style/RadioButtonEmotionDashboard"
-                    android:text="最近" />
-
-                <RadioButton
-                    android:id="@+id/rb_emotion_dashboard_default"
-                    style="@style/RadioButtonEmotionDashboard"
-                    android:checked="true"
-                    android:text="默认" />
-
-                <RadioButton
-                    android:id="@+id/rb_emotion_dashboard_emoji"
-                    style="@style/RadioButtonEmotionDashboard"
-                    android:text="Emoji" />
-
-                <RadioButton
-                    android:id="@+id/rb_emotion_dashboard_langxiaohua"
-                    style="@style/RadioButtonEmotionDashboard"
-                    android:text="浪小花" />
-            </RadioGroup>
+                android:layout_height="220dp"
+                class="com.rockerhieu.emojicon.EmojiconsFragment"/>
         </LinearLayout>
     </LinearLayout>
 

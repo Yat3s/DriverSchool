@@ -71,7 +71,9 @@ public class App extends Application {
                 if (location == null)
                     return;
                 myLl = new LatLng(location.getLatitude(), location.getLongitude());
-                myAddr = location.getAddrStr();
+
+                String tmpAddress = location.getAddrStr();
+                myAddr = tmpAddress.substring(tmpAddress.indexOf(location.getCity())+location.getCity().length());
                 cityCode = location.getCityCode();
             }
         });

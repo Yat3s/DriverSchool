@@ -128,7 +128,7 @@ public class UserInfoActivity extends Yat3sActivity{
 
     @OnClick(R.id.gender_layout)
     void changeGender(){
-        new BottomSheet.Builder(this).title("选择您的性别").sheet(R.menu.menu_gender).icon(R.mipmap.ic_servicer).listener(new DialogInterface.OnClickListener() {
+        new BottomSheet.Builder(this).title("选择您的性别").sheet(R.menu.menu_gender).listener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
