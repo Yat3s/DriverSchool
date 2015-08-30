@@ -4,17 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.adapter.MomentAdapter;
+import com.drivingevaluate.adapter.MomentAdapter2;
 import com.drivingevaluate.model.Moment;
 import com.drivingevaluate.net.GetMomentListRequester;
 import com.drivingevaluate.net.component.RequestErrorHandler;
@@ -23,7 +23,7 @@ import com.drivingevaluate.ui.LoginActivity;
 import com.drivingevaluate.ui.MomentDetailActivity;
 import com.drivingevaluate.ui.base.Yat3sFragment;
 import com.drivingevaluate.util.SharedPreferencesUtils;
-import com.drivingevaluate.view.RefreshLayout;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import org.json.JSONException;
 
@@ -33,25 +33,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MomentFragment extends Yat3sFragment implements OnClickListener {
     private View root;
-    private RefreshLayout momentRefresh;
-    private ListView momentLv;
     private TextView sortTextView;
     private FloatingActionButton addFab;
     private List<Moment> mMoments = new ArrayList<>();
     private ImageButton backButton;
-    private MomentAdapter momentAdapter;
+    private MomentAdapter2 momentAdapter;
     private int sort = 1; // 1按照时间 2按照距离
+    private int loadType = 0;
+    @Bind(R.id.moment_rv)
+    UltimateRecyclerView momentRv;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (root == null) {
-            root = inflater.inflate(R.layout.fragment_moment, container, false);
-        }
+        root = inflater.inflate(R.layout.fragment_moment, container, false);
+        ButterKnife.bind(this, root);
         initView();
         initEvent();
         getData(System.currentTimeMillis());
@@ -61,7 +63,7 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
     private void initEvent() {
         sortTextView.setOnClickListener(this);
 
-        momentRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        momentRv.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mMoments.clear();
@@ -69,15 +71,13 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
             }
         });
 
-        momentRefresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+        momentRv.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
-            public void onLoad() {
+            public void loadMore(int i, int i1) {
                 getData(mMoments.get(mMoments.size()-1).getCreateTime());
-                momentRefresh.setLoading(false);
             }
         });
-
-        momentLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        momentAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
@@ -91,7 +91,20 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getData(System.currentTimeMillis());
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(500);
+                    mMoments.clear();
+                    getData(System.currentTimeMillis());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -99,9 +112,11 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         Callback<List<Moment>> callback = new Callback<List<Moment>>() {
             @Override
             public void success(List<Moment> moments, Response response) {
+                if (loadType == 0) {
+                    momentRv.setRefreshing(false);
+                }
                 mMoments.addAll(moments);
                 momentAdapter.notifyDataSetChanged();
-                momentRefresh.setRefreshing(false);
             }
             @Override
             public void failure(RetrofitError error) {
@@ -127,21 +142,13 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
     }
 
     private void initView() {
-        momentRefresh = (RefreshLayout) root.findViewById(R.id.moment_fresh);
-        momentLv = (ListView) root.findViewById(R.id.moment_lv);
         backButton = (ImageButton) root.findViewById(R.id.btn_back);
-
         sortTextView = (TextView) root.findViewById(R.id.tv_sort);
 
-        momentAdapter = new MomentAdapter(getActivity(), mMoments,sort);
-        momentLv.setAdapter(momentAdapter);
-
-//        View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_header,null);
-//        momentLv.addHeaderView(headerView, null, false);
-        momentRefresh.setColorSchemeResources(R.color.md_blue_300,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                R.color.md_grey_500);
+        momentRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        momentAdapter = new MomentAdapter2(getActivity(), mMoments);
+        momentRv.setAdapter(momentAdapter);
+        momentRv.enableLoadmore();
         addFab = (FloatingActionButton) root.findViewById(R.id.add_moment_fab);
     }
 
@@ -167,7 +174,7 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
             case R.id.add_moment_fab:
                 if (SharedPreferencesUtils.contains(getActivity(),"token")) {
                     Intent toAddNewsIntent = new Intent(getActivity(), AddMomentActivity.class);
-                    startActivityForResult(toAddNewsIntent, 0);
+                    startActivityForResult(toAddNewsIntent, 101);
                 }
                 else {
                     startActivity(LoginActivity.class);

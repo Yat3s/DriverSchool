@@ -58,19 +58,20 @@
 
             <include layout="@layout/layout_address_intro" />
 
-            <include layout="@layout/layout_grade_merchant" />
+            <include layout="@layout/layout_merchant_evaluation" />
 
-            <include layout="@layout/layout_course" />
+            <include layout="@layout/layout_merchant_course" />
 
-            <include layout="@layout/layout_coach" />
+            <include layout="@layout/layout_merchant_coach" />
 
-            <include layout="@layout/layout_comment" />
+            <include layout="@layout/layout_merchant_comment" />
 
-            <include layout="@layout/layout_consult" />
+            <!--<include layout="@layout/layout_merchant_consult" />-->
 
-            <include layout="@layout/layout_platform_intro" />
+            <include layout="@layout/layout_merchant_other" />
 
-            <!--<include layout="@layout/layout_pick_line" />-->
+            <include layout="@layout/layout_merchant_platform_intro" />
+
         </LinearLayout>
     </ScrollView>
 

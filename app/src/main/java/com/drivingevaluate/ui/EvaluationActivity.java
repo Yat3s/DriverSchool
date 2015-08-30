@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -13,8 +12,13 @@ import com.drivingevaluate.adapter.EvaluationAdapter;
 import com.drivingevaluate.model.Evaluation;
 import com.drivingevaluate.model.Merchant;
 import com.drivingevaluate.net.GetAllEvaluationListRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,13 +68,13 @@ public class EvaluationActivity extends Yat3sActivity {
             public void success(List<Evaluation> remoteEvaluations, Response response) {
                 if (remoteEvaluations.size()!=0 ){
                     evaluations.addAll(remoteEvaluations);
-                    getData(evaluations.get(evaluations.size()-2).getCreateTime());
+                    getData(evaluations.get(evaluations.size() - 1).getCreateTime());
                 }
                 else {
                     evaluationAdapter.notifyDataSetChanged();
                     evaluationNumTv.setText(evaluations.size()+"人评价");
                     //评分
-                    gradeTv.setText(merchant.getAvgGrade()+"");
+                    gradeTv.setText(new DecimalFormat("#.0").format(merchant.getAvgGrade()));
                     timeGradeRb.setRating(merchant.getItem1());
                     placeGradeRb.setRating(merchant.getItem2());
                     serviceGradeRb.setRating(merchant.getItem3());
@@ -82,7 +86,15 @@ public class EvaluationActivity extends Yat3sActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("Yat3s",error.getMessage());
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(EvaluationActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         Map<String,Object> param = new HashMap<>();

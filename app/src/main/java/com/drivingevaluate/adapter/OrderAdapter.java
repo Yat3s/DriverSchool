@@ -40,7 +40,8 @@ public class OrderAdapter extends AutoRVAdapter{
         holder.setTextView(R.id.name_merchant_order_tv,order.getSname());
         holder.setTextView(R.id.id_order_tv,"订单号:"+order.getOrderNo());
         holder.setTextView(R.id.pre_pay_order_tv,"预付"+order.getPrePay()+"元");
-        holder.setTextView(R.id.subject_order_tv,order.getGoodsTitle());
+        holder.setTextView(R.id.name_coach_order_tv, order.getSellName());
+        holder.setTextView(R.id.subject_order_tv, "(" + order.getGoodsTitle() + ")");
         holder.setTextView(R.id.date_order_tv, DateUtils.getDayDateStr(order.getCreatedTime()));
         if (order.getStatus() == 0){
             holder.setTextView(R.id.status_tv,"待支付");

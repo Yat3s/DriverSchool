@@ -2,7 +2,6 @@ package com.drivingevaluate.ui;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.drivingevaluate.R;
@@ -46,7 +45,6 @@ public class UserMoneyActivity extends Yat3sActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("Yat3s",error.getMessage());
                 tipTv.setText("你还未领取红包,赶快到红包专区领取你的红包吧");
             }
         };

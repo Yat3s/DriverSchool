@@ -35,6 +35,7 @@ public class Merchant implements Serializable{
     private int sellCount;
 
     private int spendTime;
+    private int zhekou;
 
     private float item1;
     private float item2;
@@ -43,15 +44,24 @@ public class Merchant implements Serializable{
     public float getAvgGrade() {
         return (item1 + item2 + item3) / 3.0f;
     }
-    public List<Image> getImgUrls(){
-        List<Image> images = new ArrayList<>();
+
+    public List<Advertisement> getImgUrls() {
+        List<Advertisement> images = new ArrayList<>();
         if(photoPath != null) {
             String[] imgs = photoPath.split(",");
             for (int i = 0; i < imgs.length; i++) {
-                images.add(new Image(imgs[i]));
+                images.add(new Advertisement(imgs[i]));
             }
         }
         return images;
+    }
+
+    public int getZhekou() {
+        return zhekou;
+    }
+
+    public void setZhekou(int zhekou) {
+        this.zhekou = zhekou;
     }
 
     public int getSid() {

@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     xmlns:emojicon="http://schemas.android.com/tools"
     android:orientation="horizontal"
-    android:background="@drawable/bg_white_border_nopading_normal"
+    android:background="@color/md_white_1000"
+    android:layout_marginBottom="8dp"
     android:descendantFocusability="blocksDescendants"
     android:padding="12dp">
 
@@ -96,11 +97,12 @@
             android:layout_marginTop="8dp"
             android:background="@color/md_grey_200"/>
 
-        <com.rockerhieu.emojicon.EmojiconTextView
+        <com.drivingevaluate.view.EmoticonsTextView
             android:id="@+id/content_moment_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             emojicon:emojiconAlignment="baseline"
+            emojicon:emojiconSize="24sp"
             android:layout_marginTop="8dp"
             android:textColor="@color/md_grey_600"
             android:text="无" />

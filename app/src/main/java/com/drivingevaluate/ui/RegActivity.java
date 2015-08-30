@@ -105,7 +105,15 @@ public class RegActivity extends Yat3sActivity implements OnClickListener{
 
             @Override
             public void failure(RetrofitError error) {
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(RegActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
 
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         Map<String, Object> param = new HashMap<>();

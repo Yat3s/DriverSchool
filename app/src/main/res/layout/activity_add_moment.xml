@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
     android:background="@color/md_white_1000"
     android:orientation="vertical">
 
@@ -20,12 +19,11 @@
             android:orientation="vertical"
             android:padding="12dp">
 
-            <com.rockerhieu.emojicon.EmojiconEditText
+            <com.drivingevaluate.view.EmoticonsEditText
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/md_white_1000"
-                emojicon:emojiconSize="24sp"
                 android:textSize="16sp"
                 android:gravity="top|left"
                 android:hint="分享一下你学车的感受吧"
@@ -112,18 +110,17 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/emotion_layout"
+            android:id="@+id/layout_emo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:orientation="vertical"
             android:visibility="gone">
-            <fragment
-                android:id="@+id/emojicons"
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager_emo"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                class="com.rockerhieu.emojicon.EmojiconsFragment"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>
 

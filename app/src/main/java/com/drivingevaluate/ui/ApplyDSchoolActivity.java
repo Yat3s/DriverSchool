@@ -147,7 +147,6 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("Yat3s",error.getMessage());
                 showShortToast("提交订单失败");
             }
         };

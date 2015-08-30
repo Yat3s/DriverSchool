@@ -11,9 +11,13 @@ import com.drivingevaluate.R;
 import com.drivingevaluate.app.App;
 import com.drivingevaluate.model.Order;
 import com.drivingevaluate.net.EvaluateRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.MyUtil;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +60,7 @@ public class EvaluateActivity extends Yat3sActivity{
         order = (Order) getIntent().getExtras().getSerializable("order");
         nameMerchantTv.setText(order.getSname());
         subjectCoachTv.setText(order.getGoodsTitle());
+        nameCoachTv.setText(order.getSellName());
         MyUtil.loadImg(avatarImg,order.getPhotoPath());
     }
 
@@ -75,7 +80,15 @@ public class EvaluateActivity extends Yat3sActivity{
 
             @Override
             public void failure(RetrofitError error) {
-                showShortToast(error.getMessage());
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(EvaluateActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         Map<String,Object> param = new HashMap<>();

@@ -3,7 +3,6 @@ package com.drivingevaluate.ui;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,10 +15,14 @@ import com.drivingevaluate.model.Coach;
 import com.drivingevaluate.model.Evaluation;
 import com.drivingevaluate.net.GetCoachDetailRequester;
 import com.drivingevaluate.net.GetCoachEvaluationListRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.MyUtil;
 import com.drivingevaluate.view.FullyLinearLayoutManager;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +36,7 @@ import retrofit.client.Response;
 
 public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
     private TextView tvCoachName;
-    private Button btnSelectMe,consultButton;
+    private Button btnSelectMe;
     private ImageView avatarImg;
 
     private int coachId;
@@ -59,7 +62,6 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
 
     private void initEvent() {
         btnSelectMe.setOnClickListener(this);
-        consultButton.setOnClickListener(this);
     }
 
     private void getData() {
@@ -81,7 +83,15 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("Yat3s", "getCoachEvaluation---->"+error.getMessage());
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(CoachInfoActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         Map<String,Object> param = new HashMap<>();
@@ -108,7 +118,15 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("Yat3s","getCoachInfo---->"+error.getMessage());
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(CoachInfoActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         Map<String,Object> param = new HashMap<>();
@@ -122,7 +140,6 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
         btnSelectMe = (Button) findViewById(R.id.btn_selectMe);
         tvCoachName = (TextView) findViewById(R.id.tv_coachName);
         avatarImg = (ImageView) findViewById(R.id.img_avatar);
-        consultButton = (Button) findViewById(R.id.consult_btn);
 
         evaluationAdapter = new EvaluationAdapter(mEvaluations,this);
         evaluationRv.setLayoutManager(new FullyLinearLayoutManager(this));
@@ -139,10 +156,6 @@ public class CoachInfoActivity extends Yat3sActivity implements OnClickListener{
                 bundle.putInt("coachId",coachId);
                 bundle.putDouble("prePay",coach.getPrepayPrice());
                 startActivity(ApplyDSchoolActivity.class,bundle);
-                break;
-            case R.id.consult_btn:
-//                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+getIntent().getExtras().getString("tel"))));
-                showShortToast("告诉我这个该咨询谁？");
                 break;
             default:
                 break;

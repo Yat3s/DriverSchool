@@ -2,79 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#EEEEEE"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <!-- titlebar -->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/theme_blue"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="10dp" >
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:background="@color/theme_blue"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:padding="10dp" >-->
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_circle"
-            android:gravity="center_vertical" >
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/bg_circle"-->
+    <!--android:gravity="center_vertical" >-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_search" />
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/ic_search" />-->
 
-            <TextView
-                android:id="@+id/tvSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#0000"
-                android:hint="搜索驾校"
-                android:inputType="none"
-                android:textColor="@color/font_gray_dark"
-                android:textColorHint="@color/font_gray_dark"
-                android:textSize="12sp" />
-        </LinearLayout>
-        <View android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
-        <Button android:id="@+id/btn_city"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/selector_transparent"
-            android:drawableRight="@mipmap/ic_dropdown"
-            android:text="南昌"/>
-        
-    </LinearLayout>
-    <!-- titlebar -->
+    <!--<TextView-->
+    <!--android:id="@+id/tvSearch"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="#0000"-->
+    <!--android:hint="搜索驾校"-->
+    <!--android:inputType="none"-->
+    <!--android:textColor="@color/font_gray_dark"-->
+    <!--android:textColorHint="@color/font_gray_dark"-->
+    <!--android:textSize="12sp" />-->
+    <!--</LinearLayout>-->
+    <!--<View android:layout_width="0.5dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="#FFFFFF"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginRight="10dp"/>-->
+    <!--<Button android:id="@+id/btn_city"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="#FFFFFF"-->
+    <!--android:background="@drawable/selector_transparent"-->
+    <!--android:drawableRight="@mipmap/ic_dropdown"-->
+    <!--android:text="南昌"/>-->
+    <!-- -->
+    <!--</LinearLayout>-->
+    <!--&lt;!&ndash; titlebar &ndash;&gt;-->
 
     <include layout="@layout/layout_order" />
 
-    <View
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/merchant_rv"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line" />
-
-    <com.drivingevaluate.view.RefreshLayout
-        android:id="@+id/dschool_fresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp">
-        <ListView
-            android:id="@+id/dschool_lv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="#EEEEEE"
-            android:dividerHeight="5dp" >
-        </ListView>
-    </com.drivingevaluate.view.RefreshLayout>
-
+        android:layout_height="wrap_content"
+        android:fadeScrollbars="true"
+        app:recyclerviewScrollbars="vertical" />
 </LinearLayout>

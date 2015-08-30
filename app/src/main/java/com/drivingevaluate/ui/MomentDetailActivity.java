@@ -32,6 +32,7 @@ import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.DateUtils;
 import com.drivingevaluate.util.Infliter;
 import com.drivingevaluate.view.CustomImageView;
+import com.drivingevaluate.view.EmoticonsTextView;
 import com.drivingevaluate.view.NineGridlayout;
 import com.drivingevaluate.view.ScreenTools;
 
@@ -56,7 +57,8 @@ import retrofit.client.Response;
  */
 public class MomentDetailActivity extends Yat3sActivity implements OnClickListener{
     private ImageView avatarImg,likeImg;
-    private TextView tvName,tvPubTime,tvContent,likeCountTv,commentCountTv,likeTv;
+    private TextView tvName, tvPubTime, likeCountTv, commentCountTv, likeTv;
+    private EmoticonsTextView contentTv;
     private ListView lvComment;
     private EditText etComment;
     private Button btnCommit;
@@ -127,7 +129,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
      * 设置动态详情
      */
     private void setMomentDetails() {
-        tvContent.setText(mMoment.getDescription());
+        contentTv.setText(mMoment.getDescription());
         tvName.setText(mMoment.getUser().getUserName());
         tvPubTime.setText(DateUtils.getStandardDate(mMoment.getCreateTime()));
         likeCountTv.setText(mMoment.getPraiseCount() + "赞");
@@ -139,7 +141,10 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         }else {
             likeImg.setImageDrawable(getResources().getDrawable(R.mipmap.ic_like));
         }
-        loadImg(avatarImg, mMoment.getUser().getHeadPath());
+        if (mMoment.getUser().getHeadPath() == null || mMoment.getUser().getHeadPath().isEmpty()) {
+            avatarImg.setImageDrawable(getResources().getDrawable(R.mipmap.ic_user_default));
+        } else
+            loadImg(avatarImg, mMoment.getUser().getHeadPath());
 
         typeTv.setText("学员"+(mMoment.getUser().getGrade()+1)+"级");
         //性别处理
@@ -330,7 +335,7 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
         avatarImg = (ImageView) findViewById(R.id.avatar_img);
         tvName = (TextView) findViewById(R.id.name_tv);
         tvPubTime = (TextView) findViewById(R.id.time_moment_tv);
-        tvContent = (TextView) findViewById(R.id.content_moment_tv);
+        contentTv = (EmoticonsTextView) findViewById(R.id.content_moment_tv);
         etComment = (EditText) findViewById(R.id.et_comment);
         btnCommit = (Button) findViewById(R.id.btn_commit);
         likeCountTv = (TextView) findViewById(R.id.like_count_moment_tv);
@@ -392,7 +397,10 @@ public class MomentDetailActivity extends Yat3sActivity implements OnClickListen
             TextView tvPubTime = (TextView) convertView.findViewById(R.id.tv_pubTime);
 
             ImageView imgAvator = (ImageView) convertView.findViewById(R.id.img_avatar);
-            loadImg(imgAvator, mComments.get(position).getUser().getHeadPath());
+            if (mComments.get(position).getUser().getHeadPath() == null || mComments.get(position).getUser().getHeadPath().isEmpty()) {
+                imgAvator.setImageDrawable(getResources().getDrawable(R.mipmap.ic_user_default));
+            } else
+                loadImg(imgAvator, mComments.get(position).getUser().getHeadPath());
             tvContent.setText(mComments.get(position).getContent());
             tvPubTime.setText(DateUtils.getStandardDate(mComments.get(position).getCreatedTime()));
             tvName.setText(mComments.get(position).getUser().getUserName());

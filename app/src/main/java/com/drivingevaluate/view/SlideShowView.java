@@ -1,6 +1,7 @@
 package com.drivingevaluate.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
@@ -18,7 +19,8 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 import com.drivingevaluate.R;
-import com.drivingevaluate.model.Image;
+import com.drivingevaluate.model.Advertisement;
+import com.drivingevaluate.ui.WebView;
 import com.drivingevaluate.util.MyUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -47,9 +49,10 @@ public class SlideShowView extends FrameLayout {
     private final static int TIME_INTERVAL = 5;
     //自动轮播启用开关
     private final static boolean isAutoPlay = true;
+    private boolean clickable = false;
 
     //自定义轮播图的资源
-    private List<Image> images;
+    private List<Advertisement> ads;
     //放轮播图片的ImageView 的list
     private List<ImageView> imageViewsList;
     //放圆点的View的list
@@ -98,7 +101,7 @@ public class SlideShowView extends FrameLayout {
      */
     private void startPlay(){
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        scheduledExecutorService.scheduleAtFixedRate(new SlideShowTask(), 1, 4, TimeUnit.SECONDS);
+        scheduledExecutorService.scheduleAtFixedRate(new SlideShowTask(), 5, 5, TimeUnit.SECONDS);
     }
     /**
      * 停止轮播图切换
@@ -117,7 +120,7 @@ public class SlideShowView extends FrameLayout {
      * 初始化Views等UI
      */
     private void initUI(Context context){
-        if(images == null || images.size() == 0)
+        if (ads == null || ads.size() == 0)
             return;
 
         LayoutInflater.from(context).inflate(R.layout.layout_slideshow, this, true);
@@ -126,7 +129,7 @@ public class SlideShowView extends FrameLayout {
         dotLayout.removeAllViews();
 
         // 热点个数与图片特殊相等
-        for (int i = 0; i < images.size(); i++) {
+        for (int i = 0; i < ads.size(); i++) {
             ImageView dotView =  new ImageView(context);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
             params.leftMargin = 4;
@@ -140,9 +143,22 @@ public class SlideShowView extends FrameLayout {
             dotViewsList.add(dotView);
 
             ImageView view =  new ImageView(context);
-            MyUtil.loadImg(view,images.get(i).getImgPath());
+            MyUtil.loadImg(view, ads.get(i).getImagePath());
             view.setScaleType(ScaleType.FIT_XY);
             imageViewsList.add(view);
+
+            if (clickable) {
+                final int finalI = i;
+                view.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), WebView.class);
+                        intent.putExtra("url", ads.get(finalI).getUrl());
+                        intent.putExtra("title", ads.get(finalI).getTitle());
+                        getContext().startActivity(intent);
+                    }
+                });
+            }
         }
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -308,8 +324,13 @@ public class SlideShowView extends FrameLayout {
             }
         }
     }
-    public void startAds(List<Image> ads){
-        images = ads;
+
+    public void clickable(boolean clickable) {
+        this.clickable = clickable;
+    }
+
+    public void startAds(List<Advertisement> ads) {
+        this.ads = ads;
         initUI(context);
     }
 }

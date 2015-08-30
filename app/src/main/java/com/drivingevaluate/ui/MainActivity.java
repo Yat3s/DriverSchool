@@ -6,36 +6,66 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.app.App;
+import com.drivingevaluate.config.VersionManager;
 import com.drivingevaluate.ui.base.Yat3sActivity;
-import com.drivingevaluate.ui.fragment.FindFragment;
+import com.drivingevaluate.ui.fragment.ExaminationFragment;
+import com.drivingevaluate.ui.fragment.HomeFragment;
 import com.drivingevaluate.ui.fragment.MerchantFragment;
 import com.drivingevaluate.ui.fragment.UserFragment;
 
-public class MainActivity extends Yat3sActivity implements OnClickListener {
-	private LinearLayout mTabFind;
-	private LinearLayout mTabUser;
-	private ImageView mTabMarket;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-	private ImageButton mImgFind;
-	private ImageButton mImgUser;
-	
-	Fragment findFragment;
-	Fragment dSchoolFragment;
+public class MainActivity extends Yat3sActivity {
+	@Bind(R.id.home_tab_layout)
+	LinearLayout homeLayout;
+	@Bind(R.id.merchant_tab_layout)
+	LinearLayout merchantLayout;
+	@Bind(R.id.examination_tab_layout)
+	LinearLayout examinationLayout;
+	@Bind(R.id.user_tab_layout)
+	LinearLayout userLayout;
+
+	@Bind(R.id.home_tab_btn)
+	ImageButton homeBtn;
+	@Bind(R.id.merchant_tab_btn)
+	ImageButton merchantBtn;
+	@Bind(R.id.examination_tab_btn)
+	ImageButton examinationBtn;
+	@Bind(R.id.user_tab_btn)
+	ImageButton userBtn;
+
+	@Bind(R.id.home_tab_tv)
+	TextView homeTv;
+	@Bind(R.id.merchant_tab_tv)
+	TextView merchantTv;
+	@Bind(R.id.examination_tab_tv)
+	TextView examinationTv;
+	@Bind(R.id.user_tab_tv)
+	TextView userTv;
+
+	Fragment homeFragment;
+	Fragment merchantFragment;
+	Fragment examinationFragment;
 	Fragment userFragment;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		ButterKnife.bind(this);
+
+		VersionManager versionManager = new VersionManager(this, 0);
+		versionManager.checkUpdate();
+
 		initView();
 		initEvent();
 		Loc();
@@ -46,44 +76,37 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 		//开启定位
 		App.getInstance().initBaiduLocClient();
 		
-		mTabFind.setOnClickListener(this);
-		mTabUser.setOnClickListener(this);
-		
-		mTabMarket.setOnClickListener(this);
 	}
 
 	private void initView() {
-		mTabFind = (LinearLayout) findViewById(R.id.tab_find);
-		mTabUser = (LinearLayout) findViewById(R.id.tab_user);
-		
-		mTabMarket = (ImageView) findViewById(R.id.img_tab_market);
 
-		mImgFind = (ImageButton) findViewById(R.id.btnTabMsg);
-		mImgUser = (ImageButton) findViewById(R.id.btnTabUser);
 	}
 
-	@Override
-	public void onClick(View v) {
-		resetImgs();
+
+	@OnClick({R.id.home_tab_layout, R.id.merchant_tab_layout, R.id.examination_tab_layout, R.id.user_tab_layout})
+	void tabOnClick(View v) {
 		switch (v.getId()) {
-		case R.id.tab_find:
+			case R.id.home_tab_layout:
 			setSelect(0);
 			break;
-		case R.id.img_tab_market:
+			case R.id.merchant_tab_layout:
 			setSelect(1);
-			rotateCButton(v, 0f, 360f, 300);
 			break;
-		case R.id.tab_user:
+			case R.id.examination_tab_layout:
 			setSelect(2);
 			break;
+			case R.id.user_tab_layout:
+				setSelect(3);
+				break;
 
 		default:
 			break;
 		}
 	}
 
-	private void setSelect(int i)
+	public void setSelect(int i)
 	{
+		resetImgs();
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction transaction = fm.beginTransaction();
 		hideFragment(transaction);
@@ -92,28 +115,44 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 		switch (i)
 		{
 		case 0:
-			if (findFragment == null)
+			if (homeFragment == null)
 			{
-				findFragment = new FindFragment();
-				transaction.add(R.id.fragment_content, findFragment);
+				homeFragment = new HomeFragment();
+				transaction.add(R.id.fragment_content, homeFragment);
 			} else
 			{
-				transaction.show(findFragment);
+				transaction.show(homeFragment);
 			}
-			mImgFind.setImageResource(R.mipmap.tab_find_pressed);
+			homeBtn.setImageResource(R.mipmap.ic_tab_home_pressed);
+			homeLayout.setBackgroundColor(getResources().getColor(R.color.theme_blue));
+			homeTv.setTextColor(getResources().getColor(R.color.md_white_1000));
 			break;
 		case 1:
-			if (dSchoolFragment == null)
+			if (merchantFragment == null)
 			{
-				dSchoolFragment = new MerchantFragment();transaction.add(R.id.fragment_content, dSchoolFragment);
+				merchantFragment = new MerchantFragment();
+				transaction.add(R.id.fragment_content, merchantFragment);
 			} else
 			{
-				transaction.show(dSchoolFragment);
+				transaction.show(merchantFragment);
 				
 			}
-			mTabMarket.setImageResource(R.mipmap.ic_tab_market_pressed);
+			merchantBtn.setImageResource(R.mipmap.ic_tab_merchant_pressed);
+			merchantLayout.setBackgroundColor(getResources().getColor(R.color.theme_blue));
+			merchantTv.setTextColor(getResources().getColor(R.color.md_white_1000));
 			break;
 		case 2:
+			if (examinationFragment == null) {
+				examinationFragment = new ExaminationFragment();
+				transaction.add(R.id.fragment_content, examinationFragment);
+			} else {
+				transaction.show(examinationFragment);
+			}
+			examinationBtn.setImageResource(R.mipmap.ic_tab_examination_pressed);
+			examinationLayout.setBackgroundColor(getResources().getColor(R.color.theme_blue));
+			examinationTv.setTextColor(getResources().getColor(R.color.md_white_1000));
+			break;
+			case 3:
 			if (userFragment == null)
 			{
 				userFragment = new UserFragment();
@@ -122,7 +161,9 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 			{
 				transaction.show(userFragment);
 			}
-			mImgUser.setImageResource(R.mipmap.tab_user_pressed);
+				userBtn.setImageResource(R.mipmap.ic_tab_user_pressed);
+				userLayout.setBackgroundColor(getResources().getColor(R.color.theme_blue));
+				userTv.setTextColor(getResources().getColor(R.color.md_white_1000));
 			break;
 		default:
 			break;
@@ -133,16 +174,16 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 
 	private void hideFragment(FragmentTransaction transaction)
 	{
-		if (findFragment != null)
-		{
-			transaction.hide(findFragment);
+		if (homeFragment != null) {
+			transaction.hide(homeFragment);
 		}
-		if (dSchoolFragment != null)
-		{
-			transaction.hide(dSchoolFragment);
+		if (merchantFragment != null) {
+			transaction.hide(merchantFragment);
 		}
-		if (userFragment != null)
-		{
+		if (examinationFragment != null) {
+			transaction.hide(examinationFragment);
+		}
+		if (userFragment != null) {
 			transaction.hide(userFragment);
 		}
 	}
@@ -152,9 +193,20 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 	 * switch img to normal
 	 */
 	private void resetImgs() {
-		mImgFind.setImageResource(R.mipmap.tab_find_normal);
-		mImgUser.setImageResource(R.mipmap.tab_user_normal);
-		mTabMarket.setImageResource(R.mipmap.ic_tab_market_normal);
+		homeBtn.setImageResource(R.mipmap.ic_tab_home_normal);
+		merchantBtn.setImageResource(R.mipmap.ic_tab_merchant_normal);
+		examinationBtn.setImageResource(R.mipmap.ic_tab_examination_normal);
+		userBtn.setImageResource(R.mipmap.ic_tab_user_normal);
+
+		homeLayout.setBackgroundColor(getResources().getColor(R.color.md_white_1000));
+		merchantLayout.setBackgroundColor(getResources().getColor(R.color.md_white_1000));
+		examinationLayout.setBackgroundColor(getResources().getColor(R.color.md_white_1000));
+		userLayout.setBackgroundColor(getResources().getColor(R.color.md_white_1000));
+
+		homeTv.setTextColor(getResources().getColor(R.color.md_grey_700));
+		merchantTv.setTextColor(getResources().getColor(R.color.md_grey_700));
+		examinationTv.setTextColor(getResources().getColor(R.color.md_grey_700));
+		userTv.setTextColor(getResources().getColor(R.color.md_grey_700));
 	}
 
 	/**
@@ -178,35 +230,25 @@ public class MainActivity extends Yat3sActivity implements OnClickListener {
 	           break;  
 	       }  
 	     return super.onKeyUp(keyCode, event);  
-	 }  
-	/**
-	 * 中间菜单旋转
-	 * @param v
-	 * @param start
-	 * @param end
-	 * @param duration
-	 */
-	private void rotateCButton(View v, float start, float end, int duration) {
-		RotateAnimation anim = new RotateAnimation(start, end, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-		anim.setDuration(duration);
-		anim.setFillAfter(true);
-		v.startAnimation(anim);
-	}
-	
+	 }
+
+
 	/**
 	 * 解决UI重叠问题
 	 */
 	@Override  
     public void onAttachFragment(Fragment fragment) {  
-        super.onAttachFragment(fragment);  
-          
-        if (findFragment == null && fragment instanceof FindFragment) {  
-        	findFragment = (FindFragment)fragment;  
-        }else if ( dSchoolFragment == null && fragment instanceof MerchantFragment) {
-        	dSchoolFragment = (MerchantFragment)fragment;
-        }else if (userFragment == null && fragment instanceof UserFragment) {  
-        	userFragment = (UserFragment)fragment;  
-        }  
+        super.onAttachFragment(fragment);
+
+		if (homeFragment == null && fragment instanceof HomeFragment) {
+			homeFragment = fragment;
+		} else if (merchantFragment == null && fragment instanceof MerchantFragment) {
+			merchantFragment = fragment;
+		} else if (examinationFragment == null && fragment instanceof ExaminationFragment) {
+			examinationFragment = fragment;
+		} else if (userFragment == null && fragment instanceof UserFragment) {
+			userFragment = fragment;
+		}
     }  
 }
 

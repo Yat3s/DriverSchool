@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:drawableRight="@mipmap/ic_forward"
-                    android:text="意见反馈"
+                    android:text="在线客服"
                     android:textSize="16sp" />
             </LinearLayout>
 

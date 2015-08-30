@@ -1,100 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-<!--     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_logo" />
- -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/theme_blue">
-        <ImageButton android:id="@+id/back_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/back"
-            android:padding="8dp"
-            android:background="@drawable/bg_blue"/>
-        <TextView
-            android:id="@+id/tv_titleBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:layout_centerInParent="true"
-            android:text="登录"
-            android:textSize="20dp"/>
-
-        <Button android:id="@+id/btn_reg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_blue"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:textSize="16sp"
-            android:textColor="@color/md_white_1000"
-            android:text="快速注册"/>
-    </RelativeLayout>
+    <include layout="@layout/layout_toolbar" />
 
     <LinearLayout
-        android:id="@+id/layout_login"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_below="@id/toolbar"
+        android:background="@color/theme_blue"></LinearLayout>
+
+    <com.ogaclejapan.smarttablayout.SmartTabLayout
+        android:id="@+id/viewpagertab"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="88dp"
+        app:stl_indicatorAlwaysInCenter="true"
+        app:stl_indicatorWithoutPadding="false"
+        app:stl_indicatorInFront="true"
+        app:stl_indicatorInterpolation="smart"
+        app:stl_indicatorGravity="bottom"
+        app:stl_indicatorColor="@color/md_orange_300"
+        app:stl_indicatorThickness="4dp"
+        app:stl_indicatorCornerRadius="2dp"
+        app:stl_dividerThickness="0dp"
+        app:stl_underlineThickness="0dp"
+        app:stl_defaultTabBackground="?attr/selectableItemBackground"
+        app:stl_defaultTabTextAllCaps="true"
+        app:stl_defaultTabTextColor="@color/md_white_1000"
+        app:stl_defaultTabTextSize="14sp"
+        app:stl_defaultTabTextHorizontalPadding="24dp"
+        app:stl_defaultTabTextMinWidth="0dp"
+        app:stl_distributeEvenly="false"
+        app:stl_clickable="true" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/tag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="16dp"
-        android:orientation="vertical" >
+        android:layout_below="@id/viewpagertab"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/md_white_1000"
+        app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp">
 
-        <com.drivingevaluate.view.CleanableEditText
-            android:id="@+id/et_account"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_edittext"
-            android:drawableLeft="@mipmap/ic_account"
-            android:drawablePadding="5dp"
-            android:drawableRight="@mipmap/ic_clean"
-            android:inputType="phone"
-            android:textColorHint="@color/font_gray_light"
-            android:hint="请输入手机号"/>
-
-        <com.drivingevaluate.view.CleanableEditText
-            android:id="@+id/et_password"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_edittext"
-            android:drawableLeft="@mipmap/ic_password"
-            android:drawableRight="@mipmap/ic_clean"
-            android:inputType="textPassword"
-            android:textColorHint="@color/font_gray_light"
-            android:drawablePadding="5dp"
-            android:hint="请输入密码"/>
-        
-        <Button android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:background="@drawable/selector_blue"
-            android:text="登录"/>
-    </LinearLayout>
-    
-    <TextView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/layout_login"
-        android:layout_gravity="right"
-        android:layout_marginRight="8dp"
-        android:textColor="@color/theme_blue"
-        android:text="忘记密码?"/>
+            android:layout_height="match_parent" />
+    </android.support.v7.widget.CardView>
 
 
-</LinearLayout>
+</RelativeLayout>

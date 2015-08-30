@@ -10,6 +10,7 @@ public class Order implements Serializable{
     private String goodsTitle;
     private String photoPath;
     private String sname;
+    private String sellName;
 
     private long createdTime;
     private float prePay;//预付价
@@ -17,6 +18,14 @@ public class Order implements Serializable{
     private int judgeStatus;
 
     private String result;
+
+    public String getSellName() {
+        return sellName;
+    }
+
+    public void setSellName(String sellName) {
+        this.sellName = sellName;
+    }
 
     public String getResult() {
         return result;

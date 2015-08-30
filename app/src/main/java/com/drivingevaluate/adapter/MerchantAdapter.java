@@ -1,15 +1,10 @@
 package com.drivingevaluate.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
 import com.drivingevaluate.R;
+import com.drivingevaluate.adapter.component.AutoRVAdapter;
+import com.drivingevaluate.adapter.component.ViewHolder;
 import com.drivingevaluate.model.Merchant;
 import com.drivingevaluate.util.MyUtil;
 
@@ -19,83 +14,51 @@ import java.util.List;
 /**
  * Created by Yat3s on 15/8/4.
  */
-public class MerchantAdapter extends BaseAdapter{
-    private List<Merchant> merchants;
+public class MerchantAdapter extends AutoRVAdapter {
     private Context context;
-    private ViewHolder vh;
 
-
-    public MerchantAdapter(List<Merchant> merchants, Context context) {
-        this.merchants = merchants;
+    public MerchantAdapter(Context context, List<?> list) {
+        super(context, list);
         this.context = context;
     }
 
     @Override
-    public int getCount() {
-        return merchants.size();
+    public int onCreateViewLayoutID(int viewType) {
+        return R.layout.item_lv_merchant;
     }
 
     @Override
-    public Object getItem(int position) {
-        return merchants.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_lv_merchant,null);
-            vh = new ViewHolder();
-            vh.nameTv = (TextView) convertView.findViewById(R.id.tv_name);
-            vh.marketPriceTv = (TextView) convertView.findViewById(R.id.market_price_tv);
-            vh.distanceTv = (TextView) convertView.findViewById(R.id.distance_tv);
-            vh.scoreTv = (TextView) convertView.findViewById(R.id.tv_score);
-            vh.studentAmountTV = (TextView) convertView.findViewById(R.id.tv_studentAmount);
-            vh.spendTimeTv = (TextView) convertView.findViewById(R.id.costTime_tv);
-            vh.scoreRb = (RatingBar) convertView.findViewById(R.id.rb_score);
-            vh.preImg = (ImageView) convertView.findViewById(R.id.img_pre);
-            convertView.setTag(vh);
-        }
-        else {
-            vh = (ViewHolder)convertView.getTag();
-        }
-        vh.nameTv.setText(merchants.get(position).getSname());
-        vh.marketPriceTv.setText(("¥" + merchants.get(position).getMarketPrice()));
-        vh.studentAmountTV.setText(merchants.get(position).getSellCount()+ "名学生");
-        vh.spendTimeTv.setText("约" + merchants.get(position).getSpendTime() + "天拿证");
-
-        vh.scoreRb.setRating(merchants.get(position).getAvgGrade());
-        vh.scoreTv.setText(merchants.get(position).getAvgGrade() + "分");
-
-        MyUtil.loadImg(vh.preImg, merchants.get(position).getPhotoPath());
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Merchant merchant = (Merchant) list.get(position);
+        holder.setTextView(R.id.tv_name, merchant.getSname());
+        holder.setTextView(R.id.market_price_tv, ("¥" + (int) merchant.getMarketPrice() + "元"));
+        holder.setTextView(R.id.tv_score, new DecimalFormat("#.0").format(merchant.getAvgGrade()) + "分");
+        holder.setTextView(R.id.tv_studentAmount, merchant.getSellCount() + "名学生");
+        holder.setTextView(R.id.costTime_tv, "约" + merchant.getSpendTime() + "天拿证");
+        holder.getRatingBar(R.id.rb_score).setRating(merchant.getAvgGrade());
+        MyUtil.loadImg(holder.getImageView(R.id.img_pre), merchant.getPhotoPath());
 
         //距离处理
-        float distance = merchants.get(position).getDistance();
-        if (distance > 1000) {
-            vh.distanceTv.setText(new DecimalFormat("#.0").format(distance / 1000) + "km");
+        if (merchant.getDistance() != null && merchant.getDistance() != 0.0) {
+            float distance = merchant.getDistance();
+            if (distance > 1000) {
+                holder.setTextView(R.id.distance_tv, new DecimalFormat("#.0").format(distance / 1000) + "km");
+
+            } else {
+                holder.setTextView(R.id.distance_tv, new DecimalFormat("#").format(distance) + "m");
+            }
         } else {
-            vh.distanceTv.setText(new DecimalFormat("#").format(distance) + "m");
+            holder.setTextView(R.id.distance_tv, "");
         }
-        if (merchants.get(position).getDistance() == null || distance == 0) {
-            vh.distanceTv.setText("");
+
+        if (merchant.getZhekou() == 1) {
+            holder.setTextView(R.id.discount_tv, "活动");
+            holder.getTextView(R.id.discount_tv).setPadding(2, 2, 2, 2);
+        } else {
+            holder.setTextView(R.id.discount_tv, "");
+            holder.getTextView(R.id.discount_tv).setPadding(0, 0, 0, 0);
         }
-        return convertView;
+
     }
 
-
-    private class ViewHolder{
-        TextView nameTv ;
-        TextView marketPriceTv ;
-        TextView distanceTv ;
-        TextView scoreTv;
-        TextView studentAmountTV;
-        TextView spendTimeTv;
-
-        RatingBar scoreRb;
-        ImageView preImg;
-    }
 }

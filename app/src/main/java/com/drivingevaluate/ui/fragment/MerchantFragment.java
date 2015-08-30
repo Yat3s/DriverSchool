@@ -1,23 +1,16 @@
 package com.drivingevaluate.ui.fragment;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.Gravity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.MerchantAdapter;
@@ -26,10 +19,9 @@ import com.drivingevaluate.net.GetMerchantListRequester;
 import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.LoginActivity;
 import com.drivingevaluate.ui.MerchantDetailActivity;
-import com.drivingevaluate.ui.SelectCityActivity;
 import com.drivingevaluate.ui.base.Yat3sFragment;
 import com.drivingevaluate.util.SharedPreferencesUtils;
-import com.drivingevaluate.view.RefreshLayout;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import org.json.JSONException;
 
@@ -39,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -47,14 +41,11 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
     private LinearLayout llRating, llDistance, llPrice, llMember;
     private ImageView imgRating, imgDistance, imgPrice, imgMember;
 
-    private EditText searchEditText;
-    private Button btnSelectCity;
-    private TextView searchTextView;
     private View rootView;
-    private RefreshLayout merchantRefresh;
-    private ListView merchantLv;
-    private List<Merchant> merchants = new ArrayList<Merchant>();
-    private String sort = "4";
+    @Bind(R.id.merchant_rv)
+    UltimateRecyclerView merchantRv;
+    private List<Merchant> merchants = new ArrayList<>();
+    private String sort = "";
     private int page = 1;
     private int loadType = 0;
     private MerchantAdapter merchantAdapter;
@@ -62,12 +53,12 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_merchant, viewGroup, false);
+        ButterKnife.bind(this, rootView);
         initView();
         initEvent();
         getData();
         return rootView;
     }
-
 
     private void initView() {
         llRating = (LinearLayout) rootView.findViewById(R.id.ll_orderByRating);
@@ -80,21 +71,11 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
         imgPrice = (ImageView) rootView.findViewById(R.id.img_price);
         imgMember = (ImageView) rootView.findViewById(R.id.img_member);
 
-        btnSelectCity = (Button) rootView.findViewById(R.id.btn_city);
+        merchantAdapter = new MerchantAdapter(getActivity(), merchants);
+        merchantRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        merchantRv.setAdapter(merchantAdapter);
 
-        searchTextView = (TextView) rootView.findViewById(R.id.tvSearch);
-
-
-        merchantLv = (ListView) rootView.findViewById(R.id.dschool_lv);
-        View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_header,null);
-        merchantLv.addHeaderView(headerView, null, false);
-        merchantRefresh = (RefreshLayout) rootView.findViewById(R.id.dschool_fresh);
-        merchantRefresh.setColorSchemeResources(R.color.md_blue_300,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                R.color.md_grey_500);
-        merchantAdapter = new MerchantAdapter(merchants,getActivity());
-        merchantLv.setAdapter(merchantAdapter);
+        merchantRv.enableLoadmore();
     }
 
     private void initEvent() {
@@ -102,38 +83,35 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
         llDistance.setOnClickListener(this);
         llPrice.setOnClickListener(this);
         llMember.setOnClickListener(this);
-        btnSelectCity.setOnClickListener(this);
-        searchTextView.setOnClickListener(this);
 
-        merchantRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        merchantRv.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 page = 1;
+                merchants.clear();
                 loadType = 0;
                 getData();
             }
         });
 
-        merchantRefresh.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+        merchantRv.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
-            public void onLoad() {
-                loadType = 1;
+            public void loadMore(int i, int i1) {
                 page++;
+                loadType = 1;
                 getData();
             }
         });
 
-
-        merchantLv.setOnItemClickListener(new OnItemClickListener() {
-
+        merchantAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int position, long arg3) {
-                if (!SharedPreferencesUtils.contains(getActivity(), "token")){
+                if (!SharedPreferencesUtils.contains(getActivity(), "token")) {
                     startActivity(LoginActivity.class);
-                }else {
+                } else {
                     Bundle paramBundle = new Bundle();
-                    paramBundle.putInt("merchantId", merchants.get(position - 1).getSid());
+                    paramBundle.putInt("merchantId", merchants.get(position).getSid());
                     startActivity(MerchantDetailActivity.class, paramBundle);
                 }
             }
@@ -144,14 +122,13 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
         Callback<List<Merchant>> callback = new Callback<List<Merchant>>() {
             @Override
             public void success(List<Merchant> merchantList, Response response) {
-                if (loadType == 0){
-                    merchants.clear();
-                }else {
-                    merchantRefresh.setLoading(false);
-                }
                 merchants.addAll(merchantList);
-                merchantAdapter.notifyDataSetChanged();
-                merchantRefresh.setRefreshing(false);
+                if (loadType == 0){
+                    merchantRv.setRefreshing(false);
+                    merchantRv.setAdapter(merchantAdapter);
+                }else {
+                    merchantAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -159,6 +136,7 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
                 RequestErrorHandler requestErrorHandler = new RequestErrorHandler(getActivity());
                 try {
                     requestErrorHandler.handError(error);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -201,15 +179,6 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
                 imgMember.setImageResource(R.mipmap.ic_order_member_pressed);
                 setSort("3");
                 break;
-            case R.id.btn_city:
-                startActivity(SelectCityActivity.class);
-                break;
-            case R.id.tvSearch:
-                searchMerchantDialog();
-                break;
-            case R.id.btnSearch:
-                searchMerchant();
-                break;
             default:
                 break;
         }
@@ -217,9 +186,9 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
 
     private void setSort(String sort) {
         page = 1;
+        merchants.clear();
         this.sort = sort;
         loadType = 0;
-        merchantRefresh.setRefreshing(true);
         getData();
     }
 
@@ -231,36 +200,5 @@ public class MerchantFragment extends Yat3sFragment implements OnClickListener {
         imgDistance.setImageResource(R.mipmap.ic_order_distance_normal);
         imgPrice.setImageResource(R.mipmap.ic_order_price_normal);
         imgMember.setImageResource(R.mipmap.ic_order_member_normal);
-    }
-
-
-    /**
-     * search dialog
-     */
-    private void searchMerchantDialog() {
-        View view = LayoutInflater.from(getActivity()).inflate(
-                R.layout.dialog_search, null);
-        LinearLayout layout = (LinearLayout) view
-                .findViewById(R.id.dialog_search);
-        searchEditText = (EditText) view.findViewById(R.id.et_search);
-        Button searchButton = (Button) view.findViewById(R.id.btnSearch);
-        Dialog searchDialog = new Dialog(getActivity(), R.style.loading_dialog);
-        searchDialog.setContentView(layout);// 设置布局
-        Window dialogWindow = searchDialog.getWindow();
-        dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialogWindow.setAttributes(lp);
-        dialogWindow.setGravity(Gravity.TOP);
-        searchEditText.setFocusable(true);
-        searchEditText.setFocusableInTouchMode(true);
-        searchEditText.requestFocus();
-        searchDialog.show();
-        searchButton.setOnClickListener(this);
-    }
-
-    private void searchMerchant() {
-        //TODO searchMerchant
     }
 }

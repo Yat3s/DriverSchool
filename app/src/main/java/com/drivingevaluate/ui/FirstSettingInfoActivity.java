@@ -15,11 +15,14 @@ import com.drivingevaluate.model.Image;
 import com.drivingevaluate.model.User;
 import com.drivingevaluate.net.UpdateUserInfoRequester;
 import com.drivingevaluate.net.UploadFileRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.BitmapUtil;
 
 import net.yazeed44.imagepicker.model.ImageEntry;
 import net.yazeed44.imagepicker.util.Picker;
+
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
@@ -132,7 +135,15 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
             }
             @Override
             public void failure(RetrofitError error) {
-                showShortToast(error.getMessage());
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(FirstSettingInfoActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -148,7 +159,15 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
 
                 @Override
                 public void failure(RetrofitError error) {
-                    showShortToast("uploadImg-->" + error.getMessage());
+                    RequestErrorHandler requestErrorHandler = new RequestErrorHandler(FirstSettingInfoActivity.this);
+                    try {
+                        requestErrorHandler.handError(error);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             };
             UploadFileRequester uploadFileRequester = new UploadFileRequester(imageCallback, new TypedFile("image/jpg", avatarFile));

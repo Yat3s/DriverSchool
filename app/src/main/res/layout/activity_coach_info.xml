@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <include android:id="@+id/toolbar" layout="@layout/layout_toolbar"/>
     <ScrollView
         android:id="@+id/scrollView"
@@ -24,8 +25,8 @@
 
                 <com.drivingevaluate.view.CircleImageView
                     android:id="@+id/img_avatar"
-                    android:layout_width="132dp"
-                    android:layout_height="132dp"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="16dp"
                     android:src="@mipmap/img_avator_coach" />
@@ -62,35 +63,6 @@
                     <!--android:text="123人报名" />-->
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp" >
-
-                <TextView
-                    android:id="@+id/tv_coachAge"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="年龄：34岁" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="教龄：4年" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableLeft="@mipmap/ic_coach_safety"
-                    android:gravity="center_vertical"
-                    android:text="平台认证" />
-            </LinearLayout>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
@@ -108,8 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="      吃拿卡要不准有这是蓝翔驾校对我们教练对基本要求，高通过率是我们对学员的承诺，练车的时候我是你们的教练，下了车咱们就是朋友。只要在我这报名了，我会对你全程负责，学车过程有任何问题都可以找我，尽我所能帮你"/>
+                android:layout_marginRight="10dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -123,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="其他收费说明:\n\n体检照相费用20元，可分期付款。补考费300/科目" />
+                android:text="其他收费说明:\n\n暂无" />
 
             <View
                 android:layout_width="match_parent"
@@ -153,23 +124,23 @@
         android:background="#FFFFFF"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/consult_btn"
+        <com.balysv.materialripple.MaterialRippleLayout
+            android:id="@+id/ripple"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_grid_gray"
-            android:text="电话咨询"
-            android:textColor="#FFFFFF" />
-
+            app:mrl_rippleAlpha="0.6"
+            app:mrl_rippleColor="@color/md_blue_700"
+            app:mrl_rippleOverlay="true">
         <Button
             android:id="@+id/btn_selectMe"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_blue"
+            android:background="@color/md_blue_400"
             android:text="选择该教练报名"
+            android:textSize="16sp"
             android:textColor="#FFFFFF" />
+        </com.balysv.materialripple.MaterialRippleLayout>
     </LinearLayout>
 
 </RelativeLayout>

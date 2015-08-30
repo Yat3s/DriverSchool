@@ -15,6 +15,10 @@ public class Advertisement {
     private int type;
     private String url;
 
+    public Advertisement(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     public int getCreatedBy() {
         return createdBy;
     }

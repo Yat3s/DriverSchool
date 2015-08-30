@@ -4,6 +4,8 @@ import com.drivingevaluate.app.App;
 import com.drivingevaluate.app.ServerConf;
 import com.drivingevaluate.model.Advertisement;
 
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -14,15 +16,15 @@ import retrofit.http.GET;
  * Email:hawkoyates@gmail.com
  */
 public class AdRequester {
-    private Callback<Advertisement> callback ;
+    private Callback<List<Advertisement>> callback;
 
-    public AdRequester(Callback<Advertisement> callback) {
+    public AdRequester(Callback<List<Advertisement>> callback) {
         this.callback = callback;
     }
 
     private interface AdService {
         @GET("/api/advs")
-        void getAd(Callback<Advertisement> callback);
+        void getAd(Callback<List<Advertisement>> callback);
     }
 
     public void request(){

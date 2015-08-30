@@ -20,8 +20,8 @@ import com.drivingevaluate.util.DateUtils;
 import com.drivingevaluate.util.Infliter;
 import com.drivingevaluate.util.MyUtil;
 import com.drivingevaluate.view.CustomImageView;
+import com.drivingevaluate.view.EmoticonsTextView;
 import com.drivingevaluate.view.NineGridlayout;
-import com.rockerhieu.emojicon.EmojiconTextView;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -33,11 +33,10 @@ public class MomentAdapter extends BaseAdapter{
     private Context context;
     private List<Moment> moments;
     private ViewHolder vh;
-    private int sort;
-    public MomentAdapter(Context mContext, List<Moment> mDatas,int sort) {
+
+    public MomentAdapter(Context mContext, List<Moment> mDatas) {
         this.context = mContext;
         this.moments = mDatas;
-        this.sort = sort;
     }
 
     @Override
@@ -63,7 +62,7 @@ public class MomentAdapter extends BaseAdapter{
 
             vh.nameTv = (TextView) convertView.findViewById(R.id.name_tv);
             vh.commentAmountTv = (TextView) convertView.findViewById(R.id.comment_moment_tv);
-            vh.contentTv = (EmojiconTextView) convertView.findViewById(R.id.content_moment_tv);
+            vh.contentTv = (EmoticonsTextView) convertView.findViewById(R.id.content_moment_tv);
             vh.distanceTv = (TextView) convertView.findViewById(R.id.distance_moment_tv);
             vh.likeAmountTv = (TextView) convertView.findViewById(R.id.like_moment_tv);
             vh.publicTimeTv = (TextView) convertView.findViewById(R.id.time_moment_tv);
@@ -175,7 +174,7 @@ public class MomentAdapter extends BaseAdapter{
         TextView publicTimeTv ;
         TextView statusTv ;
         TextView addressTv ;
-        EmojiconTextView contentTv;
+        EmoticonsTextView contentTv;
 
         ImageView avatarImg;
         ImageView addressImg;

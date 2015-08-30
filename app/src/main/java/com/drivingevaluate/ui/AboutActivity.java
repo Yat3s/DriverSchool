@@ -16,6 +16,6 @@ public class AboutActivity extends Yat3sActivity{
         super.onCreate(arg0);
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
-        setToolbarWithNavigation(toolbar, "驾校详情");
+        setToolbarWithNavigation(toolbar, "关于");
     }
 }

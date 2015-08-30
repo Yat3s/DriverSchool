@@ -3,8 +3,14 @@ package com.drivingevaluate.adapter.component;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.drivingevaluate.view.CustomImageView;
+import com.drivingevaluate.view.NineGridlayout;
 
 /**
  * Created by Yat3s on 8/13/15.
@@ -41,6 +47,31 @@ public class ViewHolder {
     }
 
     public TextView getTextView(int id) {
+
+        return get(id);
+    }
+
+    public RatingBar getRatingBar(int id) {
+
+        return get(id);
+    }
+
+    public LinearLayout getLinearLayout(int id) {
+
+        return get(id);
+    }
+
+    public ImageButton getImageButton(int id) {
+
+        return get(id);
+    }
+
+    public NineGridlayout getNineGridLayout(int id) {
+
+        return get(id);
+    }
+
+    public CustomImageView getCustomImageView(int id) {
 
         return get(id);
     }

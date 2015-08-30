@@ -18,12 +18,15 @@ import com.drivingevaluate.model.User;
 import com.drivingevaluate.net.GetUserInfoRequester;
 import com.drivingevaluate.net.UpdateUserInfoRequester;
 import com.drivingevaluate.net.UploadFileRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.BitmapUtil;
 import com.drivingevaluate.util.Infliter;
 
 import net.yazeed44.imagepicker.model.ImageEntry;
 import net.yazeed44.imagepicker.util.Picker;
+
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +37,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -53,6 +57,7 @@ public class UserInfoActivity extends Yat3sActivity{
     private String gender;
     private int status;
     private File avatarFile;
+    private ArrayList<String> mSelectPath;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -82,7 +87,15 @@ public class UserInfoActivity extends Yat3sActivity{
 
             @Override
             public void failure(RetrofitError error) {
-                showShortToast(error.getMessage());
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(UserInfoActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         GetUserInfoRequester getUserInfoRequester = new GetUserInfoRequester(callback, App.getUserId());
@@ -91,14 +104,28 @@ public class UserInfoActivity extends Yat3sActivity{
 
     @OnClick(R.id.avatar_user_layout)
     void changeAvatar(){
-        new Picker.Builder(this,new MyPickListener(),R.style.AppTheme)
-                .setLimit(1)
-                .setImageBackgroundColorWhenChecked(getResources().getColor(R.color.theme_blue))
-                .setAlbumBackgroundColor(getResources().getColor(R.color.bg_dialog))
-                .setFabBackgroundColor(getResources().getColor(R.color.theme_blue))
-                .setFabBackgroundColorWhenPressed(getResources().getColor(R.color.md_purple_300))
-                .build()
-                .startActivity();
+//        new Picker.Builder(this,new MyPickListener(),R.style.AppTheme)
+//                .setLimit(1)
+//                .setImageBackgroundColorWhenChecked(getResources().getColor(R.color.theme_blue))
+//                .setAlbumBackgroundColor(getResources().getColor(R.color.bg_dialog))
+//                .setFabBackgroundColor(getResources().getColor(R.color.theme_blue))
+//                .setFabBackgroundColorWhenPressed(getResources().getColor(R.color.md_purple_300))
+//                .build()
+//                .startActivity();
+
+
+        Intent intent = new Intent(this, MultiImageSelectorActivity.class);
+        // 是否显示拍摄图片
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+        // 最大可选择图片数量
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
+        // 选择模式
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
+        // 默认选择
+        if (mSelectPath != null && mSelectPath.size() > 0) {
+            intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
+        }
+        startActivityForResult(intent, 2);
     }
 
     private class MyPickListener implements Picker.PickListener
@@ -195,7 +222,15 @@ public class UserInfoActivity extends Yat3sActivity{
             }
             @Override
             public void failure(RetrofitError error) {
-                showShortToast(error.getMessage());
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(UserInfoActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -211,7 +246,15 @@ public class UserInfoActivity extends Yat3sActivity{
 
                 @Override
                 public void failure(RetrofitError error) {
-                    showShortToast("uploadImg-->" + error.getMessage());
+                    RequestErrorHandler requestErrorHandler = new RequestErrorHandler(UserInfoActivity.this);
+                    try {
+                        requestErrorHandler.handError(error);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             };
             UploadFileRequester uploadFileRequester = new UploadFileRequester(imageCallback, new TypedFile("image/jpg", avatarFile));
@@ -229,6 +272,19 @@ public class UserInfoActivity extends Yat3sActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == 100){
             signTv.setText(data.getStringExtra("sign"));
+        }
+        if (requestCode == 2) {
+            if (resultCode == -1) {
+                mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                try {
+                    Bitmap bitmap = BitmapUtil.revitionImageSize(mSelectPath.get(0));
+                    avatarImg.setImageBitmap(bitmap);
+                    avatarFile = BitmapUtil.saveBitmap2file2(bitmap, UserInfoActivity.this);
+                    Log.e("Yat3s", mSelectPath.get(0));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

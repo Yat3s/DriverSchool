@@ -1,7 +1,5 @@
 package com.drivingevaluate.net;
 
-import android.util.Log;
-
 import com.drivingevaluate.app.App;
 import com.drivingevaluate.app.ServerConf;
 import com.drivingevaluate.config.UrlConfig;
@@ -10,10 +8,8 @@ import com.drivingevaluate.model.Coach;
 import java.util.Map;
 
 import retrofit.Callback;
-import retrofit.ErrorHandler;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.http.GET;
 import retrofit.http.QueryMap;
 
@@ -46,15 +42,8 @@ public class GetCoachDetailRequester {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(ServerConf.SERVER_IP)
                 .setRequestInterceptor(requestInterceptor)
-                .setErrorHandler(new MyErrorHandler())
                 .build();
         GetCoachDetailService getCoachDetailService = restAdapter.create(GetCoachDetailService.class);
         getCoachDetailService.getCoachDetail(param, callback);
-    }
-    class MyErrorHandler implements ErrorHandler {
-        @Override public Throwable handleError(RetrofitError cause) {
-            Log.e("yat3s", "GetCoachDetailRequester---->" + cause.getMessage());
-            return cause;
-        }
     }
 }

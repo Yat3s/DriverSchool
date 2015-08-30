@@ -1,153 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<com.balysv.materialripple.MaterialRippleLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    card_view:cardCornerRadius="5dp">
+    app:mrl_rippleAlpha="0.6"
+    app:mrl_rippleColor="@color/md_blue_200"
+    app:mrl_rippleOverlay="true"
+    android:layout_marginTop="4dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/selector_common"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <ImageView
-            android:id="@+id/img_pre"
-            android:layout_width="90dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_default" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:background="@color/md_white_1000"
+            android:padding="10dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp">
-
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="江西驾校"
-                    android:textColor="@color/font_black"
-                    android:textSize="16sp" />
-
-                <RatingBar
-                    android:id="@+id/rb_score"
-                    style="@style/roomRatingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name"
-                    android:layout_marginTop="5dp"
-                    android:isIndicator="true"
-                    android:numStars="5"
-                    android:stepSize="0.15" />
-
-                <TextView
-                    android:id="@+id/tv_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/rb_score"
-                    android:layout_below="@id/tv_name"
-                    android:layout_marginLeft="3dp"
-                    android:layout_toRightOf="@id/rb_score"
-                    android:text="5.0分"
-                    android:textColor="@color/theme_blue"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/market_price_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/rb_score"
-                    android:layout_marginTop="5dp"
-                    android:text="￥2300"
-                    android:textColor="@color/red"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/tag_null"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:textColor="#ADADAD" />
-
-                <TextView
-                    android:id="@+id/costTime_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@id/rb_score"
-                    android:text="约23天拿证"
-                    android:textSize="12sp"
-                    android:textColor="@color/font_gray_light" />
-
-
-                <TextView
-                    android:id="@+id/tv_studentAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/market_price_tv"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="10dp"
-                    android:maxEms="6"
-                    android:singleLine="true"
-                    android:text="123人正在学"
-                    android:textColor="@color/font_gray_light"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/distance_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/tv_name"
-                    android:layout_alignParentRight="true"
-                    android:text="2.3km"
-                    android:textColor="@color/font_gray_light"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/line" />
+            <ImageView
+                android:id="@+id/img_pre"
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_default" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="江西驾校"
+                        android:textColor="@color/font_black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/discount_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/md_white_1000"
+                        android:background="@color/md_blue_500"
+                        android:layout_toRightOf="@id/tv_name" />
+
+                    <RatingBar
+                        android:id="@+id/rb_score"
+                        style="@style/roomRatingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginTop="5dp"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:stepSize="0.15" />
+
+                    <TextView
+                        android:id="@+id/tv_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/rb_score"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginLeft="3dp"
+                        android:layout_toRightOf="@id/rb_score"
+                        android:text="5.0分"
+                        android:textColor="@color/theme_blue"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/market_price_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rb_score"
+                        android:layout_marginTop="5dp"
+                        android:text="￥2300"
+                        android:textColor="@color/red"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tag_null"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:textColor="#ADADAD" />
+
+                    <TextView
+                        android:id="@+id/costTime_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignTop="@id/rb_score"
+                        android:text="约23天拿证"
+                        android:textSize="12sp"
+                        android:textColor="@color/font_gray_light" />
+
+
+                    <TextView
+                        android:id="@+id/tv_studentAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/market_price_tv"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:maxEms="6"
+                        android:singleLine="true"
+                        android:text="123人正在学"
+                        android:textColor="@color/font_gray_light"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/distance_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/tv_name"
+                        android:layout_alignParentRight="true"
+                        android:text="2.3km"
+                        android:textColor="@color/font_gray_light"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@color/md_red_300"
-                    android:padding="2dp"
-                    android:text="红包"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
+                    android:layout_marginTop="5dp"
+                    android:background="@color/line" />
 
-                <TextView
-                    android:id="@+id/tv_groupon"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center_vertical"
-                    android:text="报名立即返现金"
-                    android:textColor="@color/md_red_300"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@color/md_red_300"
+                        android:padding="2dp"
+                        android:text="红包"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_groupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical"
+                        android:text="报名立即返现金"
+                        android:textColor="@color/md_red_300"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</com.balysv.materialripple.MaterialRippleLayout>

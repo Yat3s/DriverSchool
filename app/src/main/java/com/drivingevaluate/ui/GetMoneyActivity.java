@@ -3,7 +3,6 @@ package com.drivingevaluate.ui;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,7 +71,15 @@ public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListe
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("Yat3s","getMoneyList---->"+error.getMessage());
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(GetMoneyActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         LuckyMoneyRequester luckyMoneyRequester = new LuckyMoneyRequester(callback);

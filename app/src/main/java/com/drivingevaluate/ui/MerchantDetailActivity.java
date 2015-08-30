@@ -1,10 +1,11 @@
 package com.drivingevaluate.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,11 +18,9 @@ import com.drivingevaluate.R;
 import com.drivingevaluate.adapter.CoachHorizontalAdapter;
 import com.drivingevaluate.adapter.CourseAdapter;
 import com.drivingevaluate.model.Coach;
-import com.drivingevaluate.model.Consult;
 import com.drivingevaluate.model.Course;
 import com.drivingevaluate.model.Evaluation;
 import com.drivingevaluate.model.Merchant;
-import com.drivingevaluate.net.ConsultRequester;
 import com.drivingevaluate.net.GetAllEvaluationListRequester;
 import com.drivingevaluate.net.GetCoachListRequester;
 import com.drivingevaluate.net.GetMerchantDetailRequester;
@@ -34,6 +33,7 @@ import com.drivingevaluate.view.SlideShowView;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,9 +60,11 @@ public class MerchantDetailActivity extends Yat3sActivity implements OnClickList
     private int merchantId;
     private Merchant merchant;
     @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.consult_merchant_pre_ll) LinearLayout consultLayout;
-    @Bind(R.id.all_consult_btn) Button allConsultBtn;
+    //    @Bind(R.id.consult_merchant_pre_ll) LinearLayout consultLayout;
+//    @Bind(R.id.all_consult_btn) Button allConsultBtn;
     @Bind(R.id.ads) SlideShowView adBanner;
+    @Bind(R.id.other_merchant_tv)
+    TextView otherTv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,13 +85,13 @@ public class MerchantDetailActivity extends Yat3sActivity implements OnClickList
         navigateLl.setOnClickListener(this);
         evaluationLl.setOnClickListener(this);
         moreEvaluationBtn.setOnClickListener(this);
-        allConsultBtn.setOnClickListener(this);
+//        allConsultBtn.setOnClickListener(this);
     }
 
     private void getData() {
         merchantId = getIntent().getExtras().getInt("merchantId");
         getMerchantDetailData();
-        getConsultListData();
+//        getConsultListData();
         getCoachListData();
         getEvaluationListData();
     }
@@ -107,7 +109,7 @@ public class MerchantDetailActivity extends Yat3sActivity implements OnClickList
                 //轮播
                 adBanner.startAds(merchant.getImgUrls());
                 //评分
-                gradeTextView.setText(merchant.getAvgGrade()+"");
+                gradeTextView.setText(new DecimalFormat("#.0").format(merchant.getAvgGrade()));
                 timeGradeRb.setRating(merchant.getItem1());
                 placeGradeRb.setRating(merchant.getItem2());
                 serviceGradeRb.setRating(merchant.getItem3());
@@ -124,6 +126,10 @@ public class MerchantDetailActivity extends Yat3sActivity implements OnClickList
                 course.setMerchantName(merchant.getSname());
                 courses.add(course);
                 courseAdapter.notifyDataSetChanged();
+
+                if (merchant.getSdetails() != null) {
+                    otherTv.setText(merchant.getSdetails());
+                }
             }
 
             @Override
@@ -216,36 +222,36 @@ public class MerchantDetailActivity extends Yat3sActivity implements OnClickList
         getAllEvaluationListRequester.request();
     }
 
-    private void getConsultListData(){
-        Callback<List<Consult>> callback = new Callback<List<Consult>>() {
-            @Override
-            public void success(List<Consult> consults, Response response) {
-                allConsultBtn.setText("查看全部" + consults.size() + "条咨询");
-                int showSize = 0;
-                if (consults.size() == 1){
-                    showSize = 1;
-                }else if (consults.size() >= 2){
-                    showSize = 2;
-                }
-                for (int i = 0;i < showSize;i++) {
-                    View v = LayoutInflater.from(MerchantDetailActivity.this).inflate(R.layout.item_consult, null);
-                    TextView nameTv = (TextView) v.findViewById(R.id.name_tv);
-                    TextView contentTv = (TextView) v.findViewById(R.id.content_consult_tv);
-
-                    nameTv.setText(consults.get(i).getUser().getUserName()+":");
-                    contentTv.setText(consults.get(i).getDesc());
-                    consultLayout.addView(v);
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e("Yat3s","getConsultListData"+error.getMessage());
-            }
-        };
-        ConsultRequester consultRequester = new ConsultRequester(merchantId,callback);
-        consultRequester.getCousultList();
-    }
+//    private void getConsultListData(){
+//        Callback<List<Consult>> callback = new Callback<List<Consult>>() {
+//            @Override
+//            public void success(List<Consult> consults, Response response) {
+//                allConsultBtn.setText("查看全部咨询");
+//                int showSize = 0;
+//                if (consults.size() == 1){
+//                    showSize = 1;
+//                }else if (consults.size() >= 2){
+//                    showSize = 2;
+//                }
+//                for (int i = 0;i < showSize;i++) {
+//                    View v = LayoutInflater.from(MerchantDetailActivity.this).inflate(R.layout.item_consult, null);
+//                    TextView nameTv = (TextView) v.findViewById(R.id.name_tv);
+//                    TextView contentTv = (TextView) v.findViewById(R.id.content_consult_tv);
+//
+//                    nameTv.setText(consults.get(i).getUser().getUserName()+":");
+//                    contentTv.setText(consults.get(i).getDesc());
+//                    consultLayout.addView(v);
+//                }
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                Log.e("Yat3s","getConsultListData"+error.getMessage());
+//            }
+//        };
+//        ConsultRequester consultRequester = new ConsultRequester(merchantId,callback);
+//        consultRequester.getCousultList();
+//    }
 
     private void initView() {
         coachRv = (RecyclerView) findViewById(R.id.coach_merchant_rv);
@@ -298,7 +304,7 @@ public class MerchantDetailActivity extends Yat3sActivity implements OnClickList
                 startActivity(ResultCoachActivity.class, merchantBundle);
                 break;
             case R.id.btn_consult:
-                startActivity(ConsultActivity.class, merchantBundle);
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + merchant.getStel())));
                 break;
             case R.id.navigate_rl:
                 Bundle bundle = new Bundle();
@@ -317,9 +323,9 @@ public class MerchantDetailActivity extends Yat3sActivity implements OnClickList
             case R.id.allEvaluation_btn:
                 startActivity(EvaluationActivity.class,merchantBundle);
                 break;
-            case R.id.all_consult_btn:
-                startActivity(MerchantConsultActivity.class,merchantBundle);
-                break;
+//            case R.id.all_consult_btn:
+//                startActivity(MerchantConsultActivity.class,merchantBundle);
+//                break;
             case R.id.evaluation_merchant_ll:
                 startActivity(EvaluationActivity.class,merchantBundle);
                 break;

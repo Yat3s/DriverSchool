@@ -87,8 +87,12 @@
         <activity android:name=".ui.ShowAllPhoto" android:screenOrientation="portrait" />
         <activity android:name=".ui.GalleryActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.FirstSettingInfoActivity" android:screenOrientation="portrait" />
-
-
+        <activity
+            android:name=".ui.WebView"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -97,6 +101,41 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
+        <!-- ###################注册SDK使用的Activity###################### -->
+        <!--分享编辑页-->
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
+
+        <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID-->
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".wxapi.WXEntryActivity" />
+
+        <!-- ###################添加UmengAppkey###################### -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="55e1724967e58ecad2000543"></meta-data>
 
         <service
             android:name="com.baidu.location.f"

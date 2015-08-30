@@ -2,7 +2,6 @@ package com.drivingevaluate.ui;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,8 +9,12 @@ import android.widget.EditText;
 import com.drivingevaluate.R;
 import com.drivingevaluate.app.App;
 import com.drivingevaluate.net.ConsultRequester;
+import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,7 +64,15 @@ public class ConsultActivity extends Yat3sActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("Yat3s","consult---->"+error.getMessage());
+                RequestErrorHandler requestErrorHandler = new RequestErrorHandler(ConsultActivity.this);
+                try {
+                    requestErrorHandler.handError(error);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
         Map<String,Object> param = new HashMap<>();

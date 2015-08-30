@@ -1,25 +1,58 @@
 package com.drivingevaluate.model;
 
 public class Version {
-    private String version;
-    private String apkUrl;
-    private String remark;
-    public String getVersion() {
-        return version;
+    private long createDate;
+    private String downloadUrl;
+    private int id;
+    private String updateInfo;
+    private int versionCode;
+    private String versionName;
+
+    public long getCreateDate() {
+        return createDate;
     }
-    public void setVersion(String version) {
-        this.version = version;
+
+    public void setCreateDate(long createDate) {
+        this.createDate = createDate;
     }
-    public String getApkUrl() {
-        return apkUrl;
+
+    public String getDownloadUrl() {
+        return downloadUrl;
     }
-    public void setApkUrl(String apkUrl) {
-        this.apkUrl = apkUrl;
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
     }
-    public String getRemark() {
-        return remark;
+
+    public int getId() {
+        return id;
     }
-    public void setRemark(String remark) {
-        this.remark = remark;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUpdateInfo() {
+        return updateInfo;
+    }
+
+    public void setUpdateInfo(String updateInfo) {
+        this.updateInfo = updateInfo;
+    }
+
+    public int getVersionCode() {
+        return versionCode;
+    }
+
+    public void setVersionCode(int versionCode) {
+        this.versionCode = versionCode;
+    }
+
+    public String getVersionName() {
+        return versionName;
+    }
+
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
     }
 }

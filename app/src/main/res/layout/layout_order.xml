@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:background="#FFFFFF"
+    android:background="@color/theme_blue"
     android:paddingTop="5dp"
     android:orientation="horizontal" >
 
@@ -27,8 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="评价最高"
-            android:textColor="#9f9f9f"
+            android:text="默认排序"
+            android:textColor="@color/md_white_1000"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="距离最近"
-            android:textColor="#9f9f9f"
+            android:textColor="@color/md_white_1000"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="价格最低"
-            android:textColor="#9f9f9f"
+            android:textColor="@color/md_white_1000"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="学员最多"
-            android:textColor="#9f9f9f"
+            android:textColor="@color/md_white_1000"
             android:textSize="12sp" />
     </LinearLayout>
 

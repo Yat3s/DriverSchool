@@ -41,19 +41,13 @@
             android:text="时间排序"/>
     </RelativeLayout>
 
-    <com.drivingevaluate.view.RefreshLayout
-        android:id="@+id/moment_fresh"
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/moment_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/top">
-        <ListView
-            android:id="@+id/moment_lv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="#0000"
-            android:dividerHeight="10dp" >
-        </ListView>
-    </com.drivingevaluate.view.RefreshLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top"
+        android:fadeScrollbars="true"
+        app:recyclerviewScrollbars="vertical" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_moment_fab"
