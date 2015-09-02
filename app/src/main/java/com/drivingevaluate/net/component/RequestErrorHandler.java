@@ -70,6 +70,7 @@ public class RequestErrorHandler {
                 Toast.makeText(context, "请先登录", Toast.LENGTH_LONG).show();
                 if (SharedPreferencesUtils.contains(context,"token")) {
                     SharedPreferencesUtils.remove(context, "token");
+                    SharedPreferencesUtils.remove(context, "userId");
                 }
                 Intent intent = new Intent(context.getApplicationContext(), LoginActivity.class);
                 context.startActivity(intent);

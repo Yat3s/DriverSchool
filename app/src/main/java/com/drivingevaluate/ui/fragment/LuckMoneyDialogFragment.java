@@ -42,7 +42,7 @@ public class LuckMoneyDialogFragment extends DialogFragment {
         builder = new AlertDialog.Builder(getActivity());
         builder.setView(rootView);
         moneyTv = (TextView) rootView.findViewById(R.id.sum_of_money_tv);
-        moneyTv.setText(money);
+        moneyTv.setText("￥" + money + "元");
         shareBtn = (Button) rootView.findViewById(R.id.share);
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +65,7 @@ public class LuckMoneyDialogFragment extends DialogFragment {
                 mController.setShareMedia(qqShareContent);
                 mController.setShareMedia(qZoneShareContent);
                 mController.openShare(getActivity(), false);
+                dismiss();
             }
         });
         return builder.create();

@@ -10,6 +10,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.drivingevaluate.R;
 import com.drivingevaluate.ui.base.Yat3sActivity;
+import com.drivingevaluate.util.SharedPreferencesUtils;
 import com.drivingevaluate.view.TypeTextView;
 
 import butterknife.Bind;
@@ -23,7 +24,7 @@ public class SplashActivity extends Yat3sActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome);
+        setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.enlarge);
         animation.setFillAfter(true);
@@ -61,23 +62,14 @@ public class SplashActivity extends Yat3sActivity {
 
             @Override
             public void onTypeOver() {
-                YoYo.with(Techniques.FadeOutRight).duration(1000)
-                        .playOn(findViewById(R.id.logo));
-                YoYo.with(Techniques.FadeOutLeft).duration(1000)
-                        .playOn(subTitleTv);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(500);
-                            startActivity(MainActivity.class);
-                            finish();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-
+                if (!SharedPreferencesUtils.contains(SplashActivity.this, "first")) {
+                    startActivity(WelcomeActivity.class);
+                    SharedPreferencesUtils.put(SplashActivity.this, "first", false);
+                    finish();
+                } else {
+                    startActivity(MainActivity.class);
+                    finish();
+                }
             }
         });
     }

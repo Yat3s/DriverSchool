@@ -152,7 +152,7 @@ public class MerchantDetailActivity extends Yat3sActivity implements OnClickList
             @Override
             public void success(List<Coach> coachList, Response response) {
                 coaches.addAll(coachList);
-                tvCoachAmount.setText("精品教练(" + coaches.size() + ")");
+                tvCoachAmount.setText("精品教练");
                 moreCoachBtn.setText("查看全部教练");
                 coachHorizontalAdapter.notifyDataSetChanged();
                 loading.setVisibility(View.GONE);

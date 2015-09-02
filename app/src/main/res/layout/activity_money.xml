@@ -26,18 +26,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_marginTop="16dp"
-        android:text="每个在线预约并且线下成功报名的同学，都可以领取该红包" />
+        android:text="活动规则说明:\n在线报名后，凭验证码去驾校报名成功后可立即参与抢红包活动，一次机会，抢多少送多少，联系客服立返。" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_border_corner"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:orientation="vertical">
 
             <TextView

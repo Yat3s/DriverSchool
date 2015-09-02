@@ -146,16 +146,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="详细地址:"
+                        android:text="接送地址:"
                         android:textColor="@color/theme_blue" />
 
                     <EditText
-                        android:id="@+id/address_tv"
+                        android:id="@+id/address_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:background="@null"
-                        android:hint="请输入详细地址"
+                        android:hint="请输入接送地址"
                         android:textSize="16sp"
                         android:textColorHint="@color/font_gray_light" />
                 </LinearLayout>

@@ -66,6 +66,7 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         momentRv.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                loadType = 0;
                 mMoments.clear();
                 getData(System.currentTimeMillis());
             }
@@ -74,6 +75,7 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         momentRv.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int i, int i1) {
+                loadType = 1;
                 getData(mMoments.get(mMoments.size()-1).getCreateTime());
             }
         });
@@ -96,6 +98,7 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
             public void run() {
                 super.run();
                 try {
+                    loadType = 0;
                     Thread.sleep(500);
                     mMoments.clear();
                     getData(System.currentTimeMillis());
@@ -112,11 +115,13 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
         Callback<List<Moment>> callback = new Callback<List<Moment>>() {
             @Override
             public void success(List<Moment> moments, Response response) {
+                mMoments.addAll(moments);
                 if (loadType == 0) {
                     momentRv.setRefreshing(false);
+                    momentRv.setAdapter(momentAdapter);
+                } else {
+                    momentAdapter.notifyDataSetChanged();
                 }
-                mMoments.addAll(moments);
-                momentAdapter.notifyDataSetChanged();
             }
             @Override
             public void failure(RetrofitError error) {
@@ -160,11 +165,13 @@ public class MomentFragment extends Yat3sFragment implements OnClickListener {
                     sort = 2;
                     sortTextView.setText("距离排序");
                     mMoments.clear();
+                    loadType = 0;
                     getData(System.currentTimeMillis());
                 } else {
                     sort = 1;
                     sortTextView.setText("时间排序");
                     mMoments.clear();
+                    loadType = 0;
                     getData(System.currentTimeMillis());
                 }
                 break;

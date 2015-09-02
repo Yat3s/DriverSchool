@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.Selection;
 import android.text.Spannable;
@@ -36,7 +35,6 @@ import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.BitmapUtil;
 import com.drivingevaluate.util.FaceTextUtils;
 import com.drivingevaluate.util.ImageUtils.Bimp;
-import com.drivingevaluate.util.ImageUtils.FileUtils;
 import com.drivingevaluate.util.ImageUtils.ImageItem;
 import com.drivingevaluate.util.ImageUtils.PublicWay;
 import com.drivingevaluate.util.ImageUtils.Res;
@@ -55,6 +53,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -75,7 +74,8 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
     WrapHeightGridView imagesRv;
     @Bind(R.id.address_tv) TextView addressTv;
     public static Bitmap bimap ;
-
+    private ArrayList<String> mSelectPath = new ArrayList<>();
+    private List<ImageItem> images = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,9 +94,18 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == imageAdapter.getCount() - 1) {
-                    Intent intent = new Intent(AddMomentActivity.this,
-                            AlbumActivity.class);
-                    startActivity(intent);
+                    Intent intent = new Intent(AddMomentActivity.this, MultiImageSelectorActivity.class);
+                    // 是否显示拍摄图片
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+                    // 最大可选择图片数量
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 9);
+                    // 选择模式
+                    intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
+                    // 默认选择
+                    if (mSelectPath != null && mSelectPath.size() > 0) {
+                        intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
+                    }
+                    startActivityForResult(intent, 2);
                 }
             }
         });
@@ -113,7 +122,7 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
         btnCommit = (Button) findViewById(R.id.btn_commit);
         btnBack = (ImageButton) findViewById(R.id.btn_back);
 
-        imageAdapter = new WriteStatusGridImgsAdapter(this, Bimp.tempSelectBitmap,imagesRv);
+        imageAdapter = new WriteStatusGridImgsAdapter(this, images, imagesRv, mSelectPath);
         imagesRv.setAdapter(imageAdapter);
 
         btnCommit.setOnClickListener(this);
@@ -136,13 +145,33 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
 
     @OnClick(R.id.picture_iv)
     void selectPicture(){
-        startActivity(AlbumActivity.class);
+        Intent intent = new Intent(this, MultiImageSelectorActivity.class);
+        // 是否显示拍摄图片
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+        // 最大可选择图片数量
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 9);
+        // 选择模式
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
+        // 默认选择
+        if (mSelectPath != null && mSelectPath.size() > 0) {
+            intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
+        }
+        startActivityForResult(intent, 2);
     }
-    private static final int TAKE_PICTURE = 0x000001;
     @OnClick(R.id.camera_iv)
     void photo() {
-        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+        Intent intent = new Intent(this, MultiImageSelectorActivity.class);
+        // 是否显示拍摄图片
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+        // 最大可选择图片数量
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 9);
+        // 选择模式
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
+        // 默认选择
+        if (mSelectPath != null && mSelectPath.size() > 0) {
+            intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
+        }
+        startActivityForResult(intent, 2);
     }
 
     @OnClick(R.id.et_content)
@@ -175,18 +204,16 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case TAKE_PICTURE:
-                if (Bimp.tempSelectBitmap.size() < 9 && resultCode == RESULT_OK) {
-                    String fileName = String.valueOf(System.currentTimeMillis());
-                    Bitmap bm = (Bitmap) data.getExtras().get("data");
-                    FileUtils.saveBitmap(bm, fileName);
-
-                    ImageItem takePhoto = new ImageItem();
-                    takePhoto.setBitmap(bm);
-                    Bimp.tempSelectBitmap.add(takePhoto);
+        if (requestCode == 2) {
+            if (resultCode == -1) {
+                images.clear();
+                mSelectPath.clear();
+                mSelectPath.addAll(data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT));
+                for (int i = 0; i < mSelectPath.size(); i++) {
+                    ImageItem image = new ImageItem(mSelectPath.get(i));
+                    images.add(image);
                 }
-                break;
+            }
         }
     }
 
@@ -232,15 +259,15 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
                 }
             }
         };
-        if (Bimp.tempSelectBitmap.size() > 0){
-            for (int i = 0; i < Bimp.tempSelectBitmap.size(); i++) {
+        if (images.size() > 0) {
+            for (int i = 0; i < images.size(); i++) {
                 final int finalI = i;
                 Callback<Image> ImageCallback = new Callback<Image>() {
                     @Override
                     public void success(Image image, Response response) {
                         picPath.append(image.getImgId() + ",");
                         count.append("1");
-                        if (count.length() == Bimp.tempSelectBitmap.size()){
+                        if (count.length() == images.size()) {
                             param.put("imgPath", picPath.substring(0,picPath.length()-1));
                             Log.e("Yat3s","multi_pic"+picPath.substring(0,picPath.length()-1));
                             PostMomentRequester postMomentRequester = new PostMomentRequester(callback,param);
@@ -252,7 +279,6 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
                         RequestErrorHandler requestErrorHandler = new RequestErrorHandler(AddMomentActivity.this);
                         try {
                             requestErrorHandler.handError(error);
-
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (JSONException e) {
@@ -260,7 +286,7 @@ public class AddMomentActivity extends Yat3sActivity implements OnClickListener 
                         }
                     }
                 };
-                UploadFileRequester uploadFileRequester = new UploadFileRequester(ImageCallback,new TypedFile("image/jpg", BitmapUtil.saveBitmap2file2(Bimp.tempSelectBitmap.get(i).getBitmap(), AddMomentActivity.this)));
+                UploadFileRequester uploadFileRequester = new UploadFileRequester(ImageCallback, new TypedFile("image/jpg", BitmapUtil.saveBitmap2file2(images.get(i).getBitmap(), AddMomentActivity.this)));
                 uploadFileRequester.uploadFileForId();
             }
         }

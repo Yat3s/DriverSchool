@@ -1,6 +1,7 @@
 package com.drivingevaluate.ui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,9 +20,6 @@ import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.BitmapUtil;
 
-import net.yazeed44.imagepicker.model.ImageEntry;
-import net.yazeed44.imagepicker.util.Picker;
-
 import org.json.JSONException;
 
 import java.io.File;
@@ -33,6 +31,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -53,6 +52,7 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
     private String gender;
     private File avatarFile;
     private int status = 1;
+    private ArrayList<String> mSelectPath;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -63,34 +63,18 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
 
     @OnClick(R.id.avatar_img)
     void changeAvatar(){
-        new Picker.Builder(this,new MyPickListener(),R.style.AppTheme)
-                .setLimit(1)
-                .setImageBackgroundColorWhenChecked(getResources().getColor(R.color.theme_blue))
-                .setAlbumBackgroundColor(getResources().getColor(R.color.bg_dialog))
-                .setFabBackgroundColor(getResources().getColor(R.color.theme_blue))
-                .setFabBackgroundColorWhenPressed(getResources().getColor(R.color.md_purple_300))
-                .build()
-                .startActivity();
-    }
-
-    private class MyPickListener implements Picker.PickListener
-    {
-        @Override
-        public void onPickedSuccessfully(ArrayList<ImageEntry> arrayList) {
-            avatarUrl = arrayList.get(0).path;
-            Bitmap bitmap = null;
-            try {
-                bitmap = BitmapUtil.revitionImageSize(avatarUrl);
-                avatarImg.setImageBitmap(bitmap);
-                avatarFile = BitmapUtil.saveBitmap2file2(bitmap,FirstSettingInfoActivity.this);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        Intent intent = new Intent(this, MultiImageSelectorActivity.class);
+        // 是否显示拍摄图片
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
+        // 最大可选择图片数量
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 1);
+        // 选择模式
+        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
+        // 默认选择
+        if (mSelectPath != null && mSelectPath.size() > 0) {
+            intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
         }
-        @Override
-        public void onCancel(){
-            //User cancled the pick activity
-        }
+        startActivityForResult(intent, 2);
     }
 
     @OnClick(R.id.gender_et)
@@ -147,7 +131,7 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
             }
         };
 
-        if (avatarUrl != null) {
+        if (mSelectPath != null && mSelectPath.size() > 0) {
             Callback<Image> imageCallback = new Callback<Image>() {
                 @Override
                 public void success(Image image, Response response) {
@@ -176,6 +160,23 @@ public class FirstSettingInfoActivity extends Yat3sActivity{
         else {
             UpdateUserInfoRequester updateUserInfoRequester = new UpdateUserInfoRequester(callback, param);
             updateUserInfoRequester.request();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            if (resultCode == -1) {
+                mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                try {
+                    Bitmap bitmap = BitmapUtil.revitionImageSize(mSelectPath.get(0));
+                    avatarImg.setImageBitmap(bitmap);
+                    avatarFile = BitmapUtil.saveBitmap2file2(bitmap, FirstSettingInfoActivity.this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

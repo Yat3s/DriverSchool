@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,9 +21,6 @@ import com.drivingevaluate.net.component.RequestErrorHandler;
 import com.drivingevaluate.ui.base.Yat3sActivity;
 import com.drivingevaluate.util.BitmapUtil;
 import com.drivingevaluate.util.Infliter;
-
-import net.yazeed44.imagepicker.model.ImageEntry;
-import net.yazeed44.imagepicker.util.Picker;
 
 import org.json.JSONException;
 
@@ -104,16 +100,6 @@ public class UserInfoActivity extends Yat3sActivity{
 
     @OnClick(R.id.avatar_user_layout)
     void changeAvatar(){
-//        new Picker.Builder(this,new MyPickListener(),R.style.AppTheme)
-//                .setLimit(1)
-//                .setImageBackgroundColorWhenChecked(getResources().getColor(R.color.theme_blue))
-//                .setAlbumBackgroundColor(getResources().getColor(R.color.bg_dialog))
-//                .setFabBackgroundColor(getResources().getColor(R.color.theme_blue))
-//                .setFabBackgroundColorWhenPressed(getResources().getColor(R.color.md_purple_300))
-//                .build()
-//                .startActivity();
-
-
         Intent intent = new Intent(this, MultiImageSelectorActivity.class);
         // 是否显示拍摄图片
         intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
@@ -126,26 +112,6 @@ public class UserInfoActivity extends Yat3sActivity{
             intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
         }
         startActivityForResult(intent, 2);
-    }
-
-    private class MyPickListener implements Picker.PickListener
-    {
-        @Override
-        public void onPickedSuccessfully(ArrayList<ImageEntry> arrayList) {
-                avatarUrl = arrayList.get(0).path;
-            Bitmap bitmap = null;
-            try {
-                bitmap = BitmapUtil.revitionImageSize(avatarUrl);
-                avatarImg.setImageBitmap(bitmap);
-                avatarFile = BitmapUtil.saveBitmap2file2(bitmap,UserInfoActivity.this);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        @Override
-        public void onCancel(){
-            //User cancled the pick activity
-        }
     }
 
     @OnClick(R.id.modify_pwd_layout)
@@ -234,22 +200,19 @@ public class UserInfoActivity extends Yat3sActivity{
             }
         };
 
-        if (avatarUrl != null) {
+        if (mSelectPath != null && mSelectPath.size() > 0) {
             Callback<Image> imageCallback = new Callback<Image>() {
                 @Override
                 public void success(Image image, Response response) {
                     param.put("imgPath", image.getImgPath());
-                    Log.e("Yat3s", "imgPath-->" + image.getImgPath());
                     UpdateUserInfoRequester updateUserInfoRequester = new UpdateUserInfoRequester(callback, param);
                     updateUserInfoRequester.request();
                 }
-
                 @Override
                 public void failure(RetrofitError error) {
                     RequestErrorHandler requestErrorHandler = new RequestErrorHandler(UserInfoActivity.this);
                     try {
                         requestErrorHandler.handError(error);
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (JSONException e) {
@@ -280,7 +243,6 @@ public class UserInfoActivity extends Yat3sActivity{
                     Bitmap bitmap = BitmapUtil.revitionImageSize(mSelectPath.get(0));
                     avatarImg.setImageBitmap(bitmap);
                     avatarFile = BitmapUtil.saveBitmap2file2(bitmap, UserInfoActivity.this);
-                    Log.e("Yat3s", mSelectPath.get(0));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

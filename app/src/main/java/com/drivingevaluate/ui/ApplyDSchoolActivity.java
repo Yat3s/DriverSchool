@@ -32,8 +32,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListener{
-    private TextView tvSelectCoach,addressTv,prePayTv;
-    private EditText etName,etIdNo,etTel;
+    private TextView tvSelectCoach, prePayTv;
+    private EditText etName, etIdNo, etTel, addressEt;
     private Button btnCommitOrder;
     private int coachId;
     private double prePay;
@@ -65,8 +65,15 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
                     if (resultStatus.equals("9000")) {//支付成功
                         //CommitOrderActivity.this.showCustomToast("支付成功");
                         //发送支付成功请求
-                        Log.e("yat3s","resInfo"+resultInfo);
                         JsonResolveUtils.notifyPayService(resultInfo);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("name", etName.getText().toString());
+                        bundle.putString("address", addressEt.getText().toString());
+                        bundle.putString("id", etIdNo.getText().toString());
+                        bundle.putString("tel", etTel.getText().toString());
+                        bundle.putString("coach", tvSelectCoach.getText().toString());
+                        bundle.putDouble("pay", prePay);
+                        startActivity(OrderCompletedActivity.class, bundle);
                         finish();
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
@@ -116,7 +123,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         etIdNo = (EditText) findViewById(R.id.et_idNo);
         etTel = (EditText) findViewById(R.id.et_tel);
 
-        addressTv = (TextView) findViewById(R.id.address_tv);
+        addressEt = (EditText) findViewById(R.id.address_et);
         tvSelectCoach = (TextView) findViewById(R.id.tv_selectCoach);
         prePayTv = (TextView) findViewById(R.id.prePay_tv);
 
@@ -154,7 +161,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         Map<String,Object> param =new HashMap<>();
         param.put(Constants.GOODS_ID, coachId);
         param.put(Constants.USER_ID, App.getUserId());
-        param.put(Constants.ADDRESS, addressTv.getText().toString());
+        param.put(Constants.ADDRESS, addressEt.getText().toString());
         param.put(Constants.REAL_RName, etName.getText().toString());
         param.put(Constants.ID_CARD_NO, etIdNo.getText().toString());
         param.put(Constants.TEL_NO, this.etTel.getText().toString());
@@ -184,8 +191,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
         }
         else if (etTel.getText().toString().isEmpty()||etTel.getText().toString().length() !=11) {
             showShortToast("请输入正确联系人电话");
-        }
-        else if (addressTv.getText().toString().isEmpty()) {
+        } else if (addressEt.getText().toString().isEmpty()) {
             showShortToast("请填写联系地址");
         }
         else {
@@ -196,7 +202,7 @@ public class ApplyDSchoolActivity extends Yat3sActivity implements OnClickListen
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        addressTv.setText(data.getStringExtra("schoolName"));
+        addressEt.setText(data.getStringExtra("schoolName"));
         super.onActivityResult(requestCode, resultCode, data);
     }
 

@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -22,7 +21,6 @@ import com.drivingevaluate.R;
 import com.drivingevaluate.model.Advertisement;
 import com.drivingevaluate.ui.WebView;
 import com.drivingevaluate.util.MyUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +39,6 @@ import java.util.concurrent.TimeUnit;
 public class SlideShowView extends FrameLayout {
 
     // 使用universal-image-loader插件读取网络图片，需要工程导入universal-image-loader-1.8.6-with-sources.jar
-    private ImageLoader imageLoader = ImageLoader.getInstance();
 
     //轮播图图片数量
     private final static int IMAGE_COUNT = 5;
@@ -94,7 +91,6 @@ public class SlideShowView extends FrameLayout {
         if(isAutoPlay){
             startPlay();
         }
-
     }
     /**
      * 开始轮播图切换
@@ -165,20 +161,20 @@ public class SlideShowView extends FrameLayout {
         viewPager.setFocusable(true);
 
         //点击广告时候重新计时 避免用户手动滑动轮播图的时候轮播还在转动
-        viewPager.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        scheduledExecutorService.shutdown();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        startPlay();
-                        break;
-                }
-                return false;
-            }
-        });
+//        viewPager.setOnTouchListener(new OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        scheduledExecutorService.shutdown();
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        startPlay();
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
 
         viewPager.setAdapter(new MyPagerAdapter());
         viewPager.setOnPageChangeListener(new MyPageChangeListener());

@@ -20,12 +20,14 @@ public class WriteStatusGridImgsAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<ImageItem> datas;
+	private List<String> imagePath;
 	private GridView gv;
 
-	public WriteStatusGridImgsAdapter(Context context, List<ImageItem> datas, GridView gv) {
+	public WriteStatusGridImgsAdapter(Context context, List<ImageItem> datas, GridView gv, List<String> imagePath) {
 		this.context = context;
 		this.datas = datas;
 		this.gv = gv;
+		this.imagePath = imagePath;
 	}
 
 	@Override
@@ -73,6 +75,7 @@ public class WriteStatusGridImgsAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 					datas.remove(position);
+					imagePath.remove(position);
 					notifyDataSetChanged();
 				}
 			});

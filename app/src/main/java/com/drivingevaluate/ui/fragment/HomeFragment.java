@@ -160,9 +160,10 @@ public class HomeFragment extends Yat3sFragment {
                 .rippleAlpha(0.6f)
                 .create();
         MaterialRippleLayout.on(serviceLayout)
-                .rippleColor(getResources().getColor(R.color.md_red_300))
+                .rippleColor(getResources().getColor(R.color.md_blue_300))
                 .rippleDuration(400)
                 .rippleAlpha(0.6f)
+                .rippleOverlay(true)
                 .create();
 
         merchantRv.setLayoutManager(new FullyLinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));

@@ -1,7 +1,6 @@
 package com.drivingevaluate.util.ImageUtils;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -42,7 +41,6 @@ public class ImageItem implements Serializable {
 		if(bitmap == null){
 			try {
 				bitmap = Bimp.revitionImageSize(imagePath);
-				Log.e("Yat3s", imagePath);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -63,5 +61,12 @@ public class ImageItem implements Serializable {
 				", bitmap=" + bitmap +
 				", isSelected=" + isSelected +
 				'}';
+	}
+
+	public ImageItem(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public ImageItem() {
 	}
 }

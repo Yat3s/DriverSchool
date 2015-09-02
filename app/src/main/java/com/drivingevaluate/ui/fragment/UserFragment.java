@@ -168,7 +168,8 @@ public class UserFragment extends Yat3sFragment implements OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_out_btn:
-                SharedPreferencesUtils.clear(getActivity());
+                SharedPreferencesUtils.remove(getActivity(), "token");
+                SharedPreferencesUtils.remove(getActivity(), "userId");
                 startActivity(LoginActivity.class);
                 break;
             case R.id.info_user_layout:

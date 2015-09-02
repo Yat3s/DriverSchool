@@ -39,7 +39,7 @@
         android:name=".app.App"
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
-        android:label="@string/app_name"
+        android:label="@string/jkdp_app_name"
         android:theme="@style/AppTheme"
         android:largeHeap="true">
         <activity
@@ -93,6 +93,15 @@
         <activity
             android:name=".ui.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.OrderCompletedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

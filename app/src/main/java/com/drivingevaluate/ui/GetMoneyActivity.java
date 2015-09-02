@@ -1,6 +1,8 @@
 package com.drivingevaluate.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -44,6 +46,7 @@ public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListe
     Toolbar toolbar;
     @Bind(R.id.get_money_btn)
     Button getMoneyBtn;
+    private LuckyMoney mLuckMoney;
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -54,7 +57,7 @@ public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListe
 
         initView();
         initEvent();
-        getData();
+
     }
 
     private void initEvent() {
@@ -84,7 +87,6 @@ public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListe
         };
         LuckyMoneyRequester luckyMoneyRequester = new LuckyMoneyRequester(callback);
         luckyMoneyRequester.getLuckyMoneyList();
-
     }
 
     private void initView() {
@@ -108,16 +110,39 @@ public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListe
         }
     }
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            LuckMoneyDialogFragment luckMoneyDialogFragment = LuckMoneyDialogFragment.newInstance(mLuckMoney.getHongbao());
+            luckMoneyDialogFragment.show(getFragmentManager(), "luckyMoneyDialog");
+            dismissLoading();
+        }
+    };
+
     private void grabMoney() {
         Callback<LuckyMoney> callback = new Callback<LuckyMoney>() {
             @Override
-            public void success(LuckyMoney luckyMoney, Response response) {
-                LuckMoneyDialogFragment luckMoneyDialogFragment = LuckMoneyDialogFragment.newInstance(luckyMoney.getHongbao());
-                luckMoneyDialogFragment.show(getFragmentManager(),"luckyMoneyDialog");
+            public void success(final LuckyMoney luckyMoney, Response response) {
+                showLoading();
+                mLuckMoney = luckyMoney;
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(2000);
+                            handler.sendEmptyMessage(0);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
             }
 
             @Override
             public void failure(RetrofitError error) {
+                dismissLoading();
                 RequestErrorHandler requestErrorHandler = new RequestErrorHandler(GetMoneyActivity.this);
                 try {
                     requestErrorHandler.handError(error);
@@ -128,7 +153,6 @@ public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListe
                 }
             }
         };
-
         LuckyMoneyRequester luckyMoneyRequester = new LuckyMoneyRequester(callback, App.getUserId());
         luckyMoneyRequester.grabLuckyMoney();
     }
@@ -145,5 +169,12 @@ public class GetMoneyActivity extends Yat3sActivity implements View.OnClickListe
             checkLogin2startActivity(UserMoneyActivity.class,null);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mLuckyMoneys.clear();
+        getData();
     }
 }

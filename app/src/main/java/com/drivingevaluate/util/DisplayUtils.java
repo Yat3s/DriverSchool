@@ -1,4 +1,4 @@
-package com.drivingevaluate.util.ImageUtils;
+package com.drivingevaluate.util;
 
 import android.app.Activity;
 import android.content.Context;

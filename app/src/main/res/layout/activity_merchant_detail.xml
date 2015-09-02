@@ -82,14 +82,22 @@
         android:background="#FFFFFF"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_consult"
+        <com.balysv.materialripple.MaterialRippleLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_grid_gray"
-            android:text="在线咨询驾校"
-            android:textColor="#FFFFFF" />
+            app:mrl_rippleAlpha="0.6"
+            app:mrl_rippleColor="@color/md_blue_700"
+            app:mrl_rippleOverlay="true">
+
+            <Button
+                android:id="@+id/btn_consult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_orange_300"
+                android:text="在线咨询驾校"
+                android:textColor="#FFFFFF" />
+        </com.balysv.materialripple.MaterialRippleLayout>
 
         <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/ripple"
@@ -112,5 +120,5 @@
 
     <include
         android:id="@+id/loading"
-        layout="@layout/layout_loading"/>
+        layout="@layout/layout_loading" />
 </RelativeLayout>

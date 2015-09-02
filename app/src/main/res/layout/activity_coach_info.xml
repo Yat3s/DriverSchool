@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="其他收费说明:\n\n暂无" />
+                android:text="其他收费说明:\n\n通过官方途径报名，照相费需另外出（可自带），制卡费包含在学费之中。除此之外无其他收费，请务必仔细阅读并签订驾驶员培训协议，以及索要学费收据，以维护自身权益。" />
 
             <View
                 android:layout_width="match_parent"

@@ -50,7 +50,6 @@
                                 android:id="@+id/name_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="username"
                                 android:textSize="16sp" />
                             <LinearLayout
                                 android:id="@+id/gender_layout"
@@ -84,7 +83,6 @@
                                 android:layout_below="@id/name_tv"
                                 android:layout_marginTop="5dp"
                                 android:textSize="12sp"
-                                android:text="08-15 00:00"
                                 android:textColor="@color/md_grey_500" />
 
                             <TextView
@@ -93,7 +91,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:textSize="12sp"
-                                android:text="正在学车"
                                 android:textColor="@color/md_grey_500" />
                             <TextView
                                 android:id="@+id/distance_moment_tv"
@@ -103,7 +100,6 @@
                                 android:layout_below="@id/status_moment_tv"
                                 android:textSize="12sp"
                                 android:layout_marginTop="4dp"
-                                android:text="0.0km"
                                 android:textColor="@color/md_grey_500" />
                         </RelativeLayout>
 
@@ -118,8 +114,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:textColor="@color/md_grey_600"
-                            android:text="无" />
+                            android:textColor="@color/md_grey_600" />
 
                         <com.drivingevaluate.view.NineGridlayout
                             android:id="@+id/images_gv"

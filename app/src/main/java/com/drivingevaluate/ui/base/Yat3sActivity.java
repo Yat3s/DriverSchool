@@ -8,14 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.drivingevaluate.R;
 import com.drivingevaluate.app.App;
 import com.drivingevaluate.config.Config;
 import com.drivingevaluate.ui.LoginActivity;
@@ -133,26 +128,4 @@ public class Yat3sActivity extends AppCompatActivity {
         });
     }
 
-    protected void setBackTitleBar() {
-        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.titlebar_back);
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar_back);
-        ImageButton titleBackBtn = (ImageButton) findViewById(R.id.btn_back);
-        titleBackBtn.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-
-    protected void setTitleBarTitle(String title) {
-        TextView titleTextView = (TextView) findViewById(R.id.tv_titleBar);
-        titleTextView.setText(title);
-    }
-
-    protected void setCustomTitleBar() {
-        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.titlebar_custom);
-        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar_custom);
-    }
 }
